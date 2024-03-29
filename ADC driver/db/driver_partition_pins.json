@@ -1,0 +1,29 @@
+{
+	"partitions" : [
+		{
+			"name" : "Top",
+			"pins" : [
+				{
+					"name" : "read",
+					"strict" : false
+				},
+				{
+					"name" : "DB[8]",
+					"strict" : false
+				},
+				{
+					"name" : "DB[10]",
+					"strict" : false
+				},
+				{
+					"name" : "DB[12]",
+					"strict" : false
+				},
+				{
+					"name" : "clk",
+					"strict" : false
+				}
+			]
+		}
+	]
+}

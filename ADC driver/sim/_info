@@ -1,0 +1,58 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/intelFPGA_lite/projects/lpt_3_q1
+vdriver
+Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+Z1 !s110 1711750326
+!i10b 1
+!s100 Wm]Z2E1h<AZn5P5N1lYHl3
+Ig6MRm5g^]lJeAJ;:7G_o=0
+Z2 VDg1SIo80bB@j0V0VzS_@n1
+!s105 driver_sv_unit
+S1
+Z3 dC:/Sound-Localization-Firmware/ADC driver
+w1711749963
+8C:/Sound-Localization-Firmware/ADC driver/driver.sv
+FC:/Sound-Localization-Firmware/ADC driver/driver.sv
+L0 1
+Z4 OV;L;10.5b;63
+r1
+!s85 0
+31
+Z5 !s108 1711750326.000000
+!s107 C:/Sound-Localization-Firmware/ADC driver/driver.sv|
+!s90 -reportprogress|300|-work|sim|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/driver.sv|
+!i113 1
+Z6 o-work sim -sv
+Z7 tCvgOpt 0
+vdriver_tb
+R0
+R1
+!i10b 1
+!s100 czJ83ldg;eGn0dIOoOJ933
+I;OC36o1i?2S;3]@HA37Bb2
+R2
+!s105 driver_tb_sv_unit
+S1
+R3
+w1711750299
+8C:/Sound-Localization-Firmware/ADC driver/driver_tb.sv
+FC:/Sound-Localization-Firmware/ADC driver/driver_tb.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Sound-Localization-Firmware/ADC driver/driver_tb.sv|
+!s90 -reportprogress|300|-work|sim|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/driver_tb.sv|
+!i113 1
+R6
+R7
