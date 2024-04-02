@@ -24,10 +24,10 @@
 
 
 module driver(
-	output convst_A,
-	output convst_B,
-	output convst_C,
-	output convst_D,
+	output reg convst_A,
+	output reg convst_B,
+	output reg convst_C,
+	output reg convst_D,
 	
 	output reg read, 
 	output reg CS,
@@ -44,17 +44,25 @@ module driver(
 
 	reg internalwrite = 1'b1; 
 	reg [15:0] DBout;
+	reg [15:0] toMemory;
 	reg finishwrite = 1'b0;
+	
+	reg convstsent = 1'b0;
+	reg isReading = 1'b0;
+	reg readcycle = 3'b111;
 	
 	reg [2:0] writecount = 3'b100;
 	
+	reg [3:0] ADCread = 3'b101;
+	
 	assign DB = (!write) ? DBout : 16'bz;
 	assign write = internalwrite;
+	
+	assign CS = 1'b0;
+	assign HW = 1'b1;
+	assign PAR = 1'b0;
 		
 	always_ff@(posedge clk) begin //Initial write procedure to set the config regs, runs only once
-		CS <= 1'b0;
-		HW <= 1'b1;
-		PAR <= 1'b0; 
 		
 		if(finishwrite == 1'b0) begin
 			if(writecount > 3'b0) begin
@@ -76,6 +84,52 @@ module driver(
 		
 	end
 
+	
+	
+	
+	always_ff@(posedge clk) begin
+		read <= 1'b1;
+	
+		if(convstsent == 1'b1 && Busy == 1'b0) begin
+			isReading = 1'b1;
+			if(readcycle == 3'b111) begin 
+				read <= 1'b0;
+				readcycle <= readcycle - 1'b1; 
+			end else if (readcycle > 3'b000) begin
+				toMemory <= DB; 
+				readcycle <= readcycle - 1'b1; 
+			end else begin
+				readcycle <= 3'b111;
+				ADCread <= ADCread - 1'b1;
+			end
+		end
+		
+		if(ADCread == 3'b000) begin
+			isReading = 1'b0;
+			convstsent = 1'b0;
+			ADCread <= 3'b101;
+		end
+	
+		
+		if(convstsent == 1'b0 && isReading == 1'b0) begin //Not reading and have 
+			convst_A = 1'b1;
+			convst_B = 1'b1;
+			convst_C = 1'b1;
+			convst_D = 1'b1; 
+			convstsent = 1'b1; 
+		end else begin
+			convst_A = 1'b0;
+			convst_B = 1'b0;
+			convst_C = 1'b0;
+			convst_D = 1'b0;
+		end
+	
+
+	
+
+	
+	end
+	
 
 
 

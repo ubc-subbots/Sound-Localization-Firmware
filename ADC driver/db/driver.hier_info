@@ -1,16 +1,16 @@
 |driver
-convst_A <= <GND>
-convst_B <= <GND>
-convst_C <= <GND>
-convst_D <= <GND>
-read <= internalread.DB_MAX_OUTPUT_PORT_TYPE
-CS <= CS~reg0.DB_MAX_OUTPUT_PORT_TYPE
-HW <= HW~reg0.DB_MAX_OUTPUT_PORT_TYPE
-PAR <= PAR~reg0.DB_MAX_OUTPUT_PORT_TYPE
+convst_A <= convst_A~reg0.DB_MAX_OUTPUT_PORT_TYPE
+convst_B <= convst_B~reg0.DB_MAX_OUTPUT_PORT_TYPE
+convst_C <= convst_C~reg0.DB_MAX_OUTPUT_PORT_TYPE
+convst_D <= convst_D~reg0.DB_MAX_OUTPUT_PORT_TYPE
+read <= read~reg0.DB_MAX_OUTPUT_PORT_TYPE
+CS <= <GND>
+HW <= <VCC>
+PAR <= <GND>
 rst <= <GND>
 STBY <= <GND>
-write <= <GND>
-Busy => ~NO_FANOUT~
+write <= internalwrite.DB_MAX_OUTPUT_PORT_TYPE
+Busy => always1.IN1
 DB[0] <> DB[0]
 DB[1] <> DB[1]
 DB[2] <> DB[2]
@@ -27,6 +27,18 @@ DB[12] <> DB[12]
 DB[13] <> DB[13]
 DB[14] <> DB[14]
 DB[15] <> DB[15]
+clk => convst_D~reg0.CLK
+clk => convst_C~reg0.CLK
+clk => convst_B~reg0.CLK
+clk => convst_A~reg0.CLK
+clk => convstsent.CLK
+clk => ADCread[0].CLK
+clk => ADCread[1].CLK
+clk => ADCread[2].CLK
+clk => ADCread[3].CLK
+clk => readcycle.CLK
+clk => isReading.CLK
+clk => read~reg0.CLK
 clk => finishwrite.CLK
 clk => DBout[0].CLK
 clk => DBout[1].CLK
@@ -44,12 +56,9 @@ clk => DBout[12].CLK
 clk => DBout[13].CLK
 clk => DBout[14].CLK
 clk => DBout[15].CLK
-clk => internalread.CLK
-clk => readcount[0].CLK
-clk => readcount[1].CLK
-clk => readcount[2].CLK
-clk => PAR~reg0.CLK
-clk => HW~reg0.CLK
-clk => CS~reg0.CLK
+clk => internalwrite.CLK
+clk => writecount[0].CLK
+clk => writecount[1].CLK
+clk => writecount[2].CLK
 
 
