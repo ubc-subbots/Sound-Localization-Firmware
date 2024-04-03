@@ -1,5 +1,5 @@
 Analysis & Synthesis report for driver
-Sun Mar 31 13:09:06 2024
+Tue Apr 02 04:00:48 2024
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -13,10 +13,10 @@ Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
   5. Analysis & Synthesis Source Files Read
   6. Analysis & Synthesis Resource Usage Summary
   7. Analysis & Synthesis Resource Utilization by Entity
-  8. Registers Removed During Synthesis
-  9. General Register Statistics
- 10. Inverted Register Statistics
- 11. Multiplexer Restructuring Statistics (Restructuring Performed)
+  8. State Machine - |driver|readstate
+  9. Registers Removed During Synthesis
+ 10. General Register Statistics
+ 11. Inverted Register Statistics
  12. Post-Synthesis Netlist Statistics for Top Partition
  13. Elapsed Time Per Partition
  14. Analysis & Synthesis Messages
@@ -46,14 +46,14 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sun Mar 31 13:09:06 2024       ;
+; Analysis & Synthesis Status     ; Successful - Tue Apr 02 04:00:48 2024       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; driver                                      ;
 ; Top-level Entity Name           ; driver                                      ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 18                                          ;
-; Total pins                      ; 29                                          ;
+; Total registers                 ; 39                                          ;
+; Total pins                      ; 45                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 0                                           ;
 ; Total DSP Blocks                ; 0                                           ;
@@ -158,15 +158,15 @@ refer to the applicable agreement for further details.
 +----------------------------+-------------+
 ; Processors                 ; Number      ;
 +----------------------------+-------------+
-; Number detected on machine ; 8           ;
-; Maximum allowed            ; 4           ;
+; Number detected on machine ; 20          ;
+; Maximum allowed            ; 14          ;
 ;                            ;             ;
 ; Average used               ; 1.00        ;
-; Maximum used               ; 4           ;
+; Maximum used               ; 14          ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processors 2-4         ;   0.0%      ;
+;     Processors 2-14        ;   0.0%      ;
 +----------------------------+-------------+
 
 
@@ -179,31 +179,31 @@ refer to the applicable agreement for further details.
 +----------------------------------+-----------------+------------------------------+-----------------------------------------------------+---------+
 
 
-+-------------------------------------------------------------+
-; Analysis & Synthesis Resource Usage Summary                 ;
-+---------------------------------------------+---------------+
-; Resource                                    ; Usage         ;
-+---------------------------------------------+---------------+
-; Estimate of Logic utilization (ALMs needed) ; 10            ;
-;                                             ;               ;
-; Combinational ALUT usage for logic          ; 13            ;
-;     -- 7 input functions                    ; 0             ;
-;     -- 6 input functions                    ; 4             ;
-;     -- 5 input functions                    ; 3             ;
-;     -- 4 input functions                    ; 4             ;
-;     -- <=3 input functions                  ; 2             ;
-;                                             ;               ;
-; Dedicated logic registers                   ; 18            ;
-;                                             ;               ;
-; I/O pins                                    ; 29            ;
-;                                             ;               ;
-; Total DSP Blocks                            ; 0             ;
-;                                             ;               ;
-; Maximum fan-out node                        ; internalwrite ;
-; Maximum fan-out                             ; 18            ;
-; Total fan-out                               ; 169           ;
-; Average fan-out                             ; 1.61          ;
-+---------------------------------------------+---------------+
++---------------------------------------------------------+
+; Analysis & Synthesis Resource Usage Summary             ;
++---------------------------------------------+-----------+
+; Resource                                    ; Usage     ;
++---------------------------------------------+-----------+
+; Estimate of Logic utilization (ALMs needed) ; 21        ;
+;                                             ;           ;
+; Combinational ALUT usage for logic          ; 21        ;
+;     -- 7 input functions                    ; 1         ;
+;     -- 6 input functions                    ; 2         ;
+;     -- 5 input functions                    ; 3         ;
+;     -- 4 input functions                    ; 10        ;
+;     -- <=3 input functions                  ; 5         ;
+;                                             ;           ;
+; Dedicated logic registers                   ; 39        ;
+;                                             ;           ;
+; I/O pins                                    ; 45        ;
+;                                             ;           ;
+; Total DSP Blocks                            ; 0         ;
+;                                             ;           ;
+; Maximum fan-out node                        ; clk~input ;
+; Maximum fan-out                             ; 39        ;
+; Total fan-out                               ; 296       ;
+; Average fan-out                             ; 1.78      ;
++---------------------------------------------+-----------+
 
 
 +----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
@@ -211,9 +211,26 @@ refer to the applicable agreement for further details.
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 ; Compilation Hierarchy Node ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name ; Entity Name ; Library Name ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
-; |driver                    ; 13 (13)             ; 18 (18)                   ; 0                 ; 0          ; 29   ; 0            ; |driver             ; driver      ; work         ;
+; |driver                    ; 21 (21)             ; 39 (39)                   ; 0                 ; 0          ; 45   ; 0            ; |driver             ; driver      ; work         ;
 +----------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+---------------------+-------------+--------------+
 Note: For table entries with two numbers listed, the numbers in parentheses indicate the number of resources of the given type used by the specific entity alone. The numbers listed outside of parentheses indicate the total resources of the given type used by the specific entity and all of its sub-entities in the hierarchy.
+
+
+Encoding Type:  One-Hot
++-----------------------------------------------------------------------------------------------------------------------------------------------+
+; State Machine - |driver|readstate                                                                                                             ;
++---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+; Name          ; readstate.111 ; readstate.110 ; readstate.101 ; readstate.100 ; readstate.011 ; readstate.010 ; readstate.001 ; readstate.000 ;
++---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+
+; readstate.000 ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ;
+; readstate.001 ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ; 1             ;
+; readstate.010 ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ; 0             ; 1             ;
+; readstate.011 ; 0             ; 0             ; 0             ; 0             ; 1             ; 0             ; 0             ; 1             ;
+; readstate.100 ; 0             ; 0             ; 0             ; 1             ; 0             ; 0             ; 0             ; 1             ;
+; readstate.101 ; 0             ; 0             ; 1             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; readstate.110 ; 0             ; 1             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
+; readstate.111 ; 1             ; 0             ; 0             ; 0             ; 0             ; 0             ; 0             ; 1             ;
++---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+---------------+
 
 
 +---------------------------------------------------------------------------------+
@@ -221,11 +238,14 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------+----------------------------------------+
 ; Register name                          ; Reason for Removal                     ;
 +----------------------------------------+----------------------------------------+
-; DBout[0..7]                            ; Stuck at GND due to stuck port data_in ;
-; read~reg0                              ; Stuck at VCC due to stuck port data_in ;
-; DBout[9,11,13..15]                     ; Stuck at GND due to stuck port data_in ;
-; ADCread[3]                             ; Stuck at GND due to stuck port data_in ;
-; Total Number of Removed Registers = 15 ;                                        ;
+; DBout[0..7,9,11,13..15]                ; Stuck at GND due to stuck port data_in ;
+; convst_B~reg0                          ; Merged with convst_A~reg0              ;
+; convst_C~reg0                          ; Merged with convst_A~reg0              ;
+; convst_D~reg0                          ; Merged with convst_A~reg0              ;
+; readstate~3                            ; Lost fanout                            ;
+; readstate~4                            ; Lost fanout                            ;
+; readstate~5                            ; Lost fanout                            ;
+; Total Number of Removed Registers = 19 ;                                        ;
 +----------------------------------------+----------------------------------------+
 
 
@@ -234,12 +254,12 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 18    ;
-; Number of registers using Synchronous Clear  ; 0     ;
-; Number of registers using Synchronous Load   ; 0     ;
+; Total registers                              ; 39    ;
+; Number of registers using Synchronous Clear  ; 3     ;
+; Number of registers using Synchronous Load   ; 1     ;
 ; Number of registers using Asynchronous Clear ; 0     ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 3     ;
+; Number of registers using Clock Enable       ; 26    ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -250,22 +270,9 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; Inverted Register                      ; Fan out ;
 +----------------------------------------+---------+
 ; internalwrite                          ; 18      ;
-; ADCread[2]                             ; 6       ;
-; ADCread[0]                             ; 6       ;
 ; writecount[2]                          ; 6       ;
-; readcycle                              ; 4       ;
-; Total number of inverted registers = 5 ;         ;
+; Total number of inverted registers = 2 ;         ;
 +----------------------------------------+---------+
-
-
-+------------------------------------------------------------------------------------------------------------------------------------------+
-; Multiplexer Restructuring Statistics (Restructuring Performed)                                                                           ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
-; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |driver|ADCread[3]         ;
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |driver|ADCread[2]         ;
-+--------------------+-----------+---------------+----------------------+------------------------+------------+----------------------------+
 
 
 +-----------------------------------------------------+
@@ -273,22 +280,27 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 18                          ;
-;     ENA               ; 3                           ;
-;     plain             ; 15                          ;
+; arriav_ff             ; 39                          ;
+;     ENA               ; 26                          ;
+;     SCLR              ; 3                           ;
+;     SLD               ; 1                           ;
+;     plain             ; 9                           ;
 ; arriav_io_obuf        ; 16                          ;
-; arriav_lcell_comb     ; 16                          ;
-;     normal            ; 16                          ;
+; arriav_lcell_comb     ; 24                          ;
+;     extend            ; 1                           ;
+;         7 data inputs ; 1                           ;
+;     normal            ; 23                          ;
 ;         0 data inputs ; 2                           ;
 ;         1 data inputs ; 1                           ;
+;         2 data inputs ; 3                           ;
 ;         3 data inputs ; 2                           ;
-;         4 data inputs ; 4                           ;
+;         4 data inputs ; 10                          ;
 ;         5 data inputs ; 3                           ;
-;         6 data inputs ; 4                           ;
-; boundary_port         ; 29                          ;
+;         6 data inputs ; 2                           ;
+; boundary_port         ; 45                          ;
 ;                       ;                             ;
-; Max LUT depth         ; 1.00                        ;
-; Average LUT depth     ; 0.50                        ;
+; Max LUT depth         ; 2.00                        ;
+; Average LUT depth     ; 0.51                        ;
 +-----------------------+-----------------------------+
 
 
@@ -307,42 +319,43 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Sun Mar 31 13:08:53 2024
+    Info: Processing started: Tue Apr 02 04:00:41 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off ADCdriver -c driver
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
-Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
+Info (20030): Parallel compilation is enabled and will use 14 of the 14 processors detected
 Info (12021): Found 1 design units, including 1 entities, in source file driver.sv
-    Info (12023): Found entity 1: driver File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 26
+    Info (12023): Found entity 1: driver File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 35
 Info (12021): Found 1 design units, including 1 entities, in source file driver_tb.sv
     Info (12023): Found entity 1: driver_tb File: C:/Sound-Localization-Firmware/ADC driver/driver_tb.sv Line: 1
 Info (12127): Elaborating entity "driver" for the top level hierarchy
-Warning (10036): Verilog HDL or VHDL warning at driver.sv(47): object "toMemory" assigned a value but never read File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 47
-Warning (10230): Verilog HDL assignment warning at driver.sv(52): truncated value with size 3 to match size of target (1) File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 52
-Warning (10230): Verilog HDL assignment warning at driver.sv(69): truncated value with size 32 to match size of target (3) File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 69
-Warning (10230): Verilog HDL assignment warning at driver.sv(102): truncated value with size 3 to match size of target (1) File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 102
-Warning (10034): Output port "rst" at driver.sv(36) has no driver File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 36
-Warning (10034): Output port "STBY" at driver.sv(37) has no driver File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 37
+Warning (10036): Verilog HDL or VHDL warning at driver.sv(61): object "isReading" assigned a value but never read File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 61
+Warning (10036): Verilog HDL or VHDL warning at driver.sv(62): object "readcycle" assigned a value but never read File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 62
+Warning (10230): Verilog HDL assignment warning at driver.sv(62): truncated value with size 3 to match size of target (1) File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 62
+Warning (10230): Verilog HDL assignment warning at driver.sv(81): truncated value with size 32 to match size of target (3) File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 81
+Info (10264): Verilog HDL Case Statement information at driver.sv(175): all case item expressions in this case statement are onehot File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 175
+Warning (10034): Output port "rst" at driver.sv(45) has no driver File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 45
+Warning (10034): Output port "STBY" at driver.sv(46) has no driver File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 46
 Warning (13024): Output pins are stuck at VCC or GND
-    Warning (13410): Pin "read" is stuck at VCC File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 32
-    Warning (13410): Pin "CS" is stuck at GND File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 33
-    Warning (13410): Pin "HW" is stuck at VCC File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 34
-    Warning (13410): Pin "PAR" is stuck at GND File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 35
-    Warning (13410): Pin "rst" is stuck at GND File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 36
-    Warning (13410): Pin "STBY" is stuck at GND File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 37
+    Warning (13410): Pin "CS" is stuck at GND File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 42
+    Warning (13410): Pin "HW" is stuck at VCC File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 43
+    Warning (13410): Pin "PAR" is stuck at GND File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 44
+    Warning (13410): Pin "rst" is stuck at GND File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 45
+    Warning (13410): Pin "STBY" is stuck at GND File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 46
 Info (286030): Timing-Driven Synthesis is running
+Info (17049): 3 registers lost all their fanouts during netlist optimizations.
 Info (144001): Generated suppressed messages file C:/Sound-Localization-Firmware/ADC driver/output_files/driver.map.smsg
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 0 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 49 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 87 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 2 input pins
-    Info (21059): Implemented 11 output pins
+    Info (21059): Implemented 27 output pins
     Info (21060): Implemented 16 bidirectional pins
-    Info (21061): Implemented 20 logic cells
-Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 14 warnings
-    Info: Peak virtual memory: 4825 megabytes
-    Info: Processing ended: Sun Mar 31 13:09:06 2024
-    Info: Elapsed time: 00:00:13
-    Info: Total CPU time (on all processors): 00:00:08
+    Info (21061): Implemented 42 logic cells
+Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 13 warnings
+    Info: Peak virtual memory: 4894 megabytes
+    Info: Processing ended: Tue Apr 02 04:00:48 2024
+    Info: Elapsed time: 00:00:07
+    Info: Total CPU time (on all processors): 00:00:04
 
 
 +------------------------------------------+

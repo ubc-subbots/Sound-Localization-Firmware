@@ -20,7 +20,75 @@
 					"strict" : false
 				},
 				{
+					"name" : "read",
+					"strict" : false
+				},
+				{
 					"name" : "write",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[0]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[1]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[2]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[3]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[4]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[5]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[6]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[7]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[8]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[9]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[10]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[11]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[12]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[13]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[14]",
+					"strict" : false
+				},
+				{
+					"name" : "toMem[15]",
 					"strict" : false
 				},
 				{
