@@ -1,0 +1,11 @@
+
+State Machine - |driver|readstate
+Name readstate.111 readstate.110 readstate.101 readstate.100 readstate.011 readstate.010 readstate.001 readstate.000 
+readstate.000 0 0 0 0 0 0 0 0 
+readstate.001 0 0 0 0 0 0 1 1 
+readstate.010 0 0 0 0 0 1 0 1 
+readstate.011 0 0 0 0 1 0 0 1 
+readstate.100 0 0 0 1 0 0 0 1 
+readstate.101 0 0 1 0 0 0 0 1 
+readstate.110 0 1 0 0 0 0 0 1 
+readstate.111 1 0 0 0 0 0 0 1 

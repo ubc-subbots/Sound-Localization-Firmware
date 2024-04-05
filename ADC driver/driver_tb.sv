@@ -12,6 +12,7 @@ module driver_tb();
 	wire STBY;
 	wire write;
 	wire [15:0] DB;
+	wire [15:0] toMem;
 
 	reg Busy;
 	reg clk;
@@ -29,6 +30,7 @@ module driver_tb();
 	.rst(rst),
 	.STBY(STBY),
 	.write(write),
+	.toMem(toMem),
 	.Busy(Busy),
 	.DB(DB),
 	.clk(clk)

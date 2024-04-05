@@ -15,13 +15,22 @@
 /// rst: reset
 /// STBY: not relevant for this implementation
 /// write: notifies the ADC to prepare for write operation
+///
+/// toMem[15:0] : the data to be sent to FPGA's memory for processing later
 /// 
 /// Busy: default low, high when conversion is taking place, low again when conversion is finished
 /// clk: externally driven clk
 ///
 /// DB[15:0] : the input/output of the driver for data
 
-
+`define Shold 3'b000
+`define Sinit 3'b001
+`define Sbusy 3'b010 
+`define SRDwait 3'b011
+`define SreadDB 3'b100
+`define Ssafe 3'b101
+`define Scapture 3'b110
+`define Smem 3'b111
 
 module driver(
 	output reg convst_A,
@@ -37,6 +46,8 @@ module driver(
 	output STBY,
 	output reg write,
 	
+	output reg [15:0] toMem,
+	
 	input Busy,
 	inout [15:0] DB,
 	input clk
@@ -44,7 +55,6 @@ module driver(
 
 	reg internalwrite = 1'b1; 
 	reg [15:0] DBout;
-	reg [15:0] toMemory;
 	reg finishwrite = 1'b0;
 	
 	reg convstsent = 1'b0;
@@ -53,7 +63,9 @@ module driver(
 	
 	reg [2:0] writecount = 3'b100;
 	
-	reg [3:0] ADCread = 3'b101;
+	reg [3:0] ADCread = 3'b000;
+	
+	reg [2:0] readstate; 
 	
 	assign DB = (!write) ? DBout : 16'bz;
 	assign write = internalwrite;
@@ -87,7 +99,7 @@ module driver(
 	
 	
 	
-	always_ff@(posedge clk) begin
+	/*always_ff@(posedge clk) begin
 		read <= 1'b1;
 	
 		if(convstsent == 1'b1 && Busy == 1'b0) begin
@@ -123,14 +135,91 @@ module driver(
 			convst_C = 1'b0;
 			convst_D = 1'b0;
 		end
+	end*/
 	
-
-	
-
-	
+	always_ff@(posedge clk) begin
+		if(finishwrite == 1'b0) begin
+			readstate <= `Shold;
+		end else begin
+			case(readstate) 
+				`Shold: 
+					if(finishwrite)
+						readstate <= `Sinit;
+					else
+						readstate <= `Shold;
+				`Sinit: 
+					if(convstsent)  
+						readstate <= `Sbusy;
+					else
+						readstate <= `Sinit;
+				`Sbusy: 
+					if(Busy == 1'b0) 
+						readstate <= `SRDwait;
+					else 
+						readstate <= `Sbusy; 
+				`SRDwait:
+					if(ADCread == 3'b101)
+						readstate <= `Sinit;
+					else
+						readstate <= `SreadDB; 
+				`SreadDB:
+					readstate <= `Ssafe;
+				`Ssafe: 
+					readstate <= `Scapture; 
+				`Scapture: 
+					readstate <= `Smem;
+				`Smem:
+					readstate <= `SRDwait;
+			endcase
+			
+			case(readstate) 
+				`Shold:
+					begin
+						read <= 1'b1;
+						convst_A <= 1'b0;
+						convst_B <= 1'b0;
+						convst_C <= 1'b0;
+						convst_D <= 1'b0; 
+						convstsent <= 1'b0; 
+					end
+				`Sinit:
+					begin 
+						convst_A <= 1'b1;
+						convst_B <= 1'b1;
+						convst_C <= 1'b1;
+						convst_D <= 1'b1; 
+						convstsent <= 1'b1; 
+						ADCread <= 3'b000;
+					end
+				`Sbusy:
+					begin
+						convstsent <= 1'b0;
+					end	
+				`SRDwait:
+					begin
+						convst_A <= 1'b0;
+						convst_B <= 1'b0;
+						convst_C <= 1'b0;
+						convst_D <= 1'b0; 
+					end
+				`SreadDB:
+					begin
+						read <= 1'b0;
+					end
+				`Scapture: 
+					begin
+						toMem <= DB;
+					end
+				`Smem:
+					begin
+						read <= 1'b1;
+						ADCread <= ADCread + 1'b1;
+					end
+			endcase
+		
+		
+		end
 	end
-	
-
 
 
 
