@@ -53,13 +53,13 @@ module driver(
 	input clk
 );
 
+
 	reg internalwrite = 1'b1; 
 	reg [15:0] DBout;
 	reg finishwrite = 1'b0;
 	
 	reg convstsent = 1'b0;
 	reg isReading = 1'b0;
-	reg readcycle = 3'b111;
 	
 	reg [2:0] writecount = 3'b100;
 	
@@ -96,46 +96,7 @@ module driver(
 		
 	end
 
-	
-	
-	
-	/*always_ff@(posedge clk) begin
-		read <= 1'b1;
-	
-		if(convstsent == 1'b1 && Busy == 1'b0) begin
-			isReading = 1'b1;
-			if(readcycle == 3'b111) begin 
-				read <= 1'b0;
-				readcycle <= readcycle - 1'b1; 
-			end else if (readcycle > 3'b000) begin
-				toMemory <= DB; 
-				readcycle <= readcycle - 1'b1; 
-			end else begin
-				readcycle <= 3'b111;
-				ADCread <= ADCread - 1'b1;
-			end
-		end
-		
-		if(ADCread == 3'b000) begin
-			isReading = 1'b0;
-			convstsent = 1'b0;
-			ADCread <= 3'b101;
-		end
-	
-		
-		if(convstsent == 1'b0 && isReading == 1'b0) begin //Not reading and have 
-			convst_A = 1'b1;
-			convst_B = 1'b1;
-			convst_C = 1'b1;
-			convst_D = 1'b1; 
-			convstsent = 1'b1; 
-		end else begin
-			convst_A = 1'b0;
-			convst_B = 1'b0;
-			convst_C = 1'b0;
-			convst_D = 1'b0;
-		end
-	end*/
+
 	
 	always_ff@(posedge clk) begin
 		if(finishwrite == 1'b0) begin
