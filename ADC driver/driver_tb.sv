@@ -16,7 +16,7 @@ module driver_tb();
 
 	reg Busy;
 	reg clk;
-	reg DBin;
+	reg [15:0] DBin;
 
 	driver DUT(
 	.convst_A(convst_A),
@@ -41,10 +41,44 @@ module driver_tb();
 	
 	initial begin
 		clk = 1'b0;
+		Busy = 1'b0;
 		forever begin 
 			clk = ~clk;
 			#5;
 		end
+	end
+	
+	initial begin 
+		#70;
+		Busy = 1'b1;
+		#20;
+		Busy = 1'b0;
+		#20;
+		DBin = 16'b1010101010101000; //Simulated A0
+		#30;
+		DBin = 16'b0;
+		#20;
+		DBin = 16'b1110001110001100; //Simulated A1
+		#30;
+		DBin = 16'b0;
+		#20;
+		DBin = 16'b1111111111111111; //Simulated B0
+		#30;
+		DBin = 16'b0;
+		#20;
+		DBin = 16'b1111111110001100; //Simulated B1
+		#30;
+		DBin = 16'b0;
+		#20;
+		DBin = 16'b1111111110000000; //Simulated C0
+		
+		
+		#50;
+		Busy = 1'b1; //Second read cycle
+		#20;
+		Busy = 1'b0;
+		DBin = 16'b1111111111101000;
+	
 	end
 	
 
