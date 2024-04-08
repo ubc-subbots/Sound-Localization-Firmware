@@ -49,7 +49,7 @@ module ADCmemory #(parameter DEPTH = 16384, DATA_WIDTH = 16) (
 			  count <= 0;
 		 end
 		 else begin
-			  if (write & !full) begin
+			  if (write & !full) begin  
 					storage[write_ptr] <= data_in;
 					write_ptr <= write_ptr + 1;
 					count <= count + 1;

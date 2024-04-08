@@ -23,158 +23,170 @@
 ///
 /// DB[15:0] : the input/output of the driver for data
 
-`define Shold 3'b000
-`define Sinit 3'b001
-`define Sbusy 3'b010 
-`define SRDwait 3'b011
-`define SreadDB 3'b100
-`define Ssafe 3'b101
-`define Scapture 3'b110
-`define Smem 3'b111
 
 module driver(
-	output reg convst_A,
-	output reg convst_B,
-	output reg convst_C,
-	output reg convst_D,
+	output logic convst_A,
+	output logic convst_B,
+	output logic convst_C,
+	output logic convst_D,
 	
-	output reg read, 
-	output reg CS,
-	output reg HW,
-	output reg PAR,
-	output rst,
-	output STBY,
-	output reg write,
+	output logic read, 
+	output logic CS,
+	output logic HW,
+	output logic PAR,
+	output logic ADCrst,
+	output logic STBY,
+	output logic write,
 	
-	output reg [15:0] toMem,
+	output logic [15:0] toMem,
 	
+	input rst,
 	input Busy,
 	inout [15:0] DB,
 	input clk
 );
 
+	typedef enum {
+		HOLD,
+		INIT,
+		BUSY,
+		RDWAIT,
+		READDB,
+		SAFE,
+		CAPTURE,
+		MEM
+	} state_t;
 
-	reg internalwrite = 1'b1; 
-	reg [15:0] DBout;
-	reg finishwrite = 1'b0;
+
+	logic [15:0] DBout;
+	logic finishwrite;
 	
-	reg convstsent = 1'b0;
-	reg isReading = 1'b0;
+	logic convstsent;
+	logic isReading;
 	
-	reg [2:0] writecount = 3'b100;
+	logic [15:0] memreg;
 	
-	reg [3:0] ADCread = 3'b000;
+	logic [2:0] writecount;
 	
-	reg [2:0] readstate; 
+	logic [3:0] ADCread;
+		
+	state_t state_ff;
 	
 	assign DB = (!write) ? DBout : 16'bz;
-	assign write = internalwrite;
 	
 	assign CS = 1'b0;
 	assign HW = 1'b1;
 	assign PAR = 1'b0;
-		
-	always_ff@(posedge clk) begin //Initial write procedure to set the config regs, runs only once
-		
-		if(finishwrite == 1'b0) begin
-			if(writecount > 3'b0) begin
-				writecount <= writecount - 1;
-				internalwrite <= ~internalwrite;
+	
+	
+	always_ff@(posedge clk)begin 
+		if(!rst) begin
+			write               <= 1'b1;
+			finishwrite         <= 1'b0;
+			isReading           <= 1'b0;
+			writecount          <= 3'b100;
+		end else begin 
+			if(finishwrite == 1'b0) begin
+				if(writecount > 3'b0) begin
+					writecount    <= writecount - 1;
+					write         <= ~write;
+				end else begin
+					finishwrite   <= 1'b1;
+
+				end
+				
+				if(writecount > 3'b010)begin
+					DBout         <= 16'b1010100000000;  //First sets of config
+				end
+				else begin 
+					DBout         <= 16'b0;   //Second set of config 
+				end
+
 			end
 			
-			if(writecount > 3'b010)begin
-				DBout <= 16'b1010100000000;  //First sets of config
-			end
-			else begin 
-				DBout <= 16'b0;   //Second set of config 
-			end
-			
-			if(writecount == 3'b0) begin
-				finishwrite <= 1'b1;
-			end
 		end
-		
+	
+	
+	
 	end
+		
 
 
 	
 	always_ff@(posedge clk) begin
-		if(finishwrite == 1'b0) begin
-			readstate <= `Shold;
+		if(!rst) begin
+				state_ff         <= HOLD; 
+				ADCread          <= 3'b000;
+			   convstsent       <= 1'b0;
+				read             <= 1'b1;
+				
 		end else begin
-			case(readstate) 
-				`Shold: 
+			case(state_ff) 
+				//HOLD: The state before the driver finish writing 
+				HOLD: 
 					if(finishwrite)
-						readstate <= `Sinit;
+						state_ff   <= INIT;
 					else
-						readstate <= `Shold;
-				`Sinit: 
+						state_ff   <= HOLD;
+				//INIT: The conversion signal is sent in this state
+				INIT: 
 					if(convstsent)  
-						readstate <= `Sbusy;
+						state_ff   <= BUSY;
 					else
-						readstate <= `Sinit;
-				`Sbusy: 
-					if(Busy == 1'b0) 
-						readstate <= `SRDwait;
+						state_ff   <= INIT;
+				//BUSY: The state that waits for busy to go low and then sets read low
+				BUSY: 
+					if(Busy == 1'b0 && ADCread != 3'b101) 
+						state_ff   <= MEM;
+					else if(ADCread == 3'b101)
+						state_ff   <= INIT;
 					else 
-						readstate <= `Sbusy; 
-				`SRDwait:
-					if(ADCread == 3'b101)
-						readstate <= `Sinit;
-					else
-						readstate <= `SreadDB; 
-				`SreadDB:
-					readstate <= `Ssafe;
-				`Ssafe: 
-					readstate <= `Scapture; 
-				`Scapture: 
-					readstate <= `Smem;
-				`Smem:
-					readstate <= `SRDwait;
+						state_ff   <= BUSY; 
+				//MEM: The state where the ADC reading is sent to memory
+				MEM:
+					state_ff      <= BUSY;
 			endcase
 			
-			case(readstate) 
-				`Shold:
+			case(state_ff) 
+				HOLD:
 					begin
-						read <= 1'b1;
-						convst_A <= 1'b0;
-						convst_B <= 1'b0;
-						convst_C <= 1'b0;
-						convst_D <= 1'b0; 
+						read       <= 1'b1;
+						convst_A   <= 1'b0;
+						convst_B   <= 1'b0;
+						convst_C   <= 1'b0;
+						convst_D   <= 1'b0; 
 						convstsent <= 1'b0; 
 					end
-				`Sinit:
+				INIT:
 					begin 
-						convst_A <= 1'b1;
-						convst_B <= 1'b1;
-						convst_C <= 1'b1;
-						convst_D <= 1'b1; 
+						convst_A   <= 1'b1; 
+						convst_B   <= 1'b1;
+						convst_C   <= 1'b1;
+						convst_D   <= 1'b1; 
 						convstsent <= 1'b1; 
-						ADCread <= 3'b000;
+						ADCread    <= 3'b000;
+						read       <= 1'b1;
 					end
-				`Sbusy:
+				BUSY:
 					begin
-						convstsent <= 1'b0;
+						if(Busy == 1'b0 && ADCread != 3'b101) begin
+							read    <= 0;
+							memreg  <= DB;
+						end else begin
+							read    <= 1'b1;
+							memreg  <= DB;
+						end
+						convstsent <= 1'b0; 
+						convst_A   <= 1'b0; 
+						convst_B   <= 1'b0; 
+						convst_C   <= 1'b0;
+						convst_D   <= 1'b0; 
 					end	
-				`SRDwait:
+				MEM:
 					begin
-						convst_A <= 1'b0;
-						convst_B <= 1'b0;
-						convst_C <= 1'b0;
-						convst_D <= 1'b0; 
-					end
-				`SreadDB:
-					begin
-						read <= 1'b0;
-					end
-				`Scapture: 
-					begin
-						toMem <= DB;
-					end
-				`Smem:
-					begin
-						read <= 1'b1;
-						ADCread <= ADCread + 1'b1;
+						toMem      <= memreg;
+						read       <= 1'b1;
+						ADCread    <= ADCread + 1'b1;
 					end
 			endcase
 		

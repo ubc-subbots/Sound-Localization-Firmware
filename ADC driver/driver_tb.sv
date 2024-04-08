@@ -8,12 +8,13 @@ module driver_tb();
 	wire CS;
 	wire HW;
 	wire PAR;
-	wire rst;
+	wire ADCrst;
 	wire STBY;
 	wire write;
 	wire [15:0] DB;
 	wire [15:0] toMem;
 
+	reg rst;
 	reg Busy;
 	reg clk;
 	reg [15:0] DBin;
@@ -27,10 +28,11 @@ module driver_tb();
 	.CS(CS),
 	.HW(HW),
 	.PAR(PAR),
-	.rst(rst),
+	.ADCrst(ADCrst),
 	.STBY(STBY),
 	.write(write),
 	.toMem(toMem),
+	.rst(rst),
 	.Busy(Busy),
 	.DB(DB),
 	.clk(clk)
@@ -42,34 +44,39 @@ module driver_tb();
 	initial begin
 		clk = 1'b0;
 		Busy = 1'b0;
+
 		forever begin 
 			clk = ~clk;
 			#5;
 		end
 	end
 	
+
+	
 	initial begin 
-		#70;
+		rst = 1'b0;
+		#10
+		rst = 1'b1;
+		#60;
 		Busy = 1'b1;
 		#20;
 		Busy = 1'b0;
-		#20;
 		DBin = 16'b1010101010101000; //Simulated A0
-		#30;
+		#10;
 		DBin = 16'b0;
-		#20;
+		#10
 		DBin = 16'b1110001110001100; //Simulated A1
-		#30;
+		#10;
 		DBin = 16'b0;
-		#20;
+		#10;
 		DBin = 16'b1111111111111111; //Simulated B0
-		#30;
+		#10;
 		DBin = 16'b0;
-		#20;
+		#10;
 		DBin = 16'b1111111110001100; //Simulated B1
-		#30;
+		#10;
 		DBin = 16'b0;
-		#20;
+		#10;
 		DBin = 16'b1111111110000000; //Simulated C0
 		
 		
