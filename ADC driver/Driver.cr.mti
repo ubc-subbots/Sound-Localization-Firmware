@@ -1,8 +1,15 @@
-{C:/Sound-Localization-Firmware/ADC driver/driver.sv} {1 {vlog -work sim -sv -stats=none {C:/Sound-Localization-Firmware/ADC driver/driver.sv}
+{C:/Sound-Localization-Firmware/ADC driver/driver.sv} {1 {vlog -work sim -sv -stats=none {C:\Sound-Localization-Firmware\ADC driver\driver.sv}
 Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
 -- Compiling module driver
 
 Top level modules:
 	driver
+
+} {} {}} {C:/Sound-Localization-Firmware/ADC driver/driver_tb.sv} {1 {vlog -work sim -sv -stats=none {C:/Sound-Localization-Firmware/ADC driver/driver_tb.sv}
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5b Compiler 2016.10 Oct  5 2016
+-- Compiling module driver_tb
+
+Top level modules:
+	driver_tb
 
 } {} {}}

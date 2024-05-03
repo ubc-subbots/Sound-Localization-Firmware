@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<preferences>
+ <debug showDebugMenu="0" />
+ <systemtable filter="All Interfaces">
+  <columns>
+   <connections preferredWidth="79" />
+   <irq preferredWidth="34" />
+  </columns>
+ </systemtable>
+ <library
+   expandedCategories="Library/Basic Functions,Library/Memory Interfaces and Controllers/SDRAM,Library/Processors and Peripherals,Library/Memory Interfaces and Controllers,Library/Basic Functions/On Chip Memory,Library,Project,Library/Processors and Peripherals/Embedded Processors,Library/Low Power" />
+ <window width="1942" height="1030" x="-11" y="-11" />
+ <generation simulation="VERILOG" path="_PROJECT_NAME_" />
+</preferences>

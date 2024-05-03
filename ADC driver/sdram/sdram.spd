@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file
+   path="simulation/submodules/altera_up_avalon_reset_from_locked_signal.v"
+   type="VERILOG"
+   library="reset_from_locked" />
+ <file
+   path="simulation/submodules/sdram_clock_0_sys_pll.vo"
+   type="VERILOG"
+   library="sys_pll" />
+ <file
+   path="simulation/submodules/altera_reset_controller.v"
+   type="VERILOG"
+   library="rst_controller" />
+ <file
+   path="simulation/submodules/altera_reset_synchronizer.v"
+   type="VERILOG"
+   library="rst_controller" />
+ <file
+   path="simulation/submodules/altera_reset_controller.sdc"
+   type="SDC"
+   library="rst_controller" />
+ <file
+   path="simulation/submodules/sdram_clock_0.v"
+   type="VERILOG"
+   library="clock_0" />
+ <file
+   path="simulation/submodules/sdram_SDRAM.v"
+   type="VERILOG"
+   library="SDRAM" />
+ <file
+   path="simulation/submodules/sdram_SDRAM_test_component.v"
+   type="VERILOG"
+   library="SDRAM" />
+ <file path="simulation/sdram.v" type="VERILOG" />
+ <topLevel name="sdram" />
+ <deviceFamily name="cyclonev" />
+</simPackage>

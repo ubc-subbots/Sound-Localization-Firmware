@@ -1,0 +1,22 @@
+module ADCmemory #(parameter DEPTH = 1024, DATA_WIDTH = 16) (
+	input clk,
+	input rst, 
+	input write,
+	input read, 
+	
+	input [DATA_WIDTH - 1:0] data_in,
+	output reg [DATA_WIDTH - 1:0] data_out,
+	output full,
+	output empty
+);
+
+	reg [$clog2(DEPTH) - 1:0] write_ptr;
+	reg [$clog2(DEPTH) - 1:0] read_ptr;
+
+
+
+
+
+
+
+endmodule

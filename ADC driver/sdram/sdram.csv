@@ -1,0 +1,29 @@
+# system info sdram on 2024.05.02.15:47:17
+system_info:
+name,value
+DEVICE,5CSEMA5F31C6
+DEVICE_FAMILY,Cyclone V
+GENERATION_ID,1714690011
+#
+#
+# Files generated for sdram on 2024.05.02.15:47:17
+files:
+filepath,kind,attributes,module,is_top
+simulation/sdram.v,VERILOG,,sdram,true
+simulation/submodules/sdram_SDRAM.v,VERILOG,,sdram_SDRAM,false
+simulation/submodules/sdram_SDRAM_test_component.v,VERILOG,,sdram_SDRAM,false
+simulation/submodules/sdram_clock_0.v,VERILOG,,sdram_clock_0,false
+simulation/submodules/altera_reset_controller.v,VERILOG,,altera_reset_controller,false
+simulation/submodules/altera_reset_synchronizer.v,VERILOG,,altera_reset_controller,false
+simulation/submodules/altera_reset_controller.sdc,SDC,,altera_reset_controller,false
+simulation/submodules/sdram_clock_0_sys_pll.vo,VERILOG,,sdram_clock_0_sys_pll,false
+simulation/submodules/altera_up_avalon_reset_from_locked_signal.v,VERILOG,,altera_up_avalon_reset_from_locked_signal,false
+#
+# Map from instance-path to kind of module
+instances:
+instancePath,module
+sdram.SDRAM,sdram_SDRAM
+sdram.clock_0,sdram_clock_0
+sdram.clock_0.sys_pll,sdram_clock_0_sys_pll
+sdram.clock_0.reset_from_locked,altera_up_avalon_reset_from_locked_signal
+sdram.rst_controller,altera_reset_controller

@@ -1,0 +1,95 @@
+Info: Starting: Create simulation model
+Info: qsys-generate "C:\Sound-Localization-Firmware\ADC driver\sdram.qsys" --simulation=VERILOG --allow-mixed-language-simulation --output-directory="C:\Sound-Localization-Firmware\ADC driver\sdram\simulation" --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading ADC driver/sdram.qsys
+Progress: Reading input file
+Progress: Adding SDRAM [altera_avalon_new_sdram_controller 18.1]
+Progress: Parameterizing module SDRAM
+Progress: Adding clock_0 [altera_up_avalon_sys_sdram_pll 18.0]
+Progress: Parameterizing module clock_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: sdram.SDRAM: SDRAM Controller will only be supported in Quartus Prime Standard Edition in the future release.
+Info: sdram.clock_0: Refclk Freq: 50.0
+Warning: sdram.SDRAM: SDRAM.s1 must be connected to an Avalon-MM master
+Info: sdram: Generating sdram "sdram" for SIM_VERILOG
+Info: SDRAM: Starting RTL generation for module 'sdram_SDRAM'
+Info: SDRAM:   Generation command is [exec C:/intelfpga_lite/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/18.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller -- C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller/generate_rtl.pl --name=sdram_SDRAM --dir=C:/Users/Hongh/AppData/Local/Temp/alt9845_8017691036422968746.dir/0025_SDRAM_gen/ --quartus_dir=C:/intelfpga_lite/18.1/quartus --verilog --config=C:/Users/Hongh/AppData/Local/Temp/alt9845_8017691036422968746.dir/0025_SDRAM_gen//sdram_SDRAM_component_configuration.pl  --do_build_sim=1    --sim_dir=C:/Users/Hongh/AppData/Local/Temp/alt9845_8017691036422968746.dir/0025_SDRAM_gen/  ]
+Info: SDRAM: Done RTL generation for module 'sdram_SDRAM'
+Info: SDRAM: "sdram" instantiated altera_avalon_new_sdram_controller "SDRAM"
+Info: clock_0: "sdram" instantiated altera_up_avalon_sys_sdram_pll "clock_0"
+Info: rst_controller: "sdram" instantiated altera_reset_controller "rst_controller"
+Info: sys_pll: Generating simgen model
+Info: sys_pll: Info: ******************************************************************* Info: Running Quartus Prime Shell     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition     Info: Copyright (C) 2018  Intel Corporation. All rights reserved.     Info: Your use of Intel Corporation's design tools, logic functions      Info: and other software and tools, and its AMPP partner logic      Info: functions, and any output files from any of the foregoing      Info: (including device programming or simulation files), and any      Info: associated documentation or information are expressly subject      Info: to the terms and conditions of the Intel Program License      Info: Subscription Agreement, the Intel Quartus Prime License Agreement,     Info: the Intel FPGA IP License Agreement, or other applicable license     Info: agreement, including, without limitation, that your use is for     Info: the sole purpose of programming logic devices manufactured by     Info: Intel and sold by Intel or its authorized distributors.  Please     Info: refer to the applicable agreement for further details.     Info: Processing started: Thu May 02 15:46:59 2024 Info: Command: quartus_sh -t run_simgen_cmd.tcl Info: ******************************************************************* Info: Running Quartus Prime Analysis & Synthesis     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition     Info: Copyright (C) 2018  Intel Corporation. All rights reserved.     Info: Your use of Intel Corporation's design tools, logic functions      Info: and other software and tools, and its AMPP partner logic      Info: functions, and any output files from any of the foregoing      Info: (including device programming or simulation files), and any      Info: associated documentation or information are expressly subject      Info: to the terms and conditions of the Intel Program License      Info: Subscription Agreement, the Intel Quartus Prime License Agreement,     Info: the Intel FPGA IP License Agreement, or other applicable license     Info: agreement, including, without limitation, that your use is for     Info: the sole purpose of programming logic devices manufactured by     Info: Intel and sold by Intel or its authorized distributors.  Please     Info: refer to the applicable agreement for further details.     Info: Processing started: Thu May 02 15:47:01 2024 Info: Command: quartus_map sdram_clock_0_sys_pll.qpf --simgen --ini=disable_check_quartus_compatibility_qsys_only=on --simgen_parameter=CBX_HDL_LANGUAGE=VERILOG Info (20034): Auto device selection is not supported for Cyclone V device family. The default device, 5CGXFC7C7F23C8, is set. Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance. Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected Info (12021): Found 1 design units, including 1 entities, in source file sdram_clock_0_sys_pll.v     Info (12023): Found entity 1: sdram_clock_0_sys_pll File: C:/Users/Hongh/AppData/Local/Temp/alt9845_8017691036422968746.dir/0027_sys_pll_gen/sdram_clock_0_sys_pll.v Line: 2 Info (12127): Elaborating entity "sdram_clock_0_sys_pll" for the top level hierarchy Info (12128): Elaborating entity "altera_pll" for hierarchy "altera_pll:altera_pll_i" File: C:/Users/Hongh/AppData/Local/Temp/alt9845_8017691036422968746.dir/0027_sys_pll_gen/sdram_clock_0_sys_pll.v Line: 88 Info (10008): Verilog HDL or VHDL information: EDA Netlist Writer cannot regroup multidimensional array "wire_to_nowhere_64" into its bus Info (12130): Elaborated megafunction instantiation "altera_pll:altera_pll_i" File: C:/Users/Hongh/AppData/Local/Temp/alt9845_8017691036422968746.dir/0027_sys_pll_gen/sdram_clock_0_sys_pll.v Line: 88 Info (12133): Instantiated megafunction "altera_pll:altera_pll_i" with the following parameter: File: C:/Users/Hongh/AppData/Local/Temp/alt9845_8017691036422968746.dir/0027_sys_pll_gen/sdram_clock_0_sys_pll.v Line: 88     Info (12134): Parameter "fractional_vco_multiplier" = "false"     Info (12134): Parameter "reference_clock_frequency" = "50.0 MHz"     Info (12134): Parameter "operation_mode" = "direct"     Info (12134): Parameter "number_of_clocks" = "2"     Info (12134): Parameter "output_clock_frequency0" = "50.000000 MHz"     Info (12134): Parameter "phase_shift0" = "0 ps"     Info (12134): Parameter "duty_cycle0" = "50"     Info (12134): Parameter "output_clock_frequency1" = "50.000000 MHz"     Info (12134): Parameter "phase_shift1" = "-3000 ps"     Info (12134): Parameter "duty_cycle1" = "50"     Info (12134): Parameter "output_clock_frequency2" = "0 MHz"     Info (12134): Parameter "phase_shift2" = "0 ps"     Info (12134): Parameter "duty_cycle2" = "50"     Info (12134): Parameter "output_clock_frequency3" = "0 MHz"     Info (12134): Parameter "phase_shift3" = "0 ps"     Info (12134): Parameter "duty_cycle3" = "50"     Info (12134): Parameter "output_clock_frequency4" = "0 MHz"     Info (12134): Parameter "phase_shift4" = "0 ps"     Info (12134): Parameter "duty_cycle4" = "50"     Info (12134): Parameter "output_clock_frequency5" = "0 MHz"     Info (12134): Parameter "phase_shift5" = "0 ps"     Info (12134): Parameter "duty_cycle5" = "50"     Info (12134): Parameter "output_clock_frequency6" = "0 MHz"     Info (12134): Parameter "phase_shift6" = "0 ps"     Info (12134): Parameter "duty_cycle6" = "50"     Info (12134): Parameter "output_clock_frequency7" = "0 MHz"     Info (12134): Parameter "phase_shift7" = "0 ps"     Info (12134): Parameter "duty_cycle7" = "50"     Info (12134): Parameter "output_clock_frequency8" = "0 MHz"     Info (12134): Parameter "phase_shift8" = "0 ps"     Info (12134): Parameter "duty_cycle8" = "50"     Info (12134): Parameter "output_clock_frequency9" = "0 MHz"     Info (12134): Parameter "phase_shift9" = "0 ps"     Info (12134): Parameter "duty_cycle9" = "50"     Info (12134): Parameter "output_clock_frequency10" = "0 MHz"     Info (12134): Parameter "phase_shift10" = "0 ps"     Info (12134): Parameter "duty_cycle10" = "50"     Info (12134): Parameter "output_clock_frequency11" = "0 MHz"     Info (12134): Parameter "phase_shift11" = "0 ps"     Info (12134): Parameter "duty_cycle11" = "50"     Info (12134): Parameter "output_clock_frequency12" = "0 MHz"     Info (12134): Parameter "phase_shift12" = "0 ps"     Info (12134): Parameter "duty_cycle12" = "50"     Info (12134): Parameter "output_clock_frequency13" = "0 MHz"     Info (12134): Parameter "phase_shift13" = "0 ps"     Info (12134): Parameter "duty_cycle13" = "50"     Info (12134): Parameter "output_clock_frequency14" = "0 MHz"     Info (12134): Parameter "phase_shift14" = "0 ps"     Info (12134): Parameter "duty_cycle14" = "50"     Info (12134): Parameter "output_clock_frequency15" = "0 MHz"     Info (12134): Parameter "phase_shift15" = "0 ps"     Info (12134): Parameter "duty_cycle15" = "50"     Info (12134): Parameter "output_clock_frequency16" = "0 MHz"     Info (12134): Parameter "phase_shift16" = "0 ps"     Info (12134): Parameter "duty_cycle16" = "50"     Info (12134): Parameter "output_clock_frequency17" = "0 MHz"     Info (12134): Parameter "phase_shift17" = "0 ps"     Info (12134): Parameter "duty_cycle17" = "50"     Info (12134): Parameter "pll_type" = "General"     Info (12134): Parameter "pll_subtype" = "General" Info (281010): Generating sgate simulator netlist using Simgen SIMGEN_PROGRESS Start of Model generation -- 0% complete SIMGEN_PROGRESS Phase 1 : Internal Objects created -- 25% complete SIMGEN_PROGRESS Phase 2 : Connections between internal objects made -- 60% complete SIMGEN_PROGRESS Phase 3 : Netlist generated -- 100% complete Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 1 warning     Info: Peak virtual memory: 4779 megabytes     Info: Processing ended: Thu May 02 15:47:15 2024     Info: Elapsed time: 00:00:14     Info: Total CPU time (on all processors): 00:00:02 Info (23030): Evaluation of Tcl script run_simgen_cmd.tcl was successful Info: Quartus Prime Shell was successful. 0 errors, 0 warnings     Info: Peak virtual memory: 4650 megabytes     Info: Processing ended: Thu May 02 15:47:15 2024     Info: Elapsed time: 00:00:16     Info: Total CPU time (on all processors): 00:00:03
+Info: sys_pll: Simgen was successful
+Info: sys_pll: "clock_0" instantiated altera_pll "sys_pll"
+Info: reset_from_locked: "clock_0" instantiated altera_up_avalon_reset_from_locked_signal "reset_from_locked"
+Info: sdram: Done "sdram" with 6 modules, 9 files
+Info: qsys-generate succeeded.
+Info: Finished: Create simulation model
+Info: Starting: Create Modelsim Project.
+Info: sim-script-gen --spd="C:\Sound-Localization-Firmware\ADC driver\sdram\sdram.spd" --output-directory="C:/Sound-Localization-Firmware/ADC driver/sdram/simulation/" --use-relative-paths=true
+Info: Doing: ip-make-simscript --spd=C:\Sound-Localization-Firmware\ADC driver\sdram\sdram.spd --output-directory=C:/Sound-Localization-Firmware/ADC driver/sdram/simulation/ --use-relative-paths=true
+Info: Generating the following file(s) for MODELSIM simulator in C:/Sound-Localization-Firmware/ADC driver/sdram/simulation/ directory:
+Info: 	mentor/msim_setup.tcl
+Info: Generating the following file(s) for VCS simulator in C:/Sound-Localization-Firmware/ADC driver/sdram/simulation/ directory:
+Info: 	synopsys/vcs/vcs_setup.sh
+Info: Generating the following file(s) for VCSMX simulator in C:/Sound-Localization-Firmware/ADC driver/sdram/simulation/ directory:
+Info: 	synopsys/vcsmx/synopsys_sim.setup
+Info: 	synopsys/vcsmx/vcsmx_setup.sh
+Info: Generating the following file(s) for NCSIM simulator in C:/Sound-Localization-Firmware/ADC driver/sdram/simulation/ directory:
+Info: 	cadence/cds.lib
+Info: 	cadence/hdl.var
+Info: 	cadence/ncsim_setup.sh
+Info: 	5 .cds.lib files in cadence/cds_libs/ directory
+Info: Generating the following file(s) for RIVIERA simulator in C:/Sound-Localization-Firmware/ADC driver/sdram/simulation/ directory:
+Info: 	aldec/rivierapro_setup.tcl
+Info: For information on how to simulate your IP, see the explanatory comments in the simulator-specific subdirectories under C:/Sound-Localization-Firmware/ADC driver/sdram/simulation/.
+Info: Regenerate these scripts whenever you make any change to any Quartus-generated IP in your project.
+Info: Finished: Create Modelsim Project.
+Info: Starting: Create block symbol file (.bsf)
+Info: qsys-generate "C:\Sound-Localization-Firmware\ADC driver\sdram.qsys" --block-symbol-file --output-directory="C:\Sound-Localization-Firmware\ADC driver\sdram" --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading ADC driver/sdram.qsys
+Progress: Reading input file
+Progress: Adding SDRAM [altera_avalon_new_sdram_controller 18.1]
+Progress: Parameterizing module SDRAM
+Progress: Adding clock_0 [altera_up_avalon_sys_sdram_pll 18.0]
+Progress: Parameterizing module clock_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: sdram.SDRAM: SDRAM Controller will only be supported in Quartus Prime Standard Edition in the future release.
+Info: sdram.clock_0: Refclk Freq: 50.0
+Warning: sdram.SDRAM: SDRAM.s1 must be connected to an Avalon-MM master
+Info: qsys-generate succeeded.
+Info: Finished: Create block symbol file (.bsf)
+Info: 
+Info: Starting: Create HDL design files for synthesis
+Info: qsys-generate "C:\Sound-Localization-Firmware\ADC driver\sdram.qsys" --synthesis=VERILOG --output-directory="C:\Sound-Localization-Firmware\ADC driver\sdram\synthesis" --family="Cyclone V" --part=5CSEMA5F31C6
+Progress: Loading ADC driver/sdram.qsys
+Progress: Reading input file
+Progress: Adding SDRAM [altera_avalon_new_sdram_controller 18.1]
+Progress: Parameterizing module SDRAM
+Progress: Adding clock_0 [altera_up_avalon_sys_sdram_pll 18.0]
+Progress: Parameterizing module clock_0
+Progress: Building connections
+Progress: Parameterizing connections
+Progress: Validating
+Progress: Done reading input file
+Info: sdram.SDRAM: SDRAM Controller will only be supported in Quartus Prime Standard Edition in the future release.
+Info: sdram.clock_0: Refclk Freq: 50.0
+Warning: sdram.SDRAM: SDRAM.s1 must be connected to an Avalon-MM master
+Info: sdram: Generating sdram "sdram" for QUARTUS_SYNTH
+Info: SDRAM: Starting RTL generation for module 'sdram_SDRAM'
+Info: SDRAM:   Generation command is [exec C:/intelfpga_lite/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga_lite/18.1/quartus/bin64/perl/lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga_lite/18.1/quartus/sopc_builder/bin -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller -- C:/intelfpga_lite/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_new_sdram_controller/generate_rtl.pl --name=sdram_SDRAM --dir=C:/Users/Hongh/AppData/Local/Temp/alt9845_8017691036422968746.dir/0030_SDRAM_gen/ --quartus_dir=C:/intelfpga_lite/18.1/quartus --verilog --config=C:/Users/Hongh/AppData/Local/Temp/alt9845_8017691036422968746.dir/0030_SDRAM_gen//sdram_SDRAM_component_configuration.pl  --do_build_sim=0  ]
+Info: SDRAM: Done RTL generation for module 'sdram_SDRAM'
+Info: SDRAM: "sdram" instantiated altera_avalon_new_sdram_controller "SDRAM"
+Info: clock_0: "sdram" instantiated altera_up_avalon_sys_sdram_pll "clock_0"
+Info: rst_controller: "sdram" instantiated altera_reset_controller "rst_controller"
+Info: sys_pll: "clock_0" instantiated altera_pll "sys_pll"
+Info: reset_from_locked: "clock_0" instantiated altera_up_avalon_reset_from_locked_signal "reset_from_locked"
+Info: sdram: Done "sdram" with 6 modules, 10 files
+Info: qsys-generate succeeded.
+Info: Finished: Create HDL design files for synthesis

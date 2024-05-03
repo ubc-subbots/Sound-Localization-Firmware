@@ -160,6 +160,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "rst",
+					"strict" : false
+				},
+				{
 					"name" : "Busy",
 					"strict" : false
 				}
