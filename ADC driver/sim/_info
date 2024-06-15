@@ -10,25 +10,25 @@ cModel Technology
 dC:/intelFPGA_lite/projects/lpt_3_q1
 vdriver
 Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
-Z1 !s110 1712613397
+Z1 !s110 1715200902
 !i10b 1
 !s100 O8lYinGm2dd3F=_:DNh_51
-I7G15Rfho85LJ6fzQ`bQHZ3
+I8;2<b4B;_6;:>48`foZVj2
 Z2 VDg1SIo80bB@j0V0VzS_@n1
 !s105 driver_sv_unit
 S1
 Z3 dC:/Sound-Localization-Firmware/ADC driver
 w1712613356
-8C:\Sound-Localization-Firmware\ADC driver\driver.sv
-FC:\Sound-Localization-Firmware\ADC driver\driver.sv
+8C:/Sound-Localization-Firmware/ADC driver/driver.sv
+FC:/Sound-Localization-Firmware/ADC driver/driver.sv
 L0 27
 Z4 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z5 !s108 1712613397.000000
-!s107 C:\Sound-Localization-Firmware\ADC driver\driver.sv|
-!s90 -reportprogress|300|-work|sim|-sv|-stats=none|C:\Sound-Localization-Firmware\ADC driver\driver.sv|
+Z5 !s108 1715200902.000000
+!s107 C:/Sound-Localization-Firmware/ADC driver/driver.sv|
+!s90 -reportprogress|300|-work|sim|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/driver.sv|
 !i113 1
 Z6 o-work sim -sv
 Z7 tCvgOpt 0
@@ -56,3 +56,53 @@ R5
 !i113 1
 R6
 R7
+vSPI_slave
+R0
+R1
+!i10b 1
+!s100 7]m3WTo6LA4Ibb^MIV_me3
+IDHVEfcb9NN=kLjQ2[?M3h2
+R2
+!s105 SPI_slave_sv_unit
+S1
+R3
+w1715200203
+8C:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv
+FC:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv|
+!i113 1
+Z8 o-work work -sv
+R7
+n@s@p@i_slave
+vSPI_tb
+R0
+R1
+!i10b 1
+!s100 =lQ63Ni=ZT8`gBJhbmC?;1
+I7DZ71NQDU<NU_YDD=ADB;0
+R2
+!s105 SPI_tb_sv_unit
+S1
+R3
+w1715200884
+8C:/Sound-Localization-Firmware/ADC driver/SPI_tb.sv
+FC:/Sound-Localization-Firmware/ADC driver/SPI_tb.sv
+L0 1
+R4
+r1
+!s85 0
+31
+R5
+!s107 C:/Sound-Localization-Firmware/ADC driver/SPI_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/SPI_tb.sv|
+!i113 1
+R8
+R7
+n@s@p@i_tb

@@ -1,0 +1,23 @@
+module SPI_tb();
+	reg rst;
+   reg sclk;
+	reg Indata_valid; //pulse from top level module to indicate it can start process the data 
+	
+	reg [15:0] unprocessed_MISO; //the 2 byte to serialize before sending
+	
+	wire Outdata_valid; //pulse to rasberry pi indicating it should be ready to recieve data
+	wire processed_MISO;
+	
+	SPI_slave DUT(
+	.rst(rst),
+	.sclk(sclk),
+	.Indata_valid(Indata_valid), 
+	.unprocessed_MISO(unprocessed_MISO),
+	.Outdata_valid(Outdata_valid), 
+	.processed_MISO(processed_MISO)
+	);
+	
+	
+	
+	
+endmodule 

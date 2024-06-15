@@ -1,5 +1,5 @@
 Flow report for driver
-Mon Apr 08 14:57:17 2024
+Tue May 07 16:23:38 2024
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -40,24 +40,24 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Flow Summary                                                                  ;
 +---------------------------------+---------------------------------------------+
-; Flow Status                     ; Successful - Mon Apr 08 14:57:08 2024       ;
+; Flow Status                     ; Successful - Tue May 07 16:23:27 2024       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; driver                                      ;
-; Top-level Entity Name           ; driver                                      ;
+; Top-level Entity Name           ; SPI_slave                                   ;
 ; Family                          ; Cyclone V                                   ;
-; Device                          ; 5CGXFC7C7F23C8                              ;
+; Device                          ; 5CSEMA5F31C6                                ;
 ; Timing Models                   ; Final                                       ;
-; Logic utilization (in ALMs)     ; 20 / 56,480 ( < 1 % )                       ;
-; Total registers                 ; 50                                          ;
-; Total pins                      ; 46 / 268 ( 17 % )                           ;
+; Logic utilization (in ALMs)     ; 12 / 32,070 ( < 1 % )                       ;
+; Total registers                 ; 23                                          ;
+; Total pins                      ; 21 / 457 ( 5 % )                            ;
 ; Total virtual pins              ; 0                                           ;
-; Total block memory bits         ; 0 / 7,024,640 ( 0 % )                       ;
-; Total DSP Blocks                ; 0 / 156 ( 0 % )                             ;
-; Total HSSI RX PCSs              ; 0 / 6 ( 0 % )                               ;
-; Total HSSI PMA RX Deserializers ; 0 / 6 ( 0 % )                               ;
-; Total HSSI TX PCSs              ; 0 / 6 ( 0 % )                               ;
-; Total HSSI PMA TX Serializers   ; 0 / 6 ( 0 % )                               ;
-; Total PLLs                      ; 0 / 13 ( 0 % )                              ;
+; Total block memory bits         ; 0 / 4,065,280 ( 0 % )                       ;
+; Total DSP Blocks                ; 0 / 87 ( 0 % )                              ;
+; Total HSSI RX PCSs              ; 0                                           ;
+; Total HSSI PMA RX Deserializers ; 0                                           ;
+; Total HSSI TX PCSs              ; 0                                           ;
+; Total HSSI PMA TX Serializers   ; 0                                           ;
+; Total PLLs                      ; 0 / 6 ( 0 % )                               ;
 ; Total DLLs                      ; 0 / 4 ( 0 % )                               ;
 +---------------------------------+---------------------------------------------+
 
@@ -67,7 +67,7 @@ refer to the applicable agreement for further details.
 +-------------------+---------------------+
 ; Option            ; Setting             ;
 +-------------------+---------------------+
-; Start date & time ; 04/08/2024 14:56:00 ;
+; Start date & time ; 05/07/2024 16:22:18 ;
 ; Main task         ; Compilation         ;
 ; Revision Name     ; driver              ;
 +-------------------+---------------------+
@@ -78,15 +78,16 @@ refer to the applicable agreement for further details.
 +-------------------------------------+----------------------------------------+---------------+-------------+------------+
 ; Assignment Name                     ; Value                                  ; Default Value ; Entity Name ; Section Id ;
 +-------------------------------------+----------------------------------------+---------------+-------------+------------+
-; COMPILER_SIGNATURE_ID               ; 1097601717432.171261336023288          ; --            ; --          ; --         ;
+; COMPILER_SIGNATURE_ID               ; 1097601717432.171512413813440          ; --            ; --          ; --         ;
 ; MAX_CORE_JUNCTION_TEMP              ; 85                                     ; --            ; --          ; --         ;
 ; MIN_CORE_JUNCTION_TEMP              ; 0                                      ; --            ; --          ; --         ;
-; PARTITION_COLOR                     ; -- (Not supported for targeted family) ; --            ; --          ; Top        ;
-; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family) ; --            ; --          ; Top        ;
-; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family) ; --            ; --          ; Top        ;
+; PARTITION_COLOR                     ; -- (Not supported for targeted family) ; --            ; SPI_slave   ; Top        ;
+; PARTITION_FITTER_PRESERVATION_LEVEL ; -- (Not supported for targeted family) ; --            ; SPI_slave   ; Top        ;
+; PARTITION_NETLIST_TYPE              ; -- (Not supported for targeted family) ; --            ; SPI_slave   ; Top        ;
 ; POWER_BOARD_THERMAL_MODEL           ; None (CONSERVATIVE)                    ; --            ; --          ; --         ;
 ; POWER_PRESET_COOLING_SOLUTION       ; 23 MM HEAT SINK WITH 200 LFPM AIRFLOW  ; --            ; --          ; --         ;
 ; PROJECT_OUTPUT_DIRECTORY            ; output_files                           ; --            ; --          ; --         ;
+; TOP_LEVEL_ENTITY                    ; SPI_slave                              ; driver        ; --          ; --         ;
 +-------------------------------------+----------------------------------------+---------------+-------------+------------+
 
 
@@ -95,11 +96,11 @@ refer to the applicable agreement for further details.
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 ; Module Name          ; Elapsed Time ; Average Processors Used ; Peak Virtual Memory ; Total CPU Time (on all processors) ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
-; Analysis & Synthesis ; 00:00:14     ; 1.0                     ; 4829 MB             ; 00:00:10                           ;
-; Fitter               ; 00:00:43     ; 1.0                     ; 6770 MB             ; 00:00:43                           ;
-; Assembler            ; 00:00:09     ; 1.0                     ; 4833 MB             ; 00:00:04                           ;
-; Timing Analyzer      ; 00:00:08     ; 1.0                     ; 5188 MB             ; 00:00:04                           ;
-; Total                ; 00:01:14     ; --                      ; --                  ; 00:01:01                           ;
+; Analysis & Synthesis ; 00:00:15     ; 1.0                     ; 4828 MB             ; 00:00:11                           ;
+; Fitter               ; 00:00:42     ; 1.0                     ; 6612 MB             ; 00:00:39                           ;
+; Assembler            ; 00:00:08     ; 1.0                     ; 4835 MB             ; 00:00:04                           ;
+; Timing Analyzer      ; 00:00:09     ; 1.1                     ; 5134 MB             ; 00:00:04                           ;
+; Total                ; 00:01:14     ; --                      ; --                  ; 00:00:58                           ;
 +----------------------+--------------+-------------------------+---------------------+------------------------------------+
 
 

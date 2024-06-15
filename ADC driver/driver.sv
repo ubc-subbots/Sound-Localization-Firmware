@@ -68,7 +68,7 @@ module driver(
 	
 	logic [2:0] writecount;
 	
-	logic [3:0] ADCread;
+	logic [3:0] ADCread; //counter of which ADC we are on, should reset to 0 after we hit 5
 		
 	state_t state_ff;
 	

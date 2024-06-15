@@ -8,7 +8,7 @@
 ///
 /// ## IO Ports
 /// clk: externally driven clk
-/// rst: reset
+/// rst: reset  
 /// write: notifies the memory to prepare for write operation
 /// read: notifies the memory to be read to output data
 ///
@@ -21,7 +21,7 @@
 /// DEPTH: chosen to be 16384, as 16*16384 = 262144, i.e, just barely bigger then the memory needed
 /// DATA_WIDTH: chosen to be 16, as ADC provides data in this format
 
-
+  
 module ADCmemory #(parameter DEPTH = 16384, DATA_WIDTH = 16) (
 	input clk,
 	input rst, 
@@ -29,15 +29,15 @@ module ADCmemory #(parameter DEPTH = 16384, DATA_WIDTH = 16) (
 	input read, 
 	
 	input [DATA_WIDTH - 1:0] data_in,
-	output reg [DATA_WIDTH - 1:0] data_out,
+	output logic [DATA_WIDTH - 1:0] data_out,
 	output full,
 	output empty
 );
 	
-	reg [DATA_WIDTH-1:0] storage [DEPTH];
-	reg [$clog2(DEPTH) - 1:0] write_ptr;
-	reg [$clog2(DEPTH) - 1:0] read_ptr;
-	reg [$clog2(DEPTH) - 1:0] count;
+	logic [DATA_WIDTH-1:0] storage [DEPTH];
+	logic [$clog2(DEPTH) - 1:0] write_ptr;
+	logic  [$clog2(DEPTH) - 1:0] read_ptr;
+	logic [$clog2(DEPTH) - 1:0] count;
 
 	assign full = (count == DEPTH);
 	assign empty = (count == 0);
@@ -51,7 +51,7 @@ module ADCmemory #(parameter DEPTH = 16384, DATA_WIDTH = 16) (
 		 else begin
 			  if (write & !full) begin  
 					storage[write_ptr] <= data_in;
-					write_ptr <= write_ptr + 1;
+					write_ptr <= write_ptr + 1;  //write_ptr over flows 
 					count <= count + 1;
 			  end
 			  if (read & !empty) begin

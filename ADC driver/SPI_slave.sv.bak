@@ -1,0 +1,16 @@
+module SPI_slave #(parmeter SPI_MODE = 1)
+	(
+	input rst,
+	input sclk,
+	input Indata_valid, //pulse from top level module to indicate it can start process the data 
+	
+	input [15:0] unprocessed_MISO, //the 2 byte to serialize before sending
+	
+	output logic Outdata_valid, //pulse to rasberry pi indicating it should be ready to recieve data
+	output logic processed_MISO
+	)
+	
+	
+	
+	
+endmodule

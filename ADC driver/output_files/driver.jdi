@@ -1,8 +1,8 @@
 <sld_project_info>
   <project>
-    <hash md5_digest_80b="bf95be44e6a053ca3465"/>
+    <hash md5_digest_80b="abf68f42664776ee7bff"/>
   </project>
   <file_info>
-    <file device="5CGXFC7C7F23C8" path="driver.sof" usercode="0xFFFFFFFF"/>
+    <file device="5CSEMA5F31C6" path="driver.sof" usercode="0xFFFFFFFF"/>
   </file_info>
 </sld_project_info>
