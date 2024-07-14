@@ -39,6 +39,7 @@ module driver(
 	output logic write,
 	
 	output logic [15:0] toMem,
+	output logic mem_ready,
 	
 	input rst,
 	input Busy,
@@ -57,7 +58,7 @@ module driver(
 		MEM
 	} state_t;
 
-
+		
 	logic [15:0] DBout;
 	logic finishwrite;
 	
@@ -74,9 +75,26 @@ module driver(
 	
 	assign DB = (!write) ? DBout : 16'bz;
 	
-	assign CS = 1'b0;
+	//assign CS = 1'b0;
 	assign HW = 1'b1;
 	assign PAR = 1'b0;
+	
+	always_ff@(posedge clk) begin
+		if(!rst) begin
+			CS                  <= 1'b1;
+		end else begin
+			if(finishwrite == 1'b0) begin
+				CS               <= 1'b0;
+			end else begin
+				if(convstsent || (state_ff == BUSY || state_ff == MEM))
+					CS            <= 1'b0;
+				else 
+					CS            <= 1'b1;
+			end
+		
+		end
+	
+	end
 	
 	
 	always_ff@(posedge clk)begin 
@@ -92,22 +110,18 @@ module driver(
 					write         <= ~write;
 				end else begin
 					finishwrite   <= 1'b1;
-
 				end
 				
 				if(writecount > 3'b010)begin
-					DBout         <= 16'b1010100000000;  //First sets of config
+					DBout         <= 16'b0000_0000_0000_0000;  //First sets of config  intended config:  default 16'd0
 				end
 				else begin 
-					DBout         <= 16'b0;   //Second set of config 
+					DBout         <= 16'b0000_0011_1111_1111;   //Second set of config 
 				end
 
 			end
 			
 		end
-	
-	
-	
 	end
 		
 
@@ -119,6 +133,7 @@ module driver(
 				ADCread          <= 3'b000;
 			   convstsent       <= 1'b0;
 				read             <= 1'b1;
+				mem_ready        <= 1'b0;
 				
 		end else begin
 			case(state_ff) 
@@ -156,6 +171,7 @@ module driver(
 						convst_C   <= 1'b0;
 						convst_D   <= 1'b0; 
 						convstsent <= 1'b0; 
+						mem_ready  <= 1'b0;
 					end
 				INIT:
 					begin 
@@ -185,6 +201,7 @@ module driver(
 				MEM:
 					begin
 						toMem      <= memreg;
+						mem_ready  <= 1'b1; 
 						read       <= 1'b1;
 						ADCread    <= ADCread + 1'b1;
 					end

@@ -29,6 +29,7 @@ module ADCmemory #(parameter DEPTH = 16384, DATA_WIDTH = 16) (
 	input read, 
 	
 	input [DATA_WIDTH - 1:0] data_in,
+   output logic [$clog2(DEPTH) - 1:0] count,
 	output logic [DATA_WIDTH - 1:0] data_out,
 	output full,
 	output empty
@@ -37,7 +38,6 @@ module ADCmemory #(parameter DEPTH = 16384, DATA_WIDTH = 16) (
 	logic [DATA_WIDTH-1:0] storage [DEPTH];
 	logic [$clog2(DEPTH) - 1:0] write_ptr;
 	logic  [$clog2(DEPTH) - 1:0] read_ptr;
-	logic [$clog2(DEPTH) - 1:0] count;
 
 	assign full = (count == DEPTH);
 	assign empty = (count == 0);
