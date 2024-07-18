@@ -4,10 +4,6 @@
 			"name" : "Top",
 			"pins" : [
 				{
-					"name" : "convst_A",
-					"strict" : false
-				},
-				{
 					"name" : "convst_B",
 					"strict" : false
 				},

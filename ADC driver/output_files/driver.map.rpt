@@ -1,5 +1,5 @@
 Analysis & Synthesis report for driver
-Sun Jul 14 14:55:31 2024
+Wed Jul 17 19:37:14 2024
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -62,13 +62,13 @@ refer to the applicable agreement for further details.
 +-------------------------------------------------------------------------------+
 ; Analysis & Synthesis Summary                                                  ;
 +---------------------------------+---------------------------------------------+
-; Analysis & Synthesis Status     ; Successful - Sun Jul 14 14:55:30 2024       ;
+; Analysis & Synthesis Status     ; Successful - Wed Jul 17 19:37:14 2024       ;
 ; Quartus Prime Version           ; 18.1.0 Build 625 09/12/2018 SJ Lite Edition ;
 ; Revision Name                   ; driver                                      ;
 ; Top-level Entity Name           ; top                                         ;
 ; Family                          ; Cyclone V                                   ;
 ; Logic utilization (in ALMs)     ; N/A                                         ;
-; Total registers                 ; 2713                                        ;
+; Total registers                 ; 2718                                        ;
 ; Total pins                      ; 36                                          ;
 ; Total virtual pins              ; 0                                           ;
 ; Total block memory bits         ; 156,672                                     ;
@@ -267,16 +267,16 @@ refer to the applicable agreement for further details.
 +---------------------------------------------+--------------------------+
 ; Resource                                    ; Usage                    ;
 +---------------------------------------------+--------------------------+
-; Estimate of Logic utilization (ALMs needed) ; 1458                     ;
+; Estimate of Logic utilization (ALMs needed) ; 1464                     ;
 ;                                             ;                          ;
-; Combinational ALUT usage for logic          ; 836                      ;
+; Combinational ALUT usage for logic          ; 854                      ;
 ;     -- 7 input functions                    ; 3                        ;
 ;     -- 6 input functions                    ; 186                      ;
 ;     -- 5 input functions                    ; 255                      ;
-;     -- 4 input functions                    ; 63                       ;
-;     -- <=3 input functions                  ; 329                      ;
+;     -- 4 input functions                    ; 66                       ;
+;     -- <=3 input functions                  ; 344                      ;
 ;                                             ;                          ;
-; Dedicated logic registers                   ; 2713                     ;
+; Dedicated logic registers                   ; 2718                     ;
 ;                                             ;                          ;
 ; I/O pins                                    ; 36                       ;
 ; Total MLAB memory bits                      ; 0                        ;
@@ -286,8 +286,8 @@ refer to the applicable agreement for further details.
 ;                                             ;                          ;
 ; Maximum fan-out node                        ; altera_internal_jtag~TDO ;
 ; Maximum fan-out                             ; 1321                     ;
-; Total fan-out                               ; 15739                    ;
-; Average fan-out                             ; 4.14                     ;
+; Total fan-out                               ; 15798                    ;
+; Average fan-out                             ; 4.13                     ;
 +---------------------------------------------+--------------------------+
 
 
@@ -296,9 +296,9 @@ refer to the applicable agreement for further details.
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
 ; Compilation Hierarchy Node                                                                                                              ; Combinational ALUTs ; Dedicated Logic Registers ; Block Memory Bits ; DSP Blocks ; Pins ; Virtual Pins ; Full Hierarchy Name                                                                                                                                                                                                                                                                                                                             ; Entity Name                       ; Library Name ;
 +-----------------------------------------------------------------------------------------------------------------------------------------+---------------------+---------------------------+-------------------+------------+------+--------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------------------------------+--------------+
-; |top                                                                                                                                    ; 836 (3)             ; 2713 (0)                  ; 156672            ; 0          ; 36   ; 0            ; |top                                                                                                                                                                                                                                                                                                                                            ; sld_signaltap                     ; work         ;
+; |top                                                                                                                                    ; 854 (3)             ; 2718 (0)                  ; 156672            ; 0          ; 36   ; 0            ; |top                                                                                                                                                                                                                                                                                                                                            ; sld_signaltap                     ; work         ;
 ;    |Clk_divider:Clk_divider_inst|                                                                                                       ; 40 (40)             ; 33 (33)                   ; 0                 ; 0          ; 0    ; 0            ; |top|Clk_divider:Clk_divider_inst                                                                                                                                                                                                                                                                                                               ; Clk_divider                       ; work         ;
-;    |driver:driver_inst|                                                                                                                 ; 22 (22)             ; 50 (50)                   ; 0                 ; 0          ; 0    ; 0            ; |top|driver:driver_inst                                                                                                                                                                                                                                                                                                                         ; driver                            ; work         ;
+;    |driver:driver_inst|                                                                                                                 ; 40 (40)             ; 55 (55)                   ; 0                 ; 0          ; 0    ; 0            ; |top|driver:driver_inst                                                                                                                                                                                                                                                                                                                         ; driver                            ; work         ;
 ;    |sld_hub:auto_hub|                                                                                                                   ; 115 (1)             ; 124 (0)                   ; 0                 ; 0          ; 0    ; 0            ; |top|sld_hub:auto_hub                                                                                                                                                                                                                                                                                                                           ; sld_hub                           ; altera_sld   ;
 ;       |alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric| ; 114 (0)             ; 124 (0)                   ; 0                 ; 0          ; 0    ; 0            ; |top|sld_hub:auto_hub|alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric                                                                                                                                                                                           ; alt_sld_fab_with_jtag_input       ; altera_sld   ;
 ;          |alt_sld_fab:instrumentation_fabric|                                                                                           ; 114 (0)             ; 124 (0)                   ; 0                 ; 0          ; 0    ; 0            ; |top|sld_hub:auto_hub|alt_sld_fab_with_jtag_input:\instrumentation_fabric_with_node_gen:fabric_gen_new_way:with_jtag_input_gen:instrumentation_fabric|alt_sld_fab:instrumentation_fabric                                                                                                                                                        ; alt_sld_fab                       ; alt_sld_fab  ;
@@ -560,10 +560,9 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; ADCmemory:ADCmemory_inst|count[0..13]     ; Lost fanout                                      ;
 ; ADCmemory:ADCmemory_inst|read_ptr[0..13]  ; Lost fanout                                      ;
 ; ADCmemory:ADCmemory_inst|write_ptr[0..13] ; Lost fanout                                      ;
+; driver:driver_inst|convst_A               ; Stuck at GND due to stuck port data_in           ;
 ; driver:driver_inst|DBout[10..15]          ; Stuck at GND due to stuck port data_in           ;
-; driver:driver_inst|convst_B               ; Merged with driver:driver_inst|convst_A          ;
-; driver:driver_inst|convst_C               ; Merged with driver:driver_inst|convst_A          ;
-; driver:driver_inst|convst_D               ; Merged with driver:driver_inst|convst_A          ;
+; driver:driver_inst|convst_C               ; Merged with driver:driver_inst|convst_B          ;
 ; driver:driver_inst|DBout[1..9]            ; Merged with driver:driver_inst|DBout[0]          ;
 ; driver:driver_inst|state_ff[3..9,11..31]  ; Merged with driver:driver_inst|state_ff[10]      ;
 ; ADCmemory:ADCmemory_inst|data_out[1..15]  ; Merged with ADCmemory:ADCmemory_inst|data_out[0] ;
@@ -572,7 +571,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 ; ADCmemory:ADCmemory_inst|data_out[0]      ; Stuck at GND due to stuck port data_in           ;
 ; driver:driver_inst|state_ff[10]           ; Stuck at GND due to stuck port data_in           ;
 ; spi:spi_inst|processed_MISO~reg0          ; Stuck at GND due to stuck port data_in           ;
-; Total Number of Removed Registers = 137   ;                                                  ;
+; Total Number of Removed Registers = 136   ;                                                  ;
 +-------------------------------------------+--------------------------------------------------+
 
 
@@ -591,12 +590,12 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +----------------------------------------------+-------+
 ; Statistic                                    ; Value ;
 +----------------------------------------------+-------+
-; Total registers                              ; 2713  ;
+; Total registers                              ; 2718  ;
 ; Number of registers using Synchronous Clear  ; 266   ;
 ; Number of registers using Synchronous Load   ; 443   ;
 ; Number of registers using Asynchronous Clear ; 924   ;
 ; Number of registers using Asynchronous Load  ; 0     ;
-; Number of registers using Clock Enable       ; 1076  ;
+; Number of registers using Clock Enable       ; 1084  ;
 ; Number of registers using Preset             ; 0     ;
 +----------------------------------------------+-------+
 
@@ -642,7 +641,7 @@ Note: For table entries with two numbers listed, the numbers in parentheses indi
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
 ; Multiplexer Inputs ; Bus Width ; Baseline Area ; Area if Restructured ; Saving if Restructured ; Registered ; Example Multiplexer Output            ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
-; 3:1                ; 2 bits    ; 4 LEs         ; 2 LEs                ; 2 LEs                  ; Yes        ; |top|driver:driver_inst|writecount[0] ;
+; 3:1                ; 6 bits    ; 12 LEs        ; 6 LEs                ; 6 LEs                  ; Yes        ; |top|driver:driver_inst|writecount[0] ;
 ; 3:1                ; 3 bits    ; 6 LEs         ; 3 LEs                ; 3 LEs                  ; Yes        ; |top|spi:spi_inst|MISO_counter[3]     ;
 +--------------------+-----------+---------------+----------------------+------------------------+------------+---------------------------------------+
 
@@ -878,31 +877,31 @@ Note: In order to hide this table in the UI and the text report file, please set
 +-----------------------+-----------------------------+
 ; Type                  ; Count                       ;
 +-----------------------+-----------------------------+
-; arriav_ff             ; 90                          ;
+; arriav_ff             ; 95                          ;
 ;     CLR               ; 4                           ;
-;     ENA               ; 34                          ;
+;     ENA               ; 42                          ;
 ;     ENA CLR           ; 1                           ;
 ;     SCLR              ; 42                          ;
 ;     SLD               ; 4                           ;
-;     plain             ; 5                           ;
+;     plain             ; 2                           ;
 ; arriav_io_obuf        ; 17                          ;
-; arriav_lcell_comb     ; 73                          ;
-;     arith             ; 32                          ;
-;         1 data inputs ; 32                          ;
+; arriav_lcell_comb     ; 91                          ;
+;     arith             ; 39                          ;
+;         1 data inputs ; 39                          ;
 ;     extend            ; 1                           ;
 ;         7 data inputs ; 1                           ;
-;     normal            ; 40                          ;
+;     normal            ; 51                          ;
 ;         0 data inputs ; 2                           ;
 ;         1 data inputs ; 2                           ;
-;         2 data inputs ; 1                           ;
-;         3 data inputs ; 1                           ;
-;         4 data inputs ; 10                          ;
+;         2 data inputs ; 8                           ;
+;         3 data inputs ; 2                           ;
+;         4 data inputs ; 13                          ;
 ;         5 data inputs ; 10                          ;
 ;         6 data inputs ; 14                          ;
 ; boundary_port         ; 156                         ;
 ;                       ;                             ;
 ; Max LUT depth         ; 4.10                        ;
-; Average LUT depth     ; 1.66                        ;
+; Average LUT depth     ; 1.75                        ;
 +-----------------------+-----------------------------+
 
 
@@ -911,7 +910,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 +----------------+--------------+
 ; Partition Name ; Elapsed Time ;
 +----------------+--------------+
-; Top            ; 00:00:01     ;
+; Top            ; 00:00:00     ;
 +----------------+--------------+
 
 
@@ -1002,17 +1001,17 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; driver:driver_inst|HW            ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; VCC                                  ; N/A     ;
 ; driver:driver_inst|PAR           ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; GND                                  ; N/A     ;
 ; driver:driver_inst|PAR           ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; GND                                  ; N/A     ;
-; driver:driver_inst|STBY          ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; GND                                  ; N/A     ;
-; driver:driver_inst|STBY          ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; GND                                  ; N/A     ;
+; driver:driver_inst|STBY          ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; VCC                                  ; N/A     ;
+; driver:driver_inst|STBY          ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; VCC                                  ; N/A     ;
 ; driver:driver_inst|clk           ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; Clk_divider:Clk_divider_inst|clk_out ; N/A     ;
-; driver:driver_inst|convst_A      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; driver:driver_inst|convst_A      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; driver:driver_inst|convst_B      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; driver:driver_inst|convst_B      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; driver:driver_inst|convst_C      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; driver:driver_inst|convst_C      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; driver:driver_inst|convst_D      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; driver:driver_inst|convst_D      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
+; driver:driver_inst|convst_A      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; GND                                  ; N/A     ;
+; driver:driver_inst|convst_A      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; GND                                  ; N/A     ;
+; driver:driver_inst|convst_B      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_B          ; N/A     ;
+; driver:driver_inst|convst_B      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_B          ; N/A     ;
+; driver:driver_inst|convst_C      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_B          ; N/A     ;
+; driver:driver_inst|convst_C      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_B          ; N/A     ;
+; driver:driver_inst|convst_D      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_D          ; N/A     ;
+; driver:driver_inst|convst_D      ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convst_D          ; N/A     ;
 ; driver:driver_inst|convstsent    ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convstsent        ; N/A     ;
 ; driver:driver_inst|convstsent    ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|convstsent        ; N/A     ;
 ; driver:driver_inst|finishwrite   ; pre-synthesis ; connected ; Top                            ; post-synthesis    ; driver:driver_inst|finishwrite       ; N/A     ;
@@ -1244,18 +1243,18 @@ Note: In order to hide this table in the UI and the text report file, please set
 ; PAR              ; pre-synthesis ; connected ; Top               ; post-synthesis    ; ~GND                                 ; N/A     ;
 ; SPI_cs           ; pre-synthesis ; connected ; Top               ; post-synthesis    ; SPI_cs                               ; N/A     ;
 ; SPI_cs           ; pre-synthesis ; connected ; Top               ; post-synthesis    ; SPI_cs                               ; N/A     ;
-; STBY             ; pre-synthesis ; connected ; Top               ; post-synthesis    ; ~GND                                 ; N/A     ;
-; STBY             ; pre-synthesis ; connected ; Top               ; post-synthesis    ; ~GND                                 ; N/A     ;
+; STBY             ; pre-synthesis ; connected ; Top               ; post-synthesis    ; ~VCC                                 ; N/A     ;
+; STBY             ; pre-synthesis ; connected ; Top               ; post-synthesis    ; ~VCC                                 ; N/A     ;
 ; XCLK             ; pre-synthesis ; connected ; Top               ; post-synthesis    ; Clk_divider:Clk_divider_inst|clk_out ; N/A     ;
 ; XCLK             ; pre-synthesis ; connected ; Top               ; post-synthesis    ; Clk_divider:Clk_divider_inst|clk_out ; N/A     ;
-; convst_A         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; convst_A         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; convst_B         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; convst_B         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; convst_C         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; convst_C         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; convst_D         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
-; convst_D         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_A          ; N/A     ;
+; convst_A         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; ~GND                                 ; N/A     ;
+; convst_A         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; ~GND                                 ; N/A     ;
+; convst_B         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_B          ; N/A     ;
+; convst_B         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_B          ; N/A     ;
+; convst_C         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_B          ; N/A     ;
+; convst_C         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_B          ; N/A     ;
+; convst_D         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_D          ; N/A     ;
+; convst_D         ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|convst_D          ; N/A     ;
 ; processed_MISO   ; pre-synthesis ; connected ; Top               ; post-synthesis    ; spi:spi_inst|processed_MISO~en       ; N/A     ;
 ; processed_MISO   ; pre-synthesis ; connected ; Top               ; post-synthesis    ; spi:spi_inst|processed_MISO~en       ; N/A     ;
 ; read             ; pre-synthesis ; connected ; Top               ; post-synthesis    ; driver:driver_inst|read              ; N/A     ;
@@ -1309,7 +1308,7 @@ Note: In order to hide this table in the UI and the text report file, please set
 Info: *******************************************************************
 Info: Running Quartus Prime Analysis & Synthesis
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Sun Jul 14 14:54:43 2024
+    Info: Processing started: Wed Jul 17 19:36:46 2024
 Info: Command: quartus_map --read_settings_files=on --write_settings_files=off ADCdriver -c driver
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
@@ -1333,9 +1332,8 @@ Warning (10858): Verilog HDL warning at top.sv(49): object count used but never 
 Info (12128): Elaborating entity "Clk_divider" for hierarchy "Clk_divider:Clk_divider_inst" File: C:/Sound-Localization-Firmware/ADC driver/top.sv Line: 72
 Info (12128): Elaborating entity "driver" for hierarchy "driver:driver_inst" File: C:/Sound-Localization-Firmware/ADC driver/top.sv Line: 94
 Warning (10036): Verilog HDL or VHDL warning at driver.sv(66): object "isReading" assigned a value but never read File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 66
-Warning (10230): Verilog HDL assignment warning at driver.sv(109): truncated value with size 32 to match size of target (3) File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 109
+Warning (10230): Verilog HDL assignment warning at driver.sv(117): truncated value with size 32 to match size of target (7) File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 117
 Warning (10034): Output port "ADCrst" at driver.sv(37) has no driver File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 37
-Warning (10034): Output port "STBY" at driver.sv(38) has no driver File: C:/Sound-Localization-Firmware/ADC driver/driver.sv Line: 38
 Info (12128): Elaborating entity "ADCmemory" for hierarchy "ADCmemory:ADCmemory_inst" File: C:/Sound-Localization-Firmware/ADC driver/top.sv Line: 106
 Warning (10230): Verilog HDL assignment warning at ADCmemory.sv(54): truncated value with size 32 to match size of target (14) File: C:/Sound-Localization-Firmware/ADC driver/ADCmemory.sv Line: 54
 Warning (10230): Verilog HDL assignment warning at ADCmemory.sv(55): truncated value with size 32 to match size of target (14) File: C:/Sound-Localization-Firmware/ADC driver/ADCmemory.sv Line: 55
@@ -1372,7 +1370,7 @@ Info (12021): Found 1 design units, including 1 entities, in source file db/cmpr
 Info (12033): Analysis and Synthesis generated Signal Tap or debug node instance "auto_signaltap_1"
 Info (12033): Analysis and Synthesis generated Signal Tap or debug node instance "top"
 Info (11170): Starting IP generation for the debug fabric: alt_sld_fab.
-Info (11172): 2024.07.14.14:55:10 Progress: Loading sld4b1f5f44/alt_sld_fab_wrapper_hw.tcl
+Info (11172): 2024.07.17.19:37:04 Progress: Loading sld4b1f5f44/alt_sld_fab_wrapper_hw.tcl
 Info (11172): Alt_sld_fab.alt_sld_fab: SLD fabric agents which did not specify prefer_host were connected to JTAG
 Info (11172): Alt_sld_fab: Generating alt_sld_fab "alt_sld_fab" for QUARTUS_SYNTH
 Info (11172): Alt_sld_fab: "alt_sld_fab" instantiated alt_sld_fab "alt_sld_fab"
@@ -1396,9 +1394,10 @@ Info (12021): Found 2 design units, including 1 entities, in source file db/ip/s
 Info (12021): Found 1 design units, including 1 entities, in source file db/ip/sld4b1f5f44/submodules/alt_sld_fab_alt_sld_fab_splitter.sv
     Info (12023): Found entity 1: alt_sld_fab_alt_sld_fab_splitter File: C:/Sound-Localization-Firmware/ADC driver/db/ip/sld4b1f5f44/submodules/alt_sld_fab_alt_sld_fab_splitter.sv Line: 3
 Warning (13024): Output pins are stuck at VCC or GND
+    Warning (13410): Pin "convst_A" is stuck at GND File: C:/Sound-Localization-Firmware/ADC driver/top.sv Line: 12
     Warning (13410): Pin "HW" is stuck at VCC File: C:/Sound-Localization-Firmware/ADC driver/top.sv Line: 18
     Warning (13410): Pin "PAR" is stuck at GND File: C:/Sound-Localization-Firmware/ADC driver/top.sv Line: 19
-    Warning (13410): Pin "STBY" is stuck at GND File: C:/Sound-Localization-Firmware/ADC driver/top.sv Line: 21
+    Warning (13410): Pin "STBY" is stuck at VCC File: C:/Sound-Localization-Firmware/ADC driver/top.sv Line: 21
 Info (286031): Timing-Driven Synthesis is running on partition "Top"
 Warning (14632): Output pin "pre_syn.bp.driver_inst_DB_0_" driven by bidirectional pin "DB[0]" cannot be tri-stated File: C:/Sound-Localization-Firmware/ADC driver/top.sv Line: 2
 Warning (14632): Output pin "pre_syn.bp.driver_inst_DB_1_" driven by bidirectional pin "DB[1]" cannot be tri-stated File: C:/Sound-Localization-Firmware/ADC driver/top.sv Line: 2
@@ -1422,17 +1421,17 @@ Info (35024): Successfully connected in-system debug instance "auto_signaltap_1"
 Info (35024): Successfully connected in-system debug instance "top" to all 101 required data inputs, trigger inputs, acquisition clocks, and dynamic pins
 Info (16010): Generating hard_block partition "hard_block:auto_generated_inst"
     Info (16011): Adding 9 node(s), including 0 DDIO, 0 PLL, 0 transceiver and 0 LCELL
-Info (21057): Implemented 3229 device resources after synthesis - the final resource count might be different
+Info (21057): Implemented 3247 device resources after synthesis - the final resource count might be different
     Info (21058): Implemented 10 input pins
     Info (21059): Implemented 14 output pins
     Info (21060): Implemented 16 bidirectional pins
-    Info (21061): Implemented 3035 logic cells
+    Info (21061): Implemented 3053 logic cells
     Info (21064): Implemented 153 RAM segments
 Info: Quartus Prime Analysis & Synthesis was successful. 0 errors, 32 warnings
-    Info: Peak virtual memory: 4942 megabytes
-    Info: Processing ended: Sun Jul 14 14:55:31 2024
-    Info: Elapsed time: 00:00:48
-    Info: Total CPU time (on all processors): 00:00:24
+    Info: Peak virtual memory: 4931 megabytes
+    Info: Processing ended: Wed Jul 17 19:37:14 2024
+    Info: Elapsed time: 00:00:28
+    Info: Total CPU time (on all processors): 00:00:23
 
 
 +------------------------------------------+

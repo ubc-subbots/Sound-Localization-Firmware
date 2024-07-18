@@ -67,7 +67,7 @@ module driver(
 	
 	logic [15:0] memreg;
 	
-	logic [2:0] writecount;
+	logic [6:0] writecount;
 	
 	logic [3:0] ADCread; //counter of which ADC we are on, should reset to 0 after we hit 5
 		
@@ -78,16 +78,24 @@ module driver(
 	//assign CS = 1'b0;
 	assign HW = 1'b1;
 	assign PAR = 1'b0;
+	assign STBY = 1'b1;
+	
+	
+	
 	
 	always_ff@(posedge clk) begin
 		if(!rst) begin
 			CS                  <= 1'b1;
 		end else begin
 			if(finishwrite == 1'b0) begin
-				CS               <= 1'b0;
+				if(writecount > 6'd28) begin
+					CS            <= 1'b0;
+				end else begin
+					CS            <= 1'b1;
+				end				
 			end else begin
 				if(convstsent || (state_ff == BUSY || state_ff == MEM))
-					CS            <= 1'b0;
+					CS            <= 1'b1;
 				else 
 					CS            <= 1'b1;
 			end
@@ -102,21 +110,34 @@ module driver(
 			write               <= 1'b1;
 			finishwrite         <= 1'b0;
 			isReading           <= 1'b0;
-			writecount          <= 3'b100;
+			writecount          <= 6'd32;
 		end else begin 
 			if(finishwrite == 1'b0) begin
-				if(writecount > 3'b0) begin
+				if(writecount > 6'd0) begin
 					writecount    <= writecount - 1;
-					write         <= ~write;
 				end else begin
 					finishwrite   <= 1'b1;
 				end
 				
-				if(writecount > 3'b010)begin
+				if(writecount > 6'd28) begin
+					write 		  <= ~write;
+					//CS            <= 1'b0;
+				end else begin
+					write 		  <= 1'b1;
+					//CS            <= 1'b1;
+				end
+				
+				if(writecount > 6'd30)begin
 					DBout         <= 16'b0000_0000_0000_0000;  //First sets of config  intended config:  default 16'd0
 				end
 				else begin 
 					DBout         <= 16'b0000_0011_1111_1111;   //Second set of config 
+				end
+				
+				if(writecount == 6'd26 || writecount == 6'd6) begin
+					convst_D      <= 1'b1;
+				end else begin
+					convst_D      <= 1'b0;
 				end
 
 			end
@@ -165,20 +186,20 @@ module driver(
 			case(state_ff) 
 				HOLD:
 					begin
-						read       <= 1'b1;
+						read       <= 1'b0;  //should be 1
 						convst_A   <= 1'b0;
 						convst_B   <= 1'b0;
 						convst_C   <= 1'b0;
-						convst_D   <= 1'b0; 
+						//convst_D   <= 1'b0; 
 						convstsent <= 1'b0; 
 						mem_ready  <= 1'b0;
 					end
 				INIT:
 					begin 
-						convst_A   <= 1'b1; 
+						convst_A   <= 1'b0; //should be 1
 						convst_B   <= 1'b1;
 						convst_C   <= 1'b1;
-						convst_D   <= 1'b1; 
+						//convst_D   <= 1'b1; 
 						convstsent <= 1'b1; 
 						ADCread    <= 3'b000;
 						read       <= 1'b1;
@@ -189,20 +210,20 @@ module driver(
 							read    <= 0;
 							memreg  <= DB;
 						end else begin
-							read    <= 1'b1;
+							read    <= 1'b0;   //should be 1;
 							memreg  <= DB;
 						end
 						convstsent <= 1'b0; 
 						convst_A   <= 1'b0; 
 						convst_B   <= 1'b0; 
 						convst_C   <= 1'b0;
-						convst_D   <= 1'b0; 
+						//convst_D   <= 1'b0;  
 					end	
 				MEM:
 					begin
 						toMem      <= memreg;
 						mem_ready  <= 1'b1; 
-						read       <= 1'b1;
+						read       <= 1'b0;  //should be 1
 						ADCread    <= ADCread + 1'b1;
 					end
 			endcase
