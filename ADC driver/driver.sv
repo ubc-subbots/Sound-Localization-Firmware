@@ -3,18 +3,18 @@
 /// ## Overview
 ///
 /// This verilog code is suppose to config the ADC to run
-/// in the paraelle setting with an external clk then collect data
+/// in the PAR_Naelle setting with an external clk then collect data
 /// on a frequent basis 
 ///
 /// ## IO Ports
 /// convst_X: notifies the adc X0 and X1 to start converting from analogue to digital
-/// read: notifies the ADC the driver is ready to recieve data
-/// CS: chip select, default high and should be switched low for any operation
-/// HW: hardware/software select, this driver opts for the software option
-/// PAR: paralle/serial select, this driver opts for paralle
+/// RD_N: notifies the ADC the driver is RD_Ny to recieve data
+/// CS_N: chip select, default high and should be switched low for any operation
+/// HW_N: hardware/software select, this driver opts for the software option
+/// PAR_N: PAR_Nalle/serial select, this driver opts for PAR_Nalle
 /// rst: reset
-/// STBY: not relevant for this implementation
-/// write: notifies the ADC to prepare for write operation
+/// STBY_N: not relevant for this implementation
+/// WR_N: notifies the ADC to prepare for WR_N operation
 ///
 /// toMem[15:0] : the data to be sent to FPGA's memory for processing later
 /// 
@@ -24,22 +24,24 @@
 /// DB[15:0] : the input/output of the driver for data
 
 
+
 module driver(
 	output logic convst_A,
 	output logic convst_B,
 	output logic convst_C,
 	output logic convst_D,
 	
-	output logic read, 
-	output logic CS,
-	output logic HW,
-	output logic PAR,
+	output logic RD_N, 
+	output logic CS_N,
+	output logic HW_N,
+	output logic PAR_N,
 	output logic ADCrst,
-	output logic STBY,
-	output logic write,
+	output logic STBY_N,
+	output logic WR_N,
 	
 	output logic [15:0] toMem,
 	output logic mem_ready,
+	output logic [4:0] state_ff,
 	
 	input rst,
 	input Busy,
@@ -47,17 +49,19 @@ module driver(
 	input clk
 );
 
-	typedef enum {
+	/*typedef enum {
 		HOLD,
 		INIT,
 		BUSY,
-		RDWAIT,
-		READDB,
-		SAFE,
-		CAPTURE,
 		MEM
-	} state_t;
-
+	} state_t;*/
+	
+	parameter [4:0] HOLD = 5'b00000,
+						 INIT = 5'b00010,
+						 BUSY = 5'b00100,
+						 MEM = 5'b01000;
+			
+	
 		
 	logic [15:0] DBout;
 	logic finishwrite;
@@ -71,33 +75,47 @@ module driver(
 	
 	logic [3:0] ADCread; //counter of which ADC we are on, should reset to 0 after we hit 5
 		
-	state_t state_ff;
+	//reg [4:0] state_ff;
 	
-	assign DB = (!write) ? DBout : 16'bz;
+	assign DB = (!WR_N) ? DBout : 16'bz;
 	
-	//assign CS = 1'b0;
-	assign HW = 1'b1;
-	assign PAR = 1'b0;
-	assign STBY = 1'b1;
+	//assign CS_N = 1'b0;
+	assign HW_N = 1'b1;
+	assign PAR_N = 1'b0;
+	assign STBY_N = 1'b1;
 	
+	logic [31:0] waitcounter;
+	
+	
+	/*always_ff@(posedge clk) begin
+		if(!rst) begin
+			waitcounter <= 32'd0;
+		end else begin
+			if(finishwrite) begin
+				if(waitcounter < 32'd1500) begin
+					waitcounter <= waitcounter + 1'b1;
+				end
+			end
+		end
+	end*/
 	
 	
 	
 	always_ff@(posedge clk) begin
 		if(!rst) begin
-			CS                  <= 1'b1;
+			CS_N                <= 1'b1;
 		end else begin
-			if(finishwrite == 1'b0) begin
-				if(writecount > 6'd28) begin
-					CS            <= 1'b0;
+			if(finishwrite == 1'b0) begin				
+				if(writecount > 7'd0) begin
+				 CS_N            <= 1'b0;
 				end else begin
-					CS            <= 1'b1;
-				end				
+				 CS_N            <= 1'b1;
+				end		
 			end else begin
 				if(convstsent || (state_ff == BUSY || state_ff == MEM))
-					CS            <= 1'b1;
+				 CS_N            <= 1'b0;
 				else 
-					CS            <= 1'b1;
+				 CS_N            <= 1'b1;
 			end
 		
 		end
@@ -105,125 +123,156 @@ module driver(
 	end
 	
 	
+	
+	/*
 	always_ff@(posedge clk)begin 
 		if(!rst) begin
-			write               <= 1'b1;
+			WR_N               <= 1'b1;
 			finishwrite         <= 1'b0;
 			isReading           <= 1'b0;
-			writecount          <= 6'd32;
+			writecount          <= 7'd40;
 		end else begin 
 			if(finishwrite == 1'b0) begin
-				if(writecount > 6'd0) begin
-					writecount    <= writecount - 1;
+				if((writecount == 7'd40) || (writecount == 7'd30) || (writecount == 7'd20) || (writecount == 7'd10)) begin
+					WR_N         <= ~WR_N;
+				end else if(writecount > 7'd0) begin
+					WR_N         <= WR_N;
+				end else begin
+					WR_N         <= 1'b1;
+				end
+				
+				if(writecount > 7'd0) begin
+					writecount    <= writecount - 1'b1;
+					finishwrite   <= 1'b0;
 				end else begin
 					finishwrite   <= 1'b1;
 				end
 				
-				if(writecount > 6'd28) begin
-					write 		  <= ~write;
-					//CS            <= 1'b0;
-				end else begin
-					write 		  <= 1'b1;
-					//CS            <= 1'b1;
-				end
-				
-				if(writecount > 6'd30)begin
-					DBout         <= 16'b0000_0000_0000_0000;  //First sets of config  intended config:  default 16'd0
+				if(writecount > 7'd20)begin
+					DBout         <= 16'b1000_0000_0000_0000;  //First sets of config
 				end
 				else begin 
-					DBout         <= 16'b0000_0011_1111_1111;   //Second set of config 
+					DBout         <= 16'h03ff;   //Second set of config 
+				end
+
+			end
+			
+		end
+	
+	
+	
+	end
+	*/
+		
+	always_ff@(posedge clk)begin 
+		if(!rst) begin
+			WR_N               <= 1'b1;
+			finishwrite         <= 1'b0;
+			isReading           <= 1'b0;
+			writecount          <= 3'b100;
+		end else begin 
+			if(finishwrite == 1'b0) begin
+				if(writecount > 3'b0) begin
+					writecount    <= writecount - 1;
+					WR_N         <= ~WR_N;
+				end else begin
+					finishwrite   <= 1'b1;
 				end
 				
-				if(writecount == 6'd26 || writecount == 6'd6) begin
-					convst_D      <= 1'b1;
-				end else begin
-					convst_D      <= 1'b0;
+				if(writecount > 3'b010)begin
+					DBout         <= 16'b1000_0000_0101_0100;  //First sets of config
+				end
+				else begin 
+					DBout         <= 16'h03FF;   //Second set of config 
 				end
 
 			end
 			
 		end
 	end
-		
-
-
 	
 	always_ff@(posedge clk) begin
 		if(!rst) begin
 				state_ff         <= HOLD; 
 				ADCread          <= 3'b000;
 			   convstsent       <= 1'b0;
-				read             <= 1'b1;
+				RD_N             <= 1'b1;
 				mem_ready        <= 1'b0;
 				
 		end else begin
 			case(state_ff) 
 				//HOLD: The state before the driver finish writing 
-				HOLD: 
+				HOLD: begin
 					if(finishwrite)
 						state_ff   <= INIT;
 					else
 						state_ff   <= HOLD;
+					end
 				//INIT: The conversion signal is sent in this state
-				INIT: 
+				INIT: begin
+				//We choose to transition when busy goes high to make sure that the conversion process has actually begun
+				//before we go to our busy state and begin waiting for busy to go low
 					if(convstsent)  
 						state_ff   <= BUSY;
 					else
 						state_ff   <= INIT;
-				//BUSY: The state that waits for busy to go low and then sets read low
-				BUSY: 
-					if(Busy == 1'b0 && ADCread != 3'b101) 
+					end
+				//BUSY: The state that waits for busy to go low and then sets RD_N low
+				BUSY: begin
+					if(Busy == 1'b0 && ADCread != 3'b110) 
 						state_ff   <= MEM;
-					else if(ADCread == 3'b101)
+					else if(ADCread == 3'b110)
 						state_ff   <= INIT;
 					else 
 						state_ff   <= BUSY; 
-				//MEM: The state where the ADC reading is sent to memory
-				MEM:
+					end
+				//MEM: The state where the ADC RD_Ning is sent to memory
+				MEM: begin
 					state_ff      <= BUSY;
+					end
 			endcase
 			
 			case(state_ff) 
 				HOLD:
 					begin
-						read       <= 1'b0;  //should be 1
+						RD_N       <= 1'b1;  //should be 1
 						convst_A   <= 1'b0;
 						convst_B   <= 1'b0;
 						convst_C   <= 1'b0;
-						//convst_D   <= 1'b0; 
+						convst_D   <= 1'b0; 
 						convstsent <= 1'b0; 
 						mem_ready  <= 1'b0;
 					end
 				INIT:
 					begin 
-						convst_A   <= 1'b0; //should be 1
+						convst_A   <= 1'b1; //should be 1
 						convst_B   <= 1'b1;
 						convst_C   <= 1'b1;
-						//convst_D   <= 1'b1; 
+						convst_D   <= 1'b1; 
 						convstsent <= 1'b1; 
 						ADCread    <= 3'b000;
-						read       <= 1'b1;
+						RD_N       <= 1'b1;
 					end
 				BUSY:
 					begin
-						if(Busy == 1'b0 && ADCread != 3'b101) begin
-							read    <= 0;
+						if(Busy == 1'b0 && ADCread != 3'b110) begin
+							RD_N    <= 1'b0;
 							memreg  <= DB;
 						end else begin
-							read    <= 1'b0;   //should be 1;
+							RD_N    <= 1'b1;   //should be 1;
 							memreg  <= DB;
 						end
 						convstsent <= 1'b0; 
 						convst_A   <= 1'b0; 
 						convst_B   <= 1'b0; 
 						convst_C   <= 1'b0;
-						//convst_D   <= 1'b0;  
+						convst_D   <= 1'b0;  
 					end	
 				MEM:
 					begin
 						toMem      <= memreg;
 						mem_ready  <= 1'b1; 
-						read       <= 1'b0;  //should be 1
+						RD_N       <= 1'b1;  //should be 1
 						ADCread    <= ADCread + 1'b1;
 					end
 			endcase

@@ -13,13 +13,13 @@ module top(
 	output logic convst_B,
 	output logic convst_C,
 	output logic convst_D,
-	output logic read, 
-	output logic ADC_CS,
-	output logic HW,
-	output logic PAR,
+	output logic RD_N, 
+	output logic ADC_CS_N,
+	output logic HW_N,
+	output logic PAR_N,
 	output logic ADCrst,
-	output logic STBY,
-	output logic write,
+	output logic STBY_N,
+	output logic WR_N,
 	output logic XCLK,
 
 	
@@ -71,22 +71,23 @@ module top(
 		.clk_out(clk)
 	);
 	
-	assign XCLK = clk;
+	assign XCLK = 1'b1; //should be clk
 	
 	driver driver_inst(
 		.convst_A(convst_A),
 		.convst_B(convst_B),
 		.convst_C(convst_C),
 		.convst_D(convst_D),
-		.read(read),
-		.CS(ADC_CS),
-		.HW(HW),
-		.PAR(PAR),
+		.RD_N(RD_N),
+		.CS_N(ADC_CS_N),
+		.HW_N(HW_N),
+		.PAR_N(PAR_N),
 		.ADCrst(),
-		.STBY(STBY),
-		.write(write),
+		.STBY_N(STBY_N),
+		.WR_N(WR_N),
 		.toMem(toMem),
 		.mem_ready(mem_ready),
+		.state_ff(),
 		.DB(DB),
 		.Busy(Busy),
 		.rst(rst),
