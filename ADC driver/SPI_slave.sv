@@ -1,3 +1,24 @@
+/// # SPI specification
+///
+/// ## Overview
+///
+/// This synthizes into a SPI modules capable of 
+/// sending 16 bits of data to an external module (raspberry pi)
+/// upon the lower of chip select by the master (raspberry pi) 
+///
+/// ## IO Ports
+/// rst: reset
+/// sclk: serial clk provided by raspberry pi
+/// cs: chip select, default high and should be switched low for any operation
+/// 
+/// unprocessed_MISO: FPGA-facing 16 bits of data to be sent
+/// 
+/// processed_MISO: raspberry-pi facing, serialized data that are sent 
+/// ready_for_data: FPGA-facing, flag that indicates its ready for another operation 
+
+
+
+
 module spi 
 	(
 	input logic rst,
@@ -30,7 +51,7 @@ module spi
 		end
 		
 		else begin
-			if(rst) begin
+			if(~rst) begin
 				state <= INIT; 		
 			end else begin
 				case(state)

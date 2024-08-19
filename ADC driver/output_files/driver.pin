@@ -242,7 +242,7 @@ RESERVED_INPUT_WITH_WEAK_PULLUP : AE13      :        :                   :      
 RESERVED_INPUT_WITH_WEAK_PULLUP : AE14      :        :                   :         : 3B        :                
 VCCIO3B                      : AE15      : power  :                   : 2.5V    : 3B        :                
 DB[4]                        : AE16      : bidir  : 2.5 V             :         : 4A        : Y              
-RESERVED_INPUT_WITH_WEAK_PULLUP : AE17      :        :                   :         : 4A        :                
+SPI_RDY                      : AE17      : output : 2.5 V             :         : 4A        : Y              
 convst_A                     : AE18      : output : 2.5 V             :         : 4A        : Y              
 convst_B                     : AE19      : output : 2.5 V             :         : 4A        : Y              
 GND                          : AE20      : gnd    :                   :         :           :                

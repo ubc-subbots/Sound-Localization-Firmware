@@ -21,7 +21,8 @@ rst => rst.IN3
 KEY2 => ADCrst.DATAIN
 sclk => sclk.IN1
 SPI_cs => SPI_cs.IN1
-transaction_done => ~NO_FANOUT~
+transaction_done => Selector3.IN8
+transaction_done => Selector0.IN2
 convst_A <= driver:driver_inst.convst_A
 convst_B <= driver:driver_inst.convst_B
 convst_C <= driver:driver_inst.convst_C
@@ -35,6 +36,7 @@ STBY_N <= driver:driver_inst.STBY_N
 WR_N <= driver:driver_inst.WR_N
 XCLK <= <VCC>
 processed_MISO <= spi:spi_inst.processed_MISO
+SPI_RDY <= state[2].DB_MAX_OUTPUT_PORT_TYPE
 
 
 |top|Clk_divider:Clk_divider_inst
@@ -205,8 +207,6 @@ state_ff[2] <= state_ff[2]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 state_ff[3] <= state_ff[3]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 state_ff[4] <= state_ff[4]~reg0.DB_MAX_OUTPUT_PORT_TYPE
 rst => CS_N.OUTPUTSELECT
-rst => state_ff.OUTPUTSELECT
-rst => state_ff.OUTPUTSELECT
 rst => state_ff.OUTPUTSELECT
 rst => state_ff.OUTPUTSELECT
 rst => state_ff.OUTPUTSELECT

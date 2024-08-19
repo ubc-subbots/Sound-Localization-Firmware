@@ -8,13 +8,13 @@
 ///
 /// ## IO Ports
 /// convst_X: notifies the adc X0 and X1 to start converting from analogue to digital
-/// RD_N: notifies the ADC the driver is RD_Ny to recieve data
+/// RD_N: notifies the ADC the driver is ready to recieve data
 /// CS_N: chip select, default high and should be switched low for any operation
 /// HW_N: hardware/software select, this driver opts for the software option
-/// PAR_N: PAR_Nalle/serial select, this driver opts for PAR_Nalle
+/// PAR_N: paralle/serial select, this driver opts for paraalle
 /// rst: reset
 /// STBY_N: not relevant for this implementation
-/// WR_N: notifies the ADC to prepare for WR_N operation
+/// WR_N: notifies the ADC to prepare for write operation
 ///
 /// toMem[15:0] : the data to be sent to FPGA's memory for processing later
 /// 
@@ -230,6 +230,7 @@ module driver(
 				MEM: begin
 					state_ff      <= BUSY;
 					end
+				default: state_ff <= INIT;
 			endcase
 			
 			case(state_ff) 
@@ -252,6 +253,7 @@ module driver(
 						convstsent <= 1'b1; 
 						ADCread    <= 3'b000;
 						RD_N       <= 1'b1;
+						mem_ready  <= 1'b0;
 					end
 				BUSY:
 					begin
@@ -266,7 +268,8 @@ module driver(
 						convst_A   <= 1'b0; 
 						convst_B   <= 1'b0; 
 						convst_C   <= 1'b0;
-						convst_D   <= 1'b0;  
+						convst_D   <= 1'b0; 
+						mem_ready  <= 1'b0;
 					end	
 				MEM:
 					begin
@@ -275,6 +278,7 @@ module driver(
 						RD_N       <= 1'b1;  //should be 1
 						ADCread    <= ADCread + 1'b1;
 					end
+				
 			endcase
 		
 		

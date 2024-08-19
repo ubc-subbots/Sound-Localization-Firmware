@@ -1,0 +1,38 @@
+interface ADC_bfm; 
+	wire [15:0] DB;
+	
+	reg Busy;
+	reg CLOCK_27M;
+	reg rst;
+	reg KEY2; 
+	
+	reg sclk;
+	reg SPI_cs; 
+	reg transaction_done; 
+	
+	wire convst_A;
+	wire convst_B;
+	wire convst_C;
+	wire convst_D;
+	wire RD_N;
+	wire ADC_CS_N; 
+	wire HW_N; 
+	wire PAR_N; 
+	wire ADCrst; 
+	wire STBY_N; 
+	wire WR_N; 
+	wire XCLK; 
+	
+	wire processed_MISO; 
+	wire SPI_RDY; 
+	
+	
+	task reset_FPGA(); 
+		rst = 1'b0; 
+		@(negedge clk); 
+		@(negedge clk); 
+		rst = 1'b1; 
+	endtask : reset_FPGA(); 
+	
+	
+	

@@ -1,5 +1,5 @@
 Timing Analyzer report for driver
-Sun Jul 28 16:15:32 2024
+Sun Aug 18 16:58:28 2024
 Quartus Prime Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
 
 
@@ -101,14 +101,14 @@ refer to the applicable agreement for further details.
 ; Number detected on machine ; 8           ;
 ; Maximum allowed            ; 4           ;
 ;                            ;             ;
-; Average used               ; 1.55        ;
+; Average used               ; 1.33        ;
 ; Maximum used               ; 4           ;
 ;                            ;             ;
 ; Usage by Processor         ; % Time Used ;
 ;     Processor 1            ; 100.0%      ;
-;     Processor 2            ;  18.3%      ;
-;     Processor 3            ;  18.2%      ;
-;     Processor 4            ;  18.2%      ;
+;     Processor 2            ;  11.0%      ;
+;     Processor 3            ;  10.9%      ;
+;     Processor 4            ;  10.9%      ;
 +----------------------------+-------------+
 
 
@@ -121,13 +121,13 @@ refer to the applicable agreement for further details.
 +---------------------+------+--------+-----------+-------+--------+------------+-----------+-------------+-------+--------+-----------+------------+----------+--------+--------+-------------------------+
 
 
-+---------------------------------------------------------+
-; Slow 1100mV 85C Model Fmax Summary                      ;
-+----------+-----------------+---------------------+------+
-; Fmax     ; Restricted Fmax ; Clock Name          ; Note ;
-+----------+-----------------+---------------------+------+
-; 70.2 MHz ; 70.2 MHz        ; altera_reserved_tck ;      ;
-+----------+-----------------+---------------------+------+
++----------------------------------------------------------+
+; Slow 1100mV 85C Model Fmax Summary                       ;
++-----------+-----------------+---------------------+------+
+; Fmax      ; Restricted Fmax ; Clock Name          ; Note ;
++-----------+-----------------+---------------------+------+
+; 72.74 MHz ; 72.74 MHz       ; altera_reserved_tck ;      ;
++-----------+-----------------+---------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
 
@@ -142,7 +142,7 @@ HTML report is unavailable in plain text report export.
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; altera_reserved_tck ; 9.544 ; 0.000         ;
+; altera_reserved_tck ; 9.793 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -151,7 +151,7 @@ HTML report is unavailable in plain text report export.
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; altera_reserved_tck ; 0.469 ; 0.000         ;
+; altera_reserved_tck ; 0.145 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -160,7 +160,7 @@ HTML report is unavailable in plain text report export.
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; altera_reserved_tck ; 28.621 ; 0.000         ;
+; altera_reserved_tck ; 28.992 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -169,7 +169,7 @@ HTML report is unavailable in plain text report export.
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; altera_reserved_tck ; 0.856 ; 0.000         ;
+; altera_reserved_tck ; 0.853 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -178,7 +178,7 @@ HTML report is unavailable in plain text report export.
 +---------------------+--------+--------------------+
 ; Clock               ; Slack  ; End Point TNS      ;
 +---------------------+--------+--------------------+
-; altera_reserved_tck ; 15.136 ; 0.000              ;
+; altera_reserved_tck ; 15.217 ; 0.000              ;
 +---------------------+--------+--------------------+
 
 
@@ -188,13 +188,13 @@ HTML report is unavailable in plain text report export.
 No synchronizer chains to report.
 
 
-+---------------------------------------------------------+
-; Slow 1100mV 0C Model Fmax Summary                       ;
-+----------+-----------------+---------------------+------+
-; Fmax     ; Restricted Fmax ; Clock Name          ; Note ;
-+----------+-----------------+---------------------+------+
-; 72.2 MHz ; 72.2 MHz        ; altera_reserved_tck ;      ;
-+----------+-----------------+---------------------+------+
++----------------------------------------------------------+
+; Slow 1100mV 0C Model Fmax Summary                        ;
++-----------+-----------------+---------------------+------+
+; Fmax      ; Restricted Fmax ; Clock Name          ; Note ;
++-----------+-----------------+---------------------+------+
+; 74.77 MHz ; 74.77 MHz       ; altera_reserved_tck ;      ;
++-----------+-----------------+---------------------+------+
 This panel reports FMAX for every clock in the design, regardless of the user-specified clock periods.  FMAX is only computed for paths where the source and destination registers or ports are driven by the same clock.  Paths of different clocks, including generated clocks, are ignored.  For paths between a clock and its inversion, FMAX is computed as if the rising and falling edges are scaled along with FMAX, such that the duty cycle (in terms of a percentage) is maintained. Altera recommends that you always use clock constraints and other slack reports for sign-off analysis.
 
 
@@ -203,7 +203,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; altera_reserved_tck ; 9.741 ; 0.000         ;
+; altera_reserved_tck ; 9.979 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -212,7 +212,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; altera_reserved_tck ; 0.443 ; 0.000         ;
+; altera_reserved_tck ; 0.135 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -221,7 +221,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; altera_reserved_tck ; 28.833 ; 0.000         ;
+; altera_reserved_tck ; 29.172 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -230,7 +230,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; altera_reserved_tck ; 0.802 ; 0.000         ;
+; altera_reserved_tck ; 0.789 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -239,7 +239,7 @@ This panel reports FMAX for every clock in the design, regardless of the user-sp
 +---------------------+--------+-------------------+
 ; Clock               ; Slack  ; End Point TNS     ;
 +---------------------+--------+-------------------+
-; altera_reserved_tck ; 15.128 ; 0.000             ;
+; altera_reserved_tck ; 15.260 ; 0.000             ;
 +---------------------+--------+-------------------+
 
 
@@ -254,7 +254,7 @@ No synchronizer chains to report.
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; altera_reserved_tck ; 12.503 ; 0.000         ;
+; altera_reserved_tck ; 12.597 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -263,7 +263,7 @@ No synchronizer chains to report.
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; altera_reserved_tck ; 0.177 ; 0.000         ;
+; altera_reserved_tck ; 0.037 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -272,7 +272,7 @@ No synchronizer chains to report.
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; altera_reserved_tck ; 29.895 ; 0.000         ;
+; altera_reserved_tck ; 30.187 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -281,7 +281,7 @@ No synchronizer chains to report.
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; altera_reserved_tck ; 0.398 ; 0.000         ;
+; altera_reserved_tck ; 0.341 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -290,7 +290,7 @@ No synchronizer chains to report.
 +---------------------+--------+--------------------+
 ; Clock               ; Slack  ; End Point TNS      ;
 +---------------------+--------+--------------------+
-; altera_reserved_tck ; 14.929 ; 0.000              ;
+; altera_reserved_tck ; 14.996 ; 0.000              ;
 +---------------------+--------+--------------------+
 
 
@@ -305,7 +305,7 @@ No synchronizer chains to report.
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; altera_reserved_tck ; 12.945 ; 0.000         ;
+; altera_reserved_tck ; 13.046 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -314,7 +314,7 @@ No synchronizer chains to report.
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; altera_reserved_tck ; 0.160 ; 0.000         ;
+; altera_reserved_tck ; 0.027 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -323,7 +323,7 @@ No synchronizer chains to report.
 +---------------------+--------+---------------+
 ; Clock               ; Slack  ; End Point TNS ;
 +---------------------+--------+---------------+
-; altera_reserved_tck ; 30.293 ; 0.000         ;
+; altera_reserved_tck ; 30.540 ; 0.000         ;
 +---------------------+--------+---------------+
 
 
@@ -332,7 +332,7 @@ No synchronizer chains to report.
 +---------------------+-------+---------------+
 ; Clock               ; Slack ; End Point TNS ;
 +---------------------+-------+---------------+
-; altera_reserved_tck ; 0.344 ; 0.000         ;
+; altera_reserved_tck ; 0.286 ; 0.000         ;
 +---------------------+-------+---------------+
 
 
@@ -341,7 +341,7 @@ No synchronizer chains to report.
 +---------------------+--------+-------------------+
 ; Clock               ; Slack  ; End Point TNS     ;
 +---------------------+--------+-------------------+
-; altera_reserved_tck ; 14.945 ; 0.000             ;
+; altera_reserved_tck ; 15.041 ; 0.000             ;
 +---------------------+--------+-------------------+
 
 
@@ -356,8 +356,8 @@ No synchronizer chains to report.
 +----------------------+-------+-------+----------+---------+---------------------+
 ; Clock                ; Setup ; Hold  ; Recovery ; Removal ; Minimum Pulse Width ;
 +----------------------+-------+-------+----------+---------+---------------------+
-; Worst-case Slack     ; 9.544 ; 0.160 ; 28.621   ; 0.344   ; 14.929              ;
-;  altera_reserved_tck ; 9.544 ; 0.160 ; 28.621   ; 0.344   ; 14.929              ;
+; Worst-case Slack     ; 9.793 ; 0.027 ; 28.992   ; 0.286   ; 14.996              ;
+;  altera_reserved_tck ; 9.793 ; 0.027 ; 28.992   ; 0.286   ; 14.996              ;
 ; Design-wide TNS      ; 0.0   ; 0.0   ; 0.0      ; 0.0     ; 0.0                 ;
 ;  altera_reserved_tck ; 0.000 ; 0.000 ; 0.000    ; 0.000   ; 0.000               ;
 +----------------------+-------+-------+----------+---------+---------------------+
@@ -381,6 +381,7 @@ No synchronizer chains to report.
 ; WR_N                ; 2.5 V        ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
 ; XCLK                ; 2.5 V        ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
 ; processed_MISO      ; 2.5 V        ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
+; SPI_RDY             ; 2.5 V        ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
 ; DB[0]               ; 2.5 V        ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
 ; DB[1]               ; 2.5 V        ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
 ; DB[2]               ; 2.5 V        ; 0 in              ; 0 H/in                  ; 0 F/in                  ; short         ; -                   ; open           ; open             ; open   ; 0 in             ; 0 H/in                 ; 0 F/in                 ; short        ; open          ; open            ; open  ; 0 V                 ; -                  ; n/a           ; n/a             ; n/a         ;
@@ -406,7 +407,6 @@ No synchronizer chains to report.
 +---------------------+--------------+-----------------+-----------------+
 ; Pin                 ; I/O Standard ; 10-90 Rise Time ; 90-10 Fall Time ;
 +---------------------+--------------+-----------------+-----------------+
-; transaction_done    ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
 ; DB[0]               ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
 ; DB[1]               ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
 ; DB[2]               ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
@@ -426,9 +426,10 @@ No synchronizer chains to report.
 ; KEY2                ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
 ; Busy                ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
 ; rst                 ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
-; CLOCK_27M           ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
-; sclk                ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
 ; SPI_cs              ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
+; CLOCK_27M           ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
+; transaction_done    ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
+; sclk                ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
 ; altera_reserved_tms ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
 ; altera_reserved_tck ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
 ; altera_reserved_tdi ; 2.5 V        ; 2000 ps         ; 2000 ps         ;
@@ -453,6 +454,7 @@ No synchronizer chains to report.
 ; WR_N                ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.52e-07 V                   ; 2.42 V              ; -0.0568 V           ; 0.173 V                              ; 0.113 V                              ; 4.5e-10 s                   ; 4.35e-10 s                  ; No                         ; No                         ; 2.32 V                      ; 3.52e-07 V                  ; 2.42 V             ; -0.0568 V          ; 0.173 V                             ; 0.113 V                             ; 4.5e-10 s                  ; 4.35e-10 s                 ; No                        ; No                        ;
 ; XCLK                ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.52e-07 V                   ; 2.42 V              ; -0.0568 V           ; 0.173 V                              ; 0.113 V                              ; 4.5e-10 s                   ; 4.35e-10 s                  ; No                         ; No                         ; 2.32 V                      ; 3.52e-07 V                  ; 2.42 V             ; -0.0568 V          ; 0.173 V                             ; 0.113 V                             ; 4.5e-10 s                  ; 4.35e-10 s                 ; No                        ; No                        ;
 ; processed_MISO      ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.6e-07 V                    ; 2.41 V              ; -0.0463 V           ; 0.201 V                              ; 0.131 V                              ; 4.61e-10 s                  ; 4.53e-10 s                  ; No                         ; Yes                        ; 2.32 V                      ; 3.6e-07 V                   ; 2.41 V             ; -0.0463 V          ; 0.201 V                             ; 0.131 V                             ; 4.61e-10 s                 ; 4.53e-10 s                 ; No                        ; Yes                       ;
+; SPI_RDY             ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.6e-07 V                    ; 2.41 V              ; -0.0463 V           ; 0.201 V                              ; 0.131 V                              ; 4.61e-10 s                  ; 4.53e-10 s                  ; No                         ; Yes                        ; 2.32 V                      ; 3.6e-07 V                   ; 2.41 V             ; -0.0463 V          ; 0.201 V                             ; 0.131 V                             ; 4.61e-10 s                 ; 4.53e-10 s                 ; No                        ; Yes                       ;
 ; DB[0]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.07e-07 V                   ; 2.36 V              ; -0.0231 V           ; 0.14 V                               ; 0.089 V                              ; 4.52e-10 s                  ; 4.35e-10 s                  ; No                         ; Yes                        ; 2.32 V                      ; 3.07e-07 V                  ; 2.36 V             ; -0.0231 V          ; 0.14 V                              ; 0.089 V                             ; 4.52e-10 s                 ; 4.35e-10 s                 ; No                        ; Yes                       ;
 ; DB[1]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.07e-07 V                   ; 2.36 V              ; -0.0231 V           ; 0.14 V                               ; 0.089 V                              ; 4.52e-10 s                  ; 4.35e-10 s                  ; No                         ; Yes                        ; 2.32 V                      ; 3.07e-07 V                  ; 2.36 V             ; -0.0231 V          ; 0.14 V                              ; 0.089 V                             ; 4.52e-10 s                 ; 4.35e-10 s                 ; No                        ; Yes                       ;
 ; DB[2]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.52e-07 V                   ; 2.42 V              ; -0.0557 V           ; 0.175 V                              ; 0.114 V                              ; 4.5e-10 s                   ; 4.35e-10 s                  ; No                         ; No                         ; 2.32 V                      ; 3.52e-07 V                  ; 2.42 V             ; -0.0557 V          ; 0.175 V                             ; 0.114 V                             ; 4.5e-10 s                  ; 4.35e-10 s                 ; No                        ; No                        ;
@@ -491,6 +493,7 @@ No synchronizer chains to report.
 ; WR_N                ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.88e-05 V                   ; 2.39 V              ; -0.0374 V           ; 0.189 V                              ; 0.158 V                              ; 4.66e-10 s                  ; 4.67e-10 s                  ; No                         ; Yes                        ; 2.32 V                      ; 3.88e-05 V                  ; 2.39 V             ; -0.0374 V          ; 0.189 V                             ; 0.158 V                             ; 4.66e-10 s                 ; 4.67e-10 s                 ; No                        ; Yes                       ;
 ; XCLK                ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.88e-05 V                   ; 2.39 V              ; -0.0374 V           ; 0.189 V                              ; 0.158 V                              ; 4.66e-10 s                  ; 4.67e-10 s                  ; No                         ; Yes                        ; 2.32 V                      ; 3.88e-05 V                  ; 2.39 V             ; -0.0374 V          ; 0.189 V                             ; 0.158 V                             ; 4.66e-10 s                 ; 4.67e-10 s                 ; No                        ; Yes                       ;
 ; processed_MISO      ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.96e-05 V                   ; 2.38 V              ; -0.0306 V           ; 0.23 V                               ; 0.206 V                              ; 4.83e-10 s                  ; 5.01e-10 s                  ; No                         ; Yes                        ; 2.32 V                      ; 3.96e-05 V                  ; 2.38 V             ; -0.0306 V          ; 0.23 V                              ; 0.206 V                             ; 4.83e-10 s                 ; 5.01e-10 s                 ; No                        ; Yes                       ;
+; SPI_RDY             ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.96e-05 V                   ; 2.38 V              ; -0.0306 V           ; 0.23 V                               ; 0.206 V                              ; 4.83e-10 s                  ; 5.01e-10 s                  ; No                         ; Yes                        ; 2.32 V                      ; 3.96e-05 V                  ; 2.38 V             ; -0.0306 V          ; 0.23 V                              ; 0.206 V                             ; 4.83e-10 s                 ; 5.01e-10 s                 ; No                        ; Yes                       ;
 ; DB[0]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.49e-05 V                   ; 2.34 V              ; -0.0118 V           ; 0.182 V                              ; 0.051 V                              ; 4.81e-10 s                  ; 4.83e-10 s                  ; Yes                        ; Yes                        ; 2.32 V                      ; 3.49e-05 V                  ; 2.34 V             ; -0.0118 V          ; 0.182 V                             ; 0.051 V                             ; 4.81e-10 s                 ; 4.83e-10 s                 ; Yes                       ; Yes                       ;
 ; DB[1]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.49e-05 V                   ; 2.34 V              ; -0.0118 V           ; 0.182 V                              ; 0.051 V                              ; 4.81e-10 s                  ; 4.83e-10 s                  ; Yes                        ; Yes                        ; 2.32 V                      ; 3.49e-05 V                  ; 2.34 V             ; -0.0118 V          ; 0.182 V                             ; 0.051 V                             ; 4.81e-10 s                 ; 4.83e-10 s                 ; Yes                       ; Yes                       ;
 ; DB[2]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.32 V                       ; 3.88e-05 V                   ; 2.39 V              ; -0.037 V            ; 0.188 V                              ; 0.158 V                              ; 4.67e-10 s                  ; 4.67e-10 s                  ; No                         ; Yes                        ; 2.32 V                      ; 3.88e-05 V                  ; 2.39 V             ; -0.037 V           ; 0.188 V                             ; 0.158 V                             ; 4.67e-10 s                 ; 4.67e-10 s                 ; No                        ; Yes                       ;
@@ -529,6 +532,7 @@ No synchronizer chains to report.
 ; WR_N                ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 4.14e-06 V                   ; 2.91 V              ; -0.119 V            ; 0.326 V                              ; 0.298 V                              ; 2.74e-10 s                  ; 2.8e-10 s                   ; No                         ; No                         ; 2.75 V                      ; 4.14e-06 V                  ; 2.91 V             ; -0.119 V           ; 0.326 V                             ; 0.298 V                             ; 2.74e-10 s                 ; 2.8e-10 s                  ; No                        ; No                        ;
 ; XCLK                ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 4.14e-06 V                   ; 2.91 V              ; -0.119 V            ; 0.326 V                              ; 0.298 V                              ; 2.74e-10 s                  ; 2.8e-10 s                   ; No                         ; No                         ; 2.75 V                      ; 4.14e-06 V                  ; 2.91 V             ; -0.119 V           ; 0.326 V                             ; 0.298 V                             ; 2.74e-10 s                 ; 2.8e-10 s                  ; No                        ; No                        ;
 ; processed_MISO      ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 4.25e-06 V                   ; 2.9 V               ; -0.107 V            ; 0.378 V                              ; 0.16 V                               ; 2.87e-10 s                  ; 4.28e-10 s                  ; No                         ; No                         ; 2.75 V                      ; 4.25e-06 V                  ; 2.9 V              ; -0.107 V           ; 0.378 V                             ; 0.16 V                              ; 2.87e-10 s                 ; 4.28e-10 s                 ; No                        ; No                        ;
+; SPI_RDY             ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 4.25e-06 V                   ; 2.9 V               ; -0.107 V            ; 0.378 V                              ; 0.16 V                               ; 2.87e-10 s                  ; 4.28e-10 s                  ; No                         ; No                         ; 2.75 V                      ; 4.25e-06 V                  ; 2.9 V              ; -0.107 V           ; 0.378 V                             ; 0.16 V                              ; 2.87e-10 s                 ; 4.28e-10 s                 ; No                        ; No                        ;
 ; DB[0]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 3.54e-06 V                   ; 2.81 V              ; -0.0578 V           ; 0.303 V                              ; 0.28 V                               ; 2.93e-10 s                  ; 3.01e-10 s                  ; No                         ; No                         ; 2.75 V                      ; 3.54e-06 V                  ; 2.81 V             ; -0.0578 V          ; 0.303 V                             ; 0.28 V                              ; 2.93e-10 s                 ; 3.01e-10 s                 ; No                        ; No                        ;
 ; DB[1]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 3.54e-06 V                   ; 2.81 V              ; -0.0578 V           ; 0.303 V                              ; 0.28 V                               ; 2.93e-10 s                  ; 3.01e-10 s                  ; No                         ; No                         ; 2.75 V                      ; 3.54e-06 V                  ; 2.81 V             ; -0.0578 V          ; 0.303 V                             ; 0.28 V                              ; 2.93e-10 s                 ; 3.01e-10 s                 ; No                        ; No                        ;
 ; DB[2]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 4.14e-06 V                   ; 2.91 V              ; -0.121 V            ; 0.326 V                              ; 0.297 V                              ; 2.74e-10 s                  ; 2.8e-10 s                   ; No                         ; No                         ; 2.75 V                      ; 4.14e-06 V                  ; 2.91 V             ; -0.121 V           ; 0.326 V                             ; 0.297 V                             ; 2.74e-10 s                 ; 2.8e-10 s                  ; No                        ; No                        ;
@@ -567,6 +571,7 @@ No synchronizer chains to report.
 ; WR_N                ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 0.000242 V                   ; 2.86 V              ; -0.0805 V           ; 0.358 V                              ; 0.156 V                              ; 3.01e-10 s                  ; 4.34e-10 s                  ; No                         ; No                         ; 2.75 V                      ; 0.000242 V                  ; 2.86 V             ; -0.0805 V          ; 0.358 V                             ; 0.156 V                             ; 3.01e-10 s                 ; 4.34e-10 s                 ; No                        ; No                        ;
 ; XCLK                ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 0.000242 V                   ; 2.86 V              ; -0.0805 V           ; 0.358 V                              ; 0.156 V                              ; 3.01e-10 s                  ; 4.34e-10 s                  ; No                         ; No                         ; 2.75 V                      ; 0.000242 V                  ; 2.86 V             ; -0.0805 V          ; 0.358 V                             ; 0.156 V                             ; 3.01e-10 s                 ; 4.34e-10 s                 ; No                        ; No                        ;
 ; processed_MISO      ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 0.000247 V                   ; 2.85 V              ; -0.0711 V           ; 0.204 V                              ; 0.181 V                              ; 4.55e-10 s                  ; 4.49e-10 s                  ; No                         ; No                         ; 2.75 V                      ; 0.000247 V                  ; 2.85 V             ; -0.0711 V          ; 0.204 V                             ; 0.181 V                             ; 4.55e-10 s                 ; 4.49e-10 s                 ; No                        ; No                        ;
+; SPI_RDY             ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 0.000247 V                   ; 2.85 V              ; -0.0711 V           ; 0.204 V                              ; 0.181 V                              ; 4.55e-10 s                  ; 4.49e-10 s                  ; No                         ; No                         ; 2.75 V                      ; 0.000247 V                  ; 2.85 V             ; -0.0711 V          ; 0.204 V                             ; 0.181 V                             ; 4.55e-10 s                 ; 4.49e-10 s                 ; No                        ; No                        ;
 ; DB[0]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 0.000213 V                   ; 2.79 V              ; -0.0324 V           ; 0.139 V                              ; 0.119 V                              ; 4.42e-10 s                  ; 4.33e-10 s                  ; No                         ; Yes                        ; 2.75 V                      ; 0.000213 V                  ; 2.79 V             ; -0.0324 V          ; 0.139 V                             ; 0.119 V                             ; 4.42e-10 s                 ; 4.33e-10 s                 ; No                        ; Yes                       ;
 ; DB[1]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 0.000213 V                   ; 2.79 V              ; -0.0324 V           ; 0.139 V                              ; 0.119 V                              ; 4.42e-10 s                  ; 4.33e-10 s                  ; No                         ; Yes                        ; 2.75 V                      ; 0.000213 V                  ; 2.79 V             ; -0.0324 V          ; 0.139 V                             ; 0.119 V                             ; 4.42e-10 s                 ; 4.33e-10 s                 ; No                        ; Yes                       ;
 ; DB[2]               ; 2.5 V        ; 0 s                 ; 0 s                 ; 2.75 V                       ; 0.000242 V                   ; 2.86 V              ; -0.0814 V           ; 0.36 V                               ; 0.156 V                              ; 3e-10 s                     ; 4.34e-10 s                  ; No                         ; No                         ; 2.75 V                      ; 0.000242 V                  ; 2.86 V             ; -0.0814 V          ; 0.36 V                              ; 0.156 V                             ; 3e-10 s                    ; 4.34e-10 s                 ; No                        ; No                        ;
@@ -592,7 +597,7 @@ No synchronizer chains to report.
 +---------------------+---------------------+----------+----------+----------+----------+
 ; From Clock          ; To Clock            ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +---------------------+---------------------+----------+----------+----------+----------+
-; altera_reserved_tck ; altera_reserved_tck ; 16263    ; 0        ; 107      ; 0        ;
+; altera_reserved_tck ; altera_reserved_tck ; 16549    ; 0        ; 107      ; 0        ;
 +---------------------+---------------------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -602,7 +607,7 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +---------------------+---------------------+----------+----------+----------+----------+
 ; From Clock          ; To Clock            ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +---------------------+---------------------+----------+----------+----------+----------+
-; altera_reserved_tck ; altera_reserved_tck ; 16263    ; 0        ; 107      ; 0        ;
+; altera_reserved_tck ; altera_reserved_tck ; 16549    ; 0        ; 107      ; 0        ;
 +---------------------+---------------------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -612,7 +617,7 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +---------------------+---------------------+----------+----------+----------+----------+
 ; From Clock          ; To Clock            ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +---------------------+---------------------+----------+----------+----------+----------+
-; altera_reserved_tck ; altera_reserved_tck ; 747      ; 0        ; 0        ; 0        ;
+; altera_reserved_tck ; altera_reserved_tck ; 1041     ; 0        ; 0        ; 0        ;
 +---------------------+---------------------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -622,7 +627,7 @@ Entries labeled "false path" only account for clock-to-clock false paths and not
 +---------------------+---------------------+----------+----------+----------+----------+
 ; From Clock          ; To Clock            ; RR Paths ; FR Paths ; RF Paths ; FF Paths ;
 +---------------------+---------------------+----------+----------+----------+----------+
-; altera_reserved_tck ; altera_reserved_tck ; 747      ; 0        ; 0        ; 0        ;
+; altera_reserved_tck ; altera_reserved_tck ; 1041     ; 0        ; 0        ; 0        ;
 +---------------------+---------------------+----------+----------+----------+----------+
 Entries labeled "false path" only account for clock-to-clock false paths and not path-based false paths. As a result, actual path counts may be lower than reported.
 
@@ -645,11 +650,11 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ; Property                        ; Setup ; Hold ;
 +---------------------------------+-------+------+
 ; Illegal Clocks                  ; 0     ; 0    ;
-; Unconstrained Clocks            ; 3     ; 3    ;
+; Unconstrained Clocks            ; 4     ; 4    ;
 ; Unconstrained Input Ports       ; 24    ; 24   ;
-; Unconstrained Input Port Paths  ; 261   ; 261  ;
-; Unconstrained Output Ports      ; 26    ; 26   ;
-; Unconstrained Output Port Paths ; 38    ; 38   ;
+; Unconstrained Input Port Paths  ; 446   ; 446  ;
+; Unconstrained Output Ports      ; 27    ; 27   ;
+; Unconstrained Output Port Paths ; 45    ; 45   ;
 +---------------------------------+-------+------+
 
 
@@ -660,6 +665,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 +--------------------------------------+---------------------+------+---------------+
 ; CLOCK_27M                            ;                     ; Base ; Unconstrained ;
 ; Clk_divider:Clk_divider_inst|clk_out ;                     ; Base ; Unconstrained ;
+; SPI_cs                               ;                     ; Base ; Unconstrained ;
 ; altera_reserved_tck                  ; altera_reserved_tck ; Base ; Constrained   ;
 ; sclk                                 ;                     ; Base ; Unconstrained ;
 +--------------------------------------+---------------------+------+---------------+
@@ -721,6 +727,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ; DB[14]              ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; DB[15]              ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; RD_N                ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; SPI_RDY             ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; WR_N                ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; altera_reserved_tdo ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; convst_A            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
@@ -787,6 +794,7 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 ; DB[14]              ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; DB[15]              ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; RD_N                ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
+; SPI_RDY             ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; WR_N                ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; altera_reserved_tdo ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
 ; convst_A            ; No output delay, min/max delays, false-path exceptions, or max skew assignments found ;
@@ -803,13 +811,14 @@ No non-DPA dedicated SERDES Receiver circuitry present in device or used in desi
 Info: *******************************************************************
 Info: Running Quartus Prime Timing Analyzer
     Info: Version 18.1.0 Build 625 09/12/2018 SJ Lite Edition
-    Info: Processing started: Sun Jul 28 16:15:06 2024
+    Info: Processing started: Sun Aug 18 16:57:43 2024
 Info: Command: quartus_sta ADCdriver -c driver
 Info: qsta_default_script.tcl version: #1
 Warning (18236): Number of processors has not been specified which may cause overloading on shared machines.  Set the global assignment NUM_PARALLEL_PROCESSORS in your QSF to an appropriate value for best performance.
 Info (20030): Parallel compilation is enabled and will use 4 of the 4 processors detected
 Info (21077): Low junction temperature is 0 degrees C
 Info (21077): High junction temperature is 85 degrees C
+Warning (335093): The Timing Analyzer is analyzing 1 combinational loops as latches. For more details, run the Check Timing command in the Timing Analyzer or view the "User-Specified and Inferred Latches" table in the Analysis & Synthesis report.
 Info (332164): Evaluating HDL-embedded SDC commands
     Info (332165): Entity sld_hub
         Info (332166): create_clock -name altera_reserved_tck [get_ports {altera_reserved_tck}] -period 30MHz   
@@ -817,129 +826,137 @@ Info (332164): Evaluating HDL-embedded SDC commands
         Info (332166): set_clock_groups -asynchronous -group {altera_reserved_tck}
 Critical Warning (332012): Synopsys Design Constraints File file not found: 'driver.sdc'. A Synopsys Design Constraints File is required by the Timing Analyzer to get proper timing constraints. Without it, the Compiler will not properly optimize the design.
 Warning (332060): Node: Clk_divider:Clk_divider_inst|clk_out was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register driver:driver_inst|RD_N is being clocked by Clk_divider:Clk_divider_inst|clk_out
+    Info (13166): Register driver:driver_inst|CS_N is being clocked by Clk_divider:Clk_divider_inst|clk_out
 Warning (332060): Node: CLOCK_27M was determined to be a clock but was found without an associated clock assignment.
     Info (13166): Register Clk_divider:Clk_divider_inst|clk_out is being clocked by CLOCK_27M
 Warning (332060): Node: sclk was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register spi:spi_inst|processed_MISO~en is being clocked by sclk
+    Info (13166): Register spi:spi_inst|processed_MISO~reg0_emulated is being clocked by sclk
+Warning (332060): Node: SPI_cs was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Latch spi:spi_inst|processed_MISO~1 is being clocked by SPI_cs
 Info (332143): No user constrained clock uncertainty found in the design. Calling "derive_clock_uncertainty"
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
 Info: Found TIMING_ANALYZER_REPORT_SCRIPT_INCLUDE_DEFAULT_ANALYSIS = ON
 Info: Analyzing Slow 1100mV 85C Model
-Info (332146): Worst-case setup slack is 9.544
+Info (332146): Worst-case setup slack is 9.793
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     9.544               0.000 altera_reserved_tck 
-Info (332146): Worst-case hold slack is 0.469
+    Info (332119):     9.793               0.000 altera_reserved_tck 
+Info (332146): Worst-case hold slack is 0.145
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.469               0.000 altera_reserved_tck 
-Info (332146): Worst-case recovery slack is 28.621
+    Info (332119):     0.145               0.000 altera_reserved_tck 
+Info (332146): Worst-case recovery slack is 28.992
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    28.621               0.000 altera_reserved_tck 
-Info (332146): Worst-case removal slack is 0.856
+    Info (332119):    28.992               0.000 altera_reserved_tck 
+Info (332146): Worst-case removal slack is 0.853
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.856               0.000 altera_reserved_tck 
-Info (332146): Worst-case minimum pulse width slack is 15.136
+    Info (332119):     0.853               0.000 altera_reserved_tck 
+Info (332146): Worst-case minimum pulse width slack is 15.217
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    15.136               0.000 altera_reserved_tck 
+    Info (332119):    15.217               0.000 altera_reserved_tck 
 Info: Analyzing Slow 1100mV 0C Model
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Warning (332060): Node: Clk_divider:Clk_divider_inst|clk_out was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register driver:driver_inst|RD_N is being clocked by Clk_divider:Clk_divider_inst|clk_out
+    Info (13166): Register driver:driver_inst|CS_N is being clocked by Clk_divider:Clk_divider_inst|clk_out
 Warning (332060): Node: CLOCK_27M was determined to be a clock but was found without an associated clock assignment.
     Info (13166): Register Clk_divider:Clk_divider_inst|clk_out is being clocked by CLOCK_27M
 Warning (332060): Node: sclk was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register spi:spi_inst|processed_MISO~en is being clocked by sclk
+    Info (13166): Register spi:spi_inst|processed_MISO~reg0_emulated is being clocked by sclk
+Warning (332060): Node: SPI_cs was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Latch spi:spi_inst|processed_MISO~1 is being clocked by SPI_cs
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
-Info (332146): Worst-case setup slack is 9.741
+Info (332146): Worst-case setup slack is 9.979
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     9.741               0.000 altera_reserved_tck 
-Info (332146): Worst-case hold slack is 0.443
+    Info (332119):     9.979               0.000 altera_reserved_tck 
+Info (332146): Worst-case hold slack is 0.135
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.443               0.000 altera_reserved_tck 
-Info (332146): Worst-case recovery slack is 28.833
+    Info (332119):     0.135               0.000 altera_reserved_tck 
+Info (332146): Worst-case recovery slack is 29.172
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    28.833               0.000 altera_reserved_tck 
-Info (332146): Worst-case removal slack is 0.802
+    Info (332119):    29.172               0.000 altera_reserved_tck 
+Info (332146): Worst-case removal slack is 0.789
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.802               0.000 altera_reserved_tck 
-Info (332146): Worst-case minimum pulse width slack is 15.128
+    Info (332119):     0.789               0.000 altera_reserved_tck 
+Info (332146): Worst-case minimum pulse width slack is 15.260
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    15.128               0.000 altera_reserved_tck 
+    Info (332119):    15.260               0.000 altera_reserved_tck 
 Info: Analyzing Fast 1100mV 85C Model
 Info (334003): Started post-fitting delay annotation
 Info (334004): Delay annotation completed successfully
 Warning (332060): Node: Clk_divider:Clk_divider_inst|clk_out was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register driver:driver_inst|RD_N is being clocked by Clk_divider:Clk_divider_inst|clk_out
+    Info (13166): Register driver:driver_inst|CS_N is being clocked by Clk_divider:Clk_divider_inst|clk_out
 Warning (332060): Node: CLOCK_27M was determined to be a clock but was found without an associated clock assignment.
     Info (13166): Register Clk_divider:Clk_divider_inst|clk_out is being clocked by CLOCK_27M
 Warning (332060): Node: sclk was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register spi:spi_inst|processed_MISO~en is being clocked by sclk
+    Info (13166): Register spi:spi_inst|processed_MISO~reg0_emulated is being clocked by sclk
+Warning (332060): Node: SPI_cs was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Latch spi:spi_inst|processed_MISO~1 is being clocked by SPI_cs
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
-Info (332146): Worst-case setup slack is 12.503
+Info (332146): Worst-case setup slack is 12.597
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    12.503               0.000 altera_reserved_tck 
-Info (332146): Worst-case hold slack is 0.177
+    Info (332119):    12.597               0.000 altera_reserved_tck 
+Info (332146): Worst-case hold slack is 0.037
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.177               0.000 altera_reserved_tck 
-Info (332146): Worst-case recovery slack is 29.895
+    Info (332119):     0.037               0.000 altera_reserved_tck 
+Info (332146): Worst-case recovery slack is 30.187
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    29.895               0.000 altera_reserved_tck 
-Info (332146): Worst-case removal slack is 0.398
+    Info (332119):    30.187               0.000 altera_reserved_tck 
+Info (332146): Worst-case removal slack is 0.341
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.398               0.000 altera_reserved_tck 
-Info (332146): Worst-case minimum pulse width slack is 14.929
+    Info (332119):     0.341               0.000 altera_reserved_tck 
+Info (332146): Worst-case minimum pulse width slack is 14.996
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    14.929               0.000 altera_reserved_tck 
+    Info (332119):    14.996               0.000 altera_reserved_tck 
 Info: Analyzing Fast 1100mV 0C Model
 Warning (332060): Node: Clk_divider:Clk_divider_inst|clk_out was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register driver:driver_inst|RD_N is being clocked by Clk_divider:Clk_divider_inst|clk_out
+    Info (13166): Register driver:driver_inst|CS_N is being clocked by Clk_divider:Clk_divider_inst|clk_out
 Warning (332060): Node: CLOCK_27M was determined to be a clock but was found without an associated clock assignment.
     Info (13166): Register Clk_divider:Clk_divider_inst|clk_out is being clocked by CLOCK_27M
 Warning (332060): Node: sclk was determined to be a clock but was found without an associated clock assignment.
-    Info (13166): Register spi:spi_inst|processed_MISO~en is being clocked by sclk
+    Info (13166): Register spi:spi_inst|processed_MISO~reg0_emulated is being clocked by sclk
+Warning (332060): Node: SPI_cs was determined to be a clock but was found without an associated clock assignment.
+    Info (13166): Latch spi:spi_inst|processed_MISO~1 is being clocked by SPI_cs
 Info (332123): Deriving Clock Uncertainty. Please refer to report_sdc in the Timing Analyzer to see clock uncertainties.
-Info (332146): Worst-case setup slack is 12.945
+Info (332146): Worst-case setup slack is 13.046
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    12.945               0.000 altera_reserved_tck 
-Info (332146): Worst-case hold slack is 0.160
+    Info (332119):    13.046               0.000 altera_reserved_tck 
+Info (332146): Worst-case hold slack is 0.027
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.160               0.000 altera_reserved_tck 
-Info (332146): Worst-case recovery slack is 30.293
+    Info (332119):     0.027               0.000 altera_reserved_tck 
+Info (332146): Worst-case recovery slack is 30.540
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    30.293               0.000 altera_reserved_tck 
-Info (332146): Worst-case removal slack is 0.344
+    Info (332119):    30.540               0.000 altera_reserved_tck 
+Info (332146): Worst-case removal slack is 0.286
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):     0.344               0.000 altera_reserved_tck 
-Info (332146): Worst-case minimum pulse width slack is 14.945
+    Info (332119):     0.286               0.000 altera_reserved_tck 
+Info (332146): Worst-case minimum pulse width slack is 15.041
     Info (332119):     Slack       End Point TNS Clock 
     Info (332119): ========= =================== =====================
-    Info (332119):    14.945               0.000 altera_reserved_tck 
+    Info (332119):    15.041               0.000 altera_reserved_tck 
 Info (332102): Design is not fully constrained for setup requirements
 Info (332102): Design is not fully constrained for hold requirements
-Info: Quartus Prime Timing Analyzer was successful. 0 errors, 14 warnings
-    Info: Peak virtual memory: 5245 megabytes
-    Info: Processing ended: Sun Jul 28 16:15:32 2024
-    Info: Elapsed time: 00:00:26
-    Info: Total CPU time (on all processors): 00:00:19
+Info: Quartus Prime Timing Analyzer was successful. 0 errors, 19 warnings
+    Info: Peak virtual memory: 5252 megabytes
+    Info: Processing ended: Sun Aug 18 16:58:28 2024
+    Info: Elapsed time: 00:00:45
+    Info: Total CPU time (on all processors): 00:00:40
 
 

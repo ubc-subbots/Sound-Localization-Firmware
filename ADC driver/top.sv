@@ -23,13 +23,14 @@ module top(
 	output logic XCLK,
 
 	
-	output logic processed_MISO //SPI outputs to Rasberry pi
+	output logic processed_MISO, //SPI outputs to Rasberry pi
+	output logic SPI_RDY
 );
 	
-	parameter [31:0] BUFFER_SAMPLE = 32'd10;
+	parameter [31:0] BUFFER_SAMPLE = 32'd50;
 	parameter [15:0] VALID_VOLTAGE = 16'd32; 
-	parameter [31:0] VALID_COUNT_NEEDED = 32'd4;
-	parameter [31:0] REQUIRED_VOLTAGE = 32'd20;
+	parameter [31:0] VALID_COUNT_NEEDED = 32'd20;
+	parameter [31:0] REQUIRED_VOLTAGE = 32'd100;
 	
 	logic [15:0] toMem;
 	logic mem_ready;
@@ -44,25 +45,31 @@ module top(
 	logic ready_for_data;
 	
 	
-	logic [31:0] valid_count; 
+	logic [31:0] valid_count; //counter to indicate how many valid voltage we have gotten in a row, indicating if what we are detecting is a real pulse
 	
-	logic [31:0] count;
+	logic [31:0] count; //counter to indicate how many voltage we are storing in storage, and if this hits REQUIRED_VOLTAGE, we begin empting everything to SPI 
 
 	logic clk; 
 	
 	assign ADCrst = ~KEY2;
 	
-	typedef enum {
-		DEFAULT_WAIT, 
-		JUNK,
-		FILL_BUFFER,
-		COLLECT_UNTIL_FULL,
-		WAIT_FOR_FILL,
-		SPI,
-		WAIT_FOR_SPI 
-	} state_t;
+
 	
-	state_t state; 
+	parameter [5:0] DEFAULT_WAIT = 6'd0,
+						 JUNK = 6'b000011,
+						 FILL_BUFFER = 6'b000001,
+						 COLLECT_UNTIL_FULL = 6'b001001,
+						 WAIT_FOR_FILL = 6'b001000,
+						 PASSING_DATA_TO_SPI = 6'b000010,
+						 SPI = 6'b000100,   //6
+						 WAIT_FOR_SPI = 6'b010000; //16
+						 
+   logic [5:0] state = DEFAULT_WAIT; 
+	
+	assign mem_write = state[0];
+	assign mem_read = state[1];
+	assign SPI_RDY = state[2];
+	
 	
 	Clk_divider Clk_divider_inst(
 		.clk_in(CLOCK_27M),
@@ -134,7 +141,7 @@ module top(
 				FILL_BUFFER: state <= DEFAULT_WAIT; 
 				COLLECT_UNTIL_FULL: begin
 											if(count == REQUIRED_VOLTAGE) 
-												state <= SPI;
+												state <= PASSING_DATA_TO_SPI;
 											else 
 												state <= WAIT_FOR_FILL;
 										  end 
@@ -144,15 +151,20 @@ module top(
 											else 
 												state <= WAIT_FOR_FILL;
 									end 
+				PASSING_DATA_TO_SPI: begin
+												state <= SPI;
+											end
 				SPI: begin
 							if(empty) 
 								state <= DEFAULT_WAIT;
-							else 
+							else if(~SPI_cs)
 								state <= WAIT_FOR_SPI;
+							else 
+								state <= SPI;
 					  end
 				WAIT_FOR_SPI: begin	
 										if(transaction_done)
-											state <= SPI;
+											state <= PASSING_DATA_TO_SPI;
 										else 
 											state <= WAIT_FOR_SPI;
 								  end 
@@ -161,31 +173,27 @@ module top(
 		end
 	end
 	
-	/*always_ff @(posedge clk or negedge rst) begin 
+	always_ff@(posedge clk or negedge rst) begin
 		if(~rst) begin
 			valid_count <= 32'd0;
 		end else begin
-			case(state) 
-				DEFAULT_WAIT: begin 
-										mem_write <= 1'd0;
-										mem_read <= 1'd0;
-								  end 
-				JUNK: begin
-							mem_write <= 1'd1;
-							mem_read <= 1'd1;
-						end
-				FILL_BUFFER: begin
-									mem_read <= 1'd0;
-								 end
-				
-				
-		
+			if((((state == JUNK) || (state == FILL_BUFFER))) && ((toMem >= VALID_VOLTAGE) && (toMem < 16'b1111_1000_0000_0000))) 
+				valid_count <= valid_count + 1'd1; 
+			else if(state == COLLECT_UNTIL_FULL) 
+				valid_count <= 32'd0; 
 		end
+	end
 	
-	
-	end*/
-	
-
+	always_ff@(posedge clk or negedge rst) begin
+		if(~rst) begin
+			count <= 32'd0;
+		end else begin
+			if(state == COLLECT_UNTIL_FULL)
+				count <= count + 1'd1;
+			else if(state == SPI) 
+				count <= 32'd0;
+		end
+	end
 		
 	
 endmodule

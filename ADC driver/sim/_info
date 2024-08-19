@@ -8,36 +8,111 @@ z2
 !i10f 100
 cModel Technology
 dC:/intelFPGA_lite/projects/lpt_3_q1
-vdriver
+YADC_bfm
 Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
-Z1 !s110 1721601612
+Z1 !s110 1722821834
 !i10b 1
-!s100 31C79kjQ?7_;G5=QoO:a?1
-I8kl]8z72^lhcOYARJ98Sj3
+!s100 M9S9U8V;<Ni;Ch;>^5:mf0
+IW?VE9@XN^hIn^XE5XXJFA3
 Z2 VDg1SIo80bB@j0V0VzS_@n1
-!s105 driver_sv_unit
+!s105 ADC_bfm_sv_unit
 S1
 Z3 dC:/Sound-Localization-Firmware/ADC driver
-w1721601581
-8C:/Sound-Localization-Firmware/ADC driver/driver.sv
-FC:/Sound-Localization-Firmware/ADC driver/driver.sv
-L0 27
-Z4 OV;L;10.5b;63
+Z4 w1722821693
+8C:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/ADC_bfm.sv
+FC:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/ADC_bfm.sv
+L0 3
+Z5 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z5 !s108 1721601612.000000
-!s107 C:/Sound-Localization-Firmware/ADC driver/driver.sv|
-!s90 -reportprogress|300|-work|sim|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/driver.sv|
+Z6 !s108 1722821834.000000
+!s107 C:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/ADC_bfm.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/ADC_bfm.sv|
 !i113 1
-Z6 o-work sim -sv
-Z7 tCvgOpt 0
+Z7 o-work work -sv
+Z8 tCvgOpt 0
+n@a@d@c_bfm
+vADCmemory
+R0
+Z9 !s110 1722821835
+!i10b 1
+!s100 Yf9lC:<a=^:_ng^GRcWU=0
+I>`]?b]g7IMTW`kHdHGJJn1
+R2
+!s105 ADCmemory_sv_unit
+S1
+R3
+w1720837649
+8C:/Sound-Localization-Firmware/ADC driver/ADCmemory.sv
+FC:/Sound-Localization-Firmware/ADC driver/ADCmemory.sv
+L0 25
+R5
+r1
+!s85 0
+31
+Z10 !s108 1722821835.000000
+!s107 C:/Sound-Localization-Firmware/ADC driver/ADCmemory.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/ADCmemory.sv|
+!i113 1
+R7
+R8
+n@a@d@cmemory
+vClk_divider
+R0
+R9
+!i10b 1
+!s100 ?7?[W@m5A1?l>YFUUiC?b0
+IWS8aelmF`nIREk[W`oMk_3
+R2
+!s105 Clk_divider_sv_unit
+S1
+R3
+w1718576369
+8C:/Sound-Localization-Firmware/ADC driver/Clk_divider.sv
+FC:/Sound-Localization-Firmware/ADC driver/Clk_divider.sv
+L0 1
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Sound-Localization-Firmware/ADC driver/Clk_divider.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/Clk_divider.sv|
+!i113 1
+R7
+R8
+n@clk_divider
+vdriver
+R0
+R9
+!i10b 1
+!s100 KjzJQo^HZ9M_>5X6gCaRA0
+IHS=LOTo5n4`DU7idYX20Q1
+R2
+!s105 driver_sv_unit
+S1
+R3
+w1722749696
+8C:/Sound-Localization-Firmware/ADC driver/driver.sv
+FC:/Sound-Localization-Firmware/ADC driver/driver.sv
+L0 28
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Sound-Localization-Firmware/ADC driver/driver.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/driver.sv|
+!i113 1
+R7
+R8
 vdriver_tb
 R0
-R1
+R9
 !i10b 1
 !s100 VG6gWOP3doCLB5c?cG^0a1
-I4j7Ea9Sb0<YbW>4OZ6KQD3
+IFQgOgX5]E?o>X[XP[mBP20
 R2
 !s105 driver_tb_sv_unit
 S1
@@ -46,40 +121,40 @@ w1721601466
 8C:/Sound-Localization-Firmware/ADC driver/driver_tb.sv
 FC:/Sound-Localization-Firmware/ADC driver/driver_tb.sv
 L0 1
-R4
+R5
 r1
 !s85 0
 31
-R5
+R10
 !s107 C:/Sound-Localization-Firmware/ADC driver/driver_tb.sv|
-!s90 -reportprogress|300|-work|sim|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/driver_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/driver_tb.sv|
 !i113 1
-R6
 R7
+R8
 vspi
 R0
-R1
+R9
 !i10b 1
-!s100 ;6N5Y<k>=Wk5Eg?I34m^[1
-IY]@S3G@UQ^;nEBBYbY@8h3
+!s100 lh8R2`LDOHJ1XOi42VHZ^0
+IN@KGn>@]JooHP?I]12RbQ2
 R2
-Z8 !s105 SPI_slave_sv_unit
+Z11 !s105 SPI_slave_sv_unit
 S1
 R3
-w1718556603
-Z9 8C:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv
-Z10 FC:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv
+w1722819650
+Z12 8C:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv
+Z13 FC:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv
 L0 1
-R4
+R5
 r1
 !s85 0
 31
-R5
-Z11 !s107 C:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv|
-Z12 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv|
+R10
+Z14 !s107 C:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv|
+Z15 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/SPI_slave.sv|
 !i113 1
-Z13 o-work work -sv
 R7
+R8
 vSPI_slave
 R0
 !s110 1715200902
@@ -87,23 +162,23 @@ R0
 !s100 7]m3WTo6LA4Ibb^MIV_me3
 IDHVEfcb9NN=kLjQ2[?M3h2
 R2
-R8
+R11
 S1
 R3
 w1715200203
-R9
-R10
+R12
+R13
 L0 1
-R4
+R5
 r1
 !s85 0
 31
 !s108 1715200902.000000
-R11
-R12
+R14
+R15
 !i113 1
-R13
 R7
+R8
 n@s@p@i_slave
 vSPI_tb
 R0
@@ -119,14 +194,89 @@ w1715200884
 8C:/Sound-Localization-Firmware/ADC driver/SPI_tb.sv
 FC:/Sound-Localization-Firmware/ADC driver/SPI_tb.sv
 L0 1
-R4
+R5
 r1
 !s85 0
 31
-R5
+R6
 !s107 C:/Sound-Localization-Firmware/ADC driver/SPI_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/SPI_tb.sv|
 !i113 1
-R13
 R7
+R8
 n@s@p@i_tb
+Xtester_sv_unit
+!s115 ADC_bfm
+R0
+R9
+!i10b 1
+!s100 1ia746I[;O><K<FbToa@R2
+IIO>9=aVO5RX77:4JTl4472
+VIO>9=aVO5RX77:4JTl4472
+!i103 1
+S1
+R3
+w1722817787
+8C:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/tester.sv
+FC:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/tester.sv
+L0 1
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/tester.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/tester.sv|
+!i113 1
+R7
+R8
+vtop
+R0
+R9
+!i10b 1
+!s100 8jhHG=OaJaD;bLg]3dJ_=0
+I^8XfH^Dz;d8MNkHC@HSRk1
+R2
+!s105 top_sv_unit
+S1
+R3
+w1722815645
+8C:/Sound-Localization-Firmware/ADC driver/top.sv
+FC:/Sound-Localization-Firmware/ADC driver/top.sv
+L0 1
+R5
+r1
+!s85 0
+31
+R10
+!s107 C:/Sound-Localization-Firmware/ADC driver/top.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/top.sv|
+!i113 1
+R7
+R8
+vtop_tb
+R0
+R1
+!i10b 1
+!s100 ?23^77dQ]z:?i0``H7B:=3
+IAJ[E;5_<67B=1;LzX1Y6i0
+R2
+!s105 top_tb_sv_unit
+S1
+R3
+R4
+8C:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/top_tb.sv
+FC:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/top_tb.sv
+FC:\Sound-Localization-Firmware\ADC driver\super_advanced_tb\ADC_bfm.sv
+FC:\Sound-Localization-Firmware\ADC driver\super_advanced_tb\tester.sv
+L0 1
+R5
+r1
+!s85 0
+31
+R6
+!s107 C:\Sound-Localization-Firmware\ADC driver\super_advanced_tb\tester.sv|C:\Sound-Localization-Firmware\ADC driver\super_advanced_tb\ADC_bfm.sv|C:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/top_tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Sound-Localization-Firmware/ADC driver/super_advanced_tb/top_tb.sv|
+!i113 1
+R7
+R8

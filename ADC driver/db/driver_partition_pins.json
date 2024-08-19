@@ -40,6 +40,10 @@
 					"strict" : false
 				},
 				{
+					"name" : "SPI_RDY",
+					"strict" : false
+				},
+				{
 					"name" : "DB[0]",
 					"strict" : false
 				},
@@ -116,15 +120,19 @@
 					"strict" : false
 				},
 				{
+					"name" : "SPI_cs",
+					"strict" : false
+				},
+				{
 					"name" : "CLOCK_27M",
 					"strict" : false
 				},
 				{
-					"name" : "sclk",
+					"name" : "transaction_done",
 					"strict" : false
 				},
 				{
-					"name" : "SPI_cs",
+					"name" : "sclk",
 					"strict" : false
 				}
 			]
