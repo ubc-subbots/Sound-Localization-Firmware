@@ -58,6 +58,7 @@ module top(
 	parameter [5:0] DEFAULT_WAIT = 6'd0,
 						 JUNK = 6'b000011,
 						 FILL_BUFFER = 6'b000001,
+						 DUMP_EXCESS = 6'b001010,
 						 COLLECT_UNTIL_FULL = 6'b001001,
 						 WAIT_FOR_FILL = 6'b001000,
 						 PASSING_DATA_TO_SPI = 6'b000010,
@@ -134,6 +135,8 @@ module top(
 											state <= FILL_BUFFER;
 										else if(mem_ready && (mem_count == BUFFER_SAMPLE))
 											state <= JUNK;
+										else if(mem_ready && (mem_count > BUFFER_SAMPLE))
+											state <= DUMP_EXCESS;
 										else 
 											state <= DEFAULT_WAIT; 
 								  end
@@ -168,6 +171,7 @@ module top(
 										else 
 											state <= WAIT_FOR_SPI;
 								  end 
+				default: state <= DEFAULT_WAIT;
 				endcase 
 		
 		end
