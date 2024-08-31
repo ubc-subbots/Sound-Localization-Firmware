@@ -46,7 +46,7 @@ module spi
 		if(cs) begin 
 			MISO_counter <= 4'b1110;
 			processed_MISO <= unprocessed_MISO[4'b1111];
-			ready_for_data <= 1'b1;
+			ready_for_data <= 1'b0;
 			state <= INIT;
 		end
 		
@@ -70,8 +70,10 @@ module spi
 						end else if(notfinished) begin
 							processed_MISO <= unprocessed_MISO[0];
 							notfinished <= 1'b0;
+							ready_for_data <= 1'b1;
 						end else begin
 							processed_MISO <= 1'bz;
+							ready_for_data <= 1'b1;
 						end
 					end
 				endcase

@@ -236,7 +236,7 @@ module driver(
 			case(state_ff) 
 				HOLD:
 					begin
-						RD_N       <= 1'b1;  //should be 1
+						RD_N       <= 1'b1;  
 						convst_A   <= 1'b0;
 						convst_B   <= 1'b0;
 						convst_C   <= 1'b0;
@@ -246,7 +246,7 @@ module driver(
 					end
 				INIT:
 					begin 
-						convst_A   <= 1'b1; //should be 1
+						convst_A   <= 1'b1; 
 						convst_B   <= 1'b1;
 						convst_C   <= 1'b1;
 						convst_D   <= 1'b1; 
@@ -261,7 +261,7 @@ module driver(
 							RD_N    <= 1'b0;
 							memreg  <= DB;
 						end else begin
-							RD_N    <= 1'b1;   //should be 1;
+							RD_N    <= 1'b1;   
 							memreg  <= DB;
 						end
 						convstsent <= 1'b0; 
@@ -275,7 +275,7 @@ module driver(
 					begin
 						toMem      <= memreg;
 						mem_ready  <= 1'b1; 
-						RD_N       <= 1'b1;  //should be 1
+						RD_N       <= 1'b1;  
 						ADCread    <= ADCread + 1'b1;
 					end
 				

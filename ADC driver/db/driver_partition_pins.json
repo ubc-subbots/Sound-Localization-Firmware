@@ -128,11 +128,11 @@
 					"strict" : false
 				},
 				{
-					"name" : "transaction_done",
+					"name" : "sclk",
 					"strict" : false
 				},
 				{
-					"name" : "sclk",
+					"name" : "transaction_done",
 					"strict" : false
 				}
 			]

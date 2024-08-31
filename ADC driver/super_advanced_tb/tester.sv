@@ -17,7 +17,7 @@ class tester;
 	endfunction : get_ADC_junk_data
 	
 	protected function shortint get_ADC_valid_data(shortint valid_voltage); 
-		return $urandom_range(valid_voltage, 16'h07FF);
+		return $urandom_range(valid_voltage, 16'h07FF);  
 	endfunction : get_ADC_valid_data
 	
 	

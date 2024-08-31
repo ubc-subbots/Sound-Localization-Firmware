@@ -1,3 +1,24 @@
+/// # ADS8528 Driver Specification
+///
+/// ## Overview
+///
+/// Top level module responsible with the driver, memory
+/// as well as the SPI module to raspberry-pi
+///
+/// ## IO Ports
+/// refer to individual modules for port descrption
+///
+/// ## parameter 
+///
+/// BUFFER_SAMPLE : The maximum amount of sample stored in the FIFO while junk data is being read, writing to the FIFO while at this limit results in trashing whatever is at the start of the queue
+/// VALID_VOLTAGE : Any voltage above this threshold will be considered valid
+/// VALID_COUNT_NEEDED : The valid voltage the FPGA needs to recieve in a row for the system to consider it a valid pulse and transmit it to the raspberry pi 
+/// REQUIRED_VOLTAGE : Amount of sample to be collected and sent to the raspberry pi
+
+
+
+
+
 module top(
 	inout [15:0] DB,  //driver inputs
 	input Busy,
@@ -27,10 +48,10 @@ module top(
 	output logic SPI_RDY
 );
 	
-	parameter [31:0] BUFFER_SAMPLE = 32'd50;
+	parameter [31:0] BUFFER_SAMPLE = 32'd500;
 	parameter [15:0] VALID_VOLTAGE = 16'd32; 
 	parameter [31:0] VALID_COUNT_NEEDED = 32'd20;
-	parameter [31:0] REQUIRED_VOLTAGE = 32'd100;
+	parameter [31:0] REQUIRED_VOLTAGE = 32'd500;
 	
 	logic [15:0] toMem;
 	logic mem_ready;
@@ -118,7 +139,7 @@ module top(
 		.rst(rst),
 		.sclk(sclk),
 		.cs(SPI_cs),
-		.unprocessed_MISO(toSPI),
+		.unprocessed_MISO(toSPI), //should be toSPI
 		.processed_MISO(processed_MISO),
 		.ready_for_data(ready_for_data)
 	);
