@@ -52,7 +52,7 @@ module driver_tb();
 	end
 	
 
-	
+	// This should be moved into a task and an automatic checker should be used
 	initial begin 
 		rst = 1'b0;
 		#10
@@ -91,3 +91,8 @@ module driver_tb();
 
 
 endmodule
+
+
+// Assertaion based logic:
+// When Busy is 
+

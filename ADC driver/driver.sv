@@ -23,8 +23,6 @@
 ///
 /// DB[15:0] : the input/output of the driver for data
 
-
-
 module driver(
 	output logic convst_A,
 	output logic convst_B,
@@ -44,7 +42,7 @@ module driver(
 	output logic [4:0] state_ff,
 	
 	input rst,
-	input Busy,
+	input Busy, // George: is this the busy signal that is coming from the ADC? 
 	inout [15:0] DB,
 	input clk
 );
@@ -66,7 +64,7 @@ module driver(
 	logic [15:0] DBout;
 	logic finishwrite;
 	
-	logic convstsent;
+	logic convstsent; // Georgee: flag that tells the FSM that the CONVST signal has been triggered
 	logic isReading;
 	
 	logic [15:0] memreg;
@@ -100,7 +98,7 @@ module driver(
 	end*/
 	
 	
-	
+	// Chip select control logic
 	always_ff@(posedge clk) begin
 		if(!rst) begin
 			CS_N                <= 1'b1;
@@ -121,7 +119,6 @@ module driver(
 		end
 	
 	end
-	
 	
 	
 	/*
@@ -164,9 +161,13 @@ module driver(
 	end
 	*/
 		
+
+	// Data control block
+	// Controls when the FSM will transition from HOLD -> INIT
+	// Makes sure that the registers get configured first
 	always_ff@(posedge clk)begin 
 		if(!rst) begin
-			WR_N               <= 1'b1;
+			WR_N                <= 1'b1;
 			finishwrite         <= 1'b0;
 			isReading           <= 1'b0;
 			writecount          <= 3'b100;
@@ -178,7 +179,13 @@ module driver(
 				end else begin
 					finishwrite   <= 1'b1;
 				end
-				
+			
+				// George: Se 9.5.1.1, pg. 39 for CONFIG registers
+				// Changed from default
+				// BIT 31 - Register content update enabled
+				// BIT 22 - Channel pair B is powered down
+				// BIT 20 - Channel pair C is powered down 
+				// BIT 18 - Channel pair D is powered down
 				if(writecount > 3'b010)begin
 					DBout         <= 16'b1000_0000_0101_0100;  //First sets of config
 				end
@@ -191,11 +198,12 @@ module driver(
 		end
 	end
 	
+	// FSM
 	always_ff@(posedge clk) begin
 		if(!rst) begin
 				state_ff         <= HOLD; 
 				ADCread          <= 3'b000;
-			   convstsent       <= 1'b0;
+			    convstsent       <= 1'b0;
 				RD_N             <= 1'b1;
 				mem_ready        <= 1'b0;
 				
@@ -203,33 +211,26 @@ module driver(
 			case(state_ff) 
 				//HOLD: The state before the driver finish writing 
 				HOLD: begin
-					if(finishwrite)
-						state_ff   <= INIT;
-					else
-						state_ff   <= HOLD;
+					if(finishwrite) state_ff   <= INIT;
+					else            state_ff   <= HOLD;
 					end
+
 				//INIT: The conversion signal is sent in this state
 				INIT: begin
 				//We choose to transition when busy goes high to make sure that the conversion process has actually begun
 				//before we go to our busy state and begin waiting for busy to go low
-					if(convstsent)  
-						state_ff   <= BUSY;
-					else
-						state_ff   <= INIT;
+				// George: the busy signal should be brought into the if statement then lol
+					if(convstsent)  state_ff   <= BUSY;
+					else            state_ff   <= INIT;
 					end
 				//BUSY: The state that waits for busy to go low and then sets RD_N low
 				BUSY: begin
-					if(Busy == 1'b0 && ADCread != 3'b110) 
-						state_ff   <= MEM;
-					else if(ADCread == 3'b110)
-						state_ff   <= INIT;
-					else 
-						state_ff   <= BUSY; 
+					if(Busy == 1'b0 && ADCread != 3'b110)  state_ff   <= MEM;
+					else if            (ADCread == 3'b110) state_ff   <= INIT; // George: I assume reset after 5 because there's 5 microphones
+					else          						   state_ff   <= BUSY; 
 					end
 				//MEM: The state where the ADC RD_Ning is sent to memory
-				MEM: begin
-					state_ff      <= BUSY;
-					end
+				MEM:     state_ff      <= BUSY;
 				default: state_ff <= INIT;
 			endcase
 			
