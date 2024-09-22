@@ -3,12 +3,39 @@
 // This is a non-synthesizable model intended for simulation purposes only
 // A testbench environment should be made with this behavioural model and 
 
-`include "timing.sv"
+`include "macro.f"
+
+task automatic start_channel_conversion (
+    ref         logic        XCLK,
+    input       bit          CLKSEL,
+    ref         logic        CONVST_x, 
+    ref         bit          channel_conv_ongoing, 
+    output      reg  [15:0]  CH0, 
+    output      reg  [15:0]  CH1
+);
+    // Initiate channel conversion for this specific channel
+    // $display ("[%t] CONVS_x called", $time);
+    channel_conv_ongoing = 1; 
+    CH0 = 'bx;
+    CH1 = 'bx;
+
+    if      (CLKSEL == 0) # (`tCONV );  // Conversion time for internal clock
+    else if (CLKSEL == 1) repeat(`tCCLK) @ (posedge XCLK); // Repeat for tCCLK cycles of the external conversion clock
+
+    $display ("[%t] Channel set at", $time);
+    CH0 = $urandom_range(0, 65535);
+    CH1 = $urandom_range(0, 65535);
+
+    channel_conv_ongoing = 0;
+  
+endtask
+
 
 
 module ADC_behav(
     input logic             XCLK,     // external clock
     input logic             CS_N,     // chip select 
+    input logic             WR_N,     // write data
     input logic             RD_N,     // read data 
 
     input logic             CONVST_A, // initialize conversion for channel
@@ -17,185 +44,161 @@ module ADC_behav(
     input logic             CONVST_D, // initialize conversion for channel
 
     output logic            BUSY,
-    inout  logic    [15:0]  DB          // databus - I want to test some simulations just to see how this is meant to behave
+    inout  wire    [15:0]   DB         // databus 
 );
 
-[15:0] reg CH_A0, CH_A1;
-[15:0] reg CH_B0, CH_B1;
-[15:0] reg CH_C0, CH_C1;
-[15:0] reg CH_D0, CH_D1;
+reg [15:0] DB_i,  DB_o;    // buffer since inout port cannot be driven by an initial block
+reg [15:0] CH_A0, CH_A1;   // Channel A conversion output
+reg [15:0] CH_B0, CH_B1;   // Channel B conversion output
+reg [15:0] CH_C0, CH_C1;   // Channel C conversion output
+reg [15:0] CH_D0, CH_D1;   // Channel D conversion output
 
-initial begin
-    // Busy signal model params
-    XCLK_count = 0;
+reg [2:0] ADC_num;
+bit CONVST_A_ongoing;
+bit CONVST_B_ongoing;
+bit CONVST_C_ongoing;
+bit CONVST_D_ongoing;
 
-    // Channel output model params
-    ADC_num = 0;
-    CONVST_A_started = 0;
-    CONVST_B_started = 0;
-    CONVST_C_started = 0;
-    CONVST_D_started = 0;
-    A_CLK_COUNT = 0;
-    B_CLK_COUNT = 0;
-    C_CLK_COUNT = 0;
-    D_CLK_COUNT = 0;
-end
+// You cannot pass input signals by reference to a task
+// Therefore buffer it and pass the buffered signal to the task
+logic XCLK_buf;
+logic CONVST_A_buf;
+logic CONVST_B_buf;
+logic CONVST_C_buf;
+logic CONVST_D_buf;
 
+assign XCLK_buf = XCLK;
+assign CONVST_A_buf = CONVST_A;
+assign CONVST_B_buf = CONVST_B;
+assign CONVST_C_buf = CONVST_C;
+assign CONVST_D_buf = CONVST_D;
 
 //-------------------------//
 //       Write Access      //
 //-------------------------//
 
-// Timing
-// tCSWR
-// tWRL
-// tWRH
-// tWRCS
-// tSUDI
-// tHDI
-
 // This is to test functionality of the 2 bytes sent to configure registers are written correclty
 reg [31:0] CONFIG_REG;
-reg [31:0] write_count; // set to reasonably large number with no upper bound 
+int write_count;
+assign CLKSEL = CONFIG_REG[29]; // 0 = Use internal conversion clock : 1 = use XCLK
+
+// Write to the configuration registers when WR_N goes low
 initial begin
     write_count = 0;
+    forever begin
+        @ (negedge WR_N) write_count <= write_count + 1;
+
+        // Ignoring for now that technically the config reg only updates after both write signals. Implement a buffer in the future
+        if      (write_count == 1) CONFIG_REG[31:16] = DB_i;
+        else if (write_count == 2) CONFIG_REG[15:0]  = DB_i;
+    end
 end
 
-always_ff @ (negedge WR_N) begin
-    write_count <= write_count + 1;
+//--------------------------//
+//      DB Port Driver      //
+//--------------------------//
+initial forever begin
+    @ (negedge RD_N) begin 
+        # (`tPDDO); // output constraint on when DB will update after RD_N goes low
+
+        case (ADC_num)
+            0 : DB_o = CH_A0;
+            1 : DB_o = CH_A1;
+            2 : DB_o = CH_B0;
+            3 : DB_o = CH_B1;
+            4 : DB_o = CH_C0;
+            5 : DB_o = CH_C1;
+            6 : DB_o = CH_D0;
+            7 : DB_o = CH_D1;
+            default: DB_o = 'bz; // check what it should be between data values
+        endcase
+
+        ADC_num = ADC_num + 1;
+    end
 end
 
-// Set the bits of the configuration register based on the write count
+// Assume: Configure DB as an output port as the default
+assign direction = WR_N;   
+assign DB   =  direction ?  DB_o : 'bz;
+assign DB_i =  direction ?  'bz : DB;
+
 //--------------------------//
 //        Read Access       // 
 //--------------------------//
 
 // ------- BUSY SIGNAL MODEL ------ //
-int XCLK_count;
-always_ff @ posedge(CONVST_A or CONVST_B or CONVST_C or CONVST_D) begin
-    # (`tDCVB) BUSY <= 1'b1; // CONVST_x high to BUSY high delay
+initial forever begin
+    // BUSY assertion logic
+    @ (posedge CONVST_A or posedge CONVST_B or posedge CONVST_C or posedge CONVST_D) begin
+        # (`tDCVB) BUSY <= 1'b1; // CONVST_x high to BUSY high delay
+    end
+
+    // BUSY deassertion logic
+    // TODO: If we're operating each chanel independently, then BUSY should be 0 for 67ns then back to high if any channel conversion is still ongoing
+    @ (negedge CONVST_A_ongoing) BUSY <= 1'b0;
 end
 
-// Busy is 0 if all channels are finished processing
-always_comb begin
-    BUSY = (CONVST_A_started | CONVST_B_started | CONVST_C_started | CONVST_D_started);
+// ------- CHANNEL CONVERSION MODEL ------ //
+
+// Set channel output model params
+initial begin
+    ADC_num = 0;
+    CONVST_A_ongoing = 0;
+    CONVST_B_ongoing = 0;
+    CONVST_C_ongoing = 0;
+    CONVST_D_ongoing = 0;
 end
-
-
-// ------- CHANNEL OUTPUT MODEL ------ //
 
 // Randomize value for channel. Seed with a value so that this random sequence can be reasserted. 
 // Use $urandom_range instead of random for generation random sequences since $random isn't thread safe so hard to reproduce random sequences when multiple initial blocks are used
-reg [2:0] ADC_num;
-reg [4:0] A_CLK_COUNT, B_CLK_COUNT, C_CLK_COUNT, D_CLK_COUNT; // number of clock cyccles once a conversion begins
-bit CONVST_A_started;
-bit CONVST_B_started;
-bit CONVST_C_started;
-bit CONVST_D_started;
-int XCLK_setup = 0;
-// Reset
-always_ff @ posedge (CS_N) begin
-    ADC_num = 0;
-    CONVST_A_started = 0;
-    CONVST_B_started = 0;
-    CONVST_C_started = 0;
-    CONVST_D_started = 0;
-    A_CLK_COUNT = 0;
-    B_CLK_COUNT = 0;
-    C_CLK_COUNT = 0;
-    D_CLK_COUNT = 0;
+initial forever begin
+    fork
+        // THREAD - Reset process. If CONVST_A goes high, all the conversions for channel A, B, C D should also be high
+        @ (posedge CONVST_A_buf) ADC_num = 0;
+
+        // THREAD - Channel conversions
+        // On the positive edge of CONVST_x, conversion begins assuming that CONVST_A process was not asserted before
+        // Each of these will launch a new thread which will set the CONVST_x_ongoing flag to true
+        start_channel_conversion(XCLK_buf, CLKSEL, CONVST_A_buf, CONVST_A_ongoing, CH_A0, CH_A1);
+        start_channel_conversion(XCLK_buf, CLKSEL, CONVST_B_buf, CONVST_B_ongoing, CH_B0, CH_B1);
+        start_channel_conversion(XCLK_buf, CLKSEL, CONVST_C_buf, CONVST_C_ongoing, CH_C0, CH_C1);
+        start_channel_conversion(XCLK_buf, CLKSEL, CONVST_D_buf, CONVST_D_ongoing, CH_D0, CH_D1);
+
+    join_any // Prevents hanging if a particular thread is stuck in a waiting state
 end
-
-// Channel conversion model
-
-// On the positive edge of CONVST_x, conversion begins. It will finish in 20 clock cycles of XCLK 
-// If CONVST_A positive edge is detected reset internal state machine
-
-// TODO: Each channel should have it's own internal counter for how many XCLK's it's seen
-
-always @ (posedge CONVST_A) begin
-    ADC_num = 0;
-    CONVST_A_started = 1
-    XCLK_setup = $time;
-    CH_A0 = $urandom_range(0, 65535);
-    CH_A1 = $urandom_range(0, 65535);
-end
-
-always @ (posedge CONVST_B) begin
-    CONVST_B_started = 1
-    CH_B0 = $urandom_range(0, 65535);
-    CH_B1 = $urandom_range(0, 65535);
-end
-
-always @ (posedge CONVST_C) begin
-    CONVST_C_started = 1
-    CH_C0 = $urandom_range(0, 65535);
-    CH_C1 = $urandom_range(0, 65535);
-end
-
-always @ (posedge CONVST_D) begin
-    CONVST_D_started = 1
-    CH_D0 = $urandom_range(0, 65535);
-    CH_D1 = $urandom_range(0, 65535);
-end
-
-always @ (posedge XCLK) begin
-    A_CLK_COUNT = A_CLK_COUNT + 1;       
-    B_CLK_COUNT = B_CLK_COUNT + 1;       
-    C_CLK_COUNT = C_CLK_COUNT + 1;       
-    D_CLK_COUNT = D_CLK_COUNT + 1;       
-end
-
-always @ (negedge RD_N) begin : channel_data_gen
-    # (`tPDDO); // output constraint on when DB will update after RD_N goes low
-
-    ADC_num <= ADC_num + 1;
-end
-
-always_comb begin : channel_selection
-    case (ADC_num)
-        0 : DB = CH_A0;
-        1 : DB = CH_A1;
-        2 : DB = CH_B0;
-        3 : DB = CH_B1;
-        4 : DB = CH_C0;
-        5 : DB = CH_C1;
-        6 : DB = CH_D0;
-        7 : DB = CH_D1;
-        default: DB = 'bz; // check what it should be between data values
-    endcase
-end
-
-// BUSY signal output constraint
-
-
 
 // ============================
 // Assert Model Properties  
 // ============================
 initial forever begin
-    assert property (!(WR_N == 0 && RD_N == 0)); // Write and read signals should never both be 0 at the same time
-    write_access_properties ();
-    read_access_properties ();
+
+    // Need to add delay statements to this loop otherwise the simulation will hang
+    if (WR_N == 0 | RD_N == 0) begin
+        assert (!(WR_N == 0 && RD_N == 0)); // Write and read signals should never both be 0 at the same time
+    end
+    #1;
+
+    // write_access_properties ();
+
+    // read_access_properties (
+    //       .ADC_num               (ADC_num),
+    //       .RD_N                  (RD_N),
+    //       .CONVST_A_ongoing      (CONVST_A_ongoing),
+    //       .CONVST_B_ongoing      (CONVST_B_ongoing),
+    //       .CONVST_C_ongoing      (CONVST_C_ongoing),
+    //       .CONVST_D_ongoing      (CONVST_D_ongoing),
+    //       .CONVST_A              (CONVST_A),
+    //       .CONVST_B              (CONVST_B),
+    //       .CONVST_C              (CONVST_C),
+    //       .CONVST_D              (CONVST_D)
+    // );
+
 end
 
 endmodule
 
-task set_channel (
-    input reg CONVST_x, 
-    input bit channel_start_flag, 
-    input reg CH0, 
-    input reg CH1
-);
 
-
-
-
-
-endtask
-
-
-task write_access_properties (
+task automatic write_access_properties (
     input int write_count,
     ref CS_N,
     ref WR_N,
@@ -208,8 +211,6 @@ task write_access_properties (
     // PROPERTY - CS  low to WR low time
 
 
-
-
     // PROPERTY - We should never write to the configuration register more than two times
     // assert property (!(write_count > 2));
 
@@ -220,62 +221,59 @@ task write_access_properties (
 
 endtask
 
-task read_access_properties (
+task automatic read_access_properties (
+    input int ADC_num,
     ref RD_N,
-    ref CONVST_A,
+    input bit CHA_conversion,
+    input bit CHB_conversion,
+    input bit CHC_conversion,
+    input bit CHD_conversion,
+    ref CONVST_A, // if the posedge construct is to be used the signal needs to be passed by reference
     ref CONVST_B,
     ref CONVST_C,
-    ref CONVST_D,
+    ref CONVST_D
 );
     // --------- READ ACCESS CHECKS ------ //
-
-    // DATA validity - Check that based on ADC number, that on the positive edge of RD_N that the correct channel is outputed
-    // Placed here to act as an automatic checker to emulate what the driver module should be getting
-    always_ff @ (posedge RD_N) begin
-        case (ADC_num)
-            0 : assert(DB = CH_A0) 
-            1 : assert(DB = CH_A1) 
-            2 : assert(DB = CH_B0) 
-            3 : assert(DB = CH_B1) 
-            4 : assert(DB = CH_C0) 
-            5 : assert(DB = CH_C1) 
-            6 : assert(DB = CH_D0) 
-            7 : assert(DB = CH_D1) 
-            default: assert(DB = 'bz); // check what it should be between data values
-        endcase
-    end
-
-    // PROPERTY - If a conversion has started, then an error will be raised if CONVST_x is positive edge triggered at any time 
-    // These are status flags that will be set inside the model that will be 1 when a conversion for that channel is ongoing. 
-    bit CHA_conversion;
-    bit CHB_conversion;
-    bit CHC_conversion;
-    bit CHD_conversion;
-
-    assert property (@(posedge CONVST_A) CHA_conversion == 0); 
-    assert property (@(posedge CONVST_B) CHB_conversion == 0); 
-    assert property (@(posedge CONVST_C) CHC_conversion == 0); 
-    assert property (@(posedge CONVST_D) CHD_conversion == 0); 
-
-
-    // PROPERTY - DB should never have the take on the values of C1, D0, or D1 since the driver should reset the ADC counter
-    assert property (@(posedge RD_N) DB != CH_C1)
-    assert property (@(posedge RD_N) DB != CH_D0)
-    assert property (@(posedge RD_N) DB != CH_D1)
-
 
     // PROPERTY - RDL min pulse duration is met
     int negedge_RD;
     int posedge_RD;
     int RD_pulse_duration;
-    initial forever begin
-        @ (negedge RD_N) negedge_RD = $time;
-        @ (posedge RD_N) begin 
-            posedge_RD = $time;
 
-            RD_pulse_duration = posedge_RD - negedge_RD;
-            assert RD_pulse_duration > `tRDL;
-        end
+    // George: Commented out for now due to modelsim compilation errors
+    // DATA validity - Check that based on ADC number, that on the positive edge of RD_N that the correct channel is outputed
+    // Placed here to act as an automatic checker to emulate what the driver module should be getting
+    // @ (posedge RD_N) begin
+    //     case (ADC_num)
+    //         0 : assert(DB == CH_A0) 
+    //         1 : assert(DB == CH_A1) 
+    //         2 : assert(DB == CH_B0) 
+    //         3 : assert(DB == CH_B1) 
+    //         4 : assert(DB == CH_C0) 
+    //         5 : assert(DB == CH_C1) 
+    //         6 : assert(DB == CH_D0) 
+    //         7 : assert(DB == CH_D1) 
+    //         default: assert(DB == 'bz); // check what it should be between data values
+    //     endcase
+    // end
+
+    // PROPERTY - If a conversion is ongoing, then an error will be raised if CONVST_x is positive edge triggered at any time 
+    // These are status flags that will be set inside the model that will be 1 when a conversion for that channel is ongoing. 
+    @(posedge CONVST_A) assert (CHA_conversion == 0); 
+    @(posedge CONVST_B) assert (CHB_conversion == 0); 
+    @(posedge CONVST_C) assert (CHC_conversion == 0); 
+    @(posedge CONVST_D) assert (CHD_conversion == 0); 
+
+    // // PROPERTY - This counter should never go above 5
+    @(posedge RD_N) assert (ADC_num <= 5);
+
+    // PROPERTY - RDL min pulse duration is met
+    @ (negedge RD_N) negedge_RD = $time;
+    @ (posedge RD_N) begin 
+        posedge_RD = $time;
+
+        RD_pulse_duration = posedge_RD - negedge_RD;
+        assert (RD_pulse_duration > `tRDL);
     end
 
     // PROPERTY - RDH read access restriction is met
