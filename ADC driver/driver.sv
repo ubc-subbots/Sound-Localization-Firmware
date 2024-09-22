@@ -179,18 +179,25 @@ module driver(
 				end else begin
 					finishwrite   <= 1'b1;
 				end
-			
+					
 				// George: Se 9.5.1.1, pg. 39 for CONFIG registers
 				// Changed from default
+				// I'd recommend a style change where you explicitely say which bits are changed so no one needs to go hunting for it
+				// config_val = `DEFAULT_VAL // 
+				// config_val[31] = 1
+				// config_val[22] = 1
+				// config_val[20] = 1
+				// config_val[18] = 1
+				// DBout <= config_val;
 				// BIT 31 - Register content update enabled
-				// BIT 22 - Channel pair B is powered down
-				// BIT 20 - Channel pair C is powered down 
-				// BIT 18 - Channel pair D is powered down
+				// BIT 22 - Channel pair B is powered down : George:Why are thes 3 channels powered down? 
+				// BIT 20 - Channel pair C is powered down : 
+				// BIT 18 - Channel pair D is powered down : 
 				if(writecount > 3'b010)begin
-					DBout         <= 16'b1000_0000_0101_0100;  //First sets of config
+					DBout         <= 16'b1000_0000_0101_0100;  //First sets of config // George: magic number >:(	
 				end
 				else begin 
-					DBout         <= 16'h03FF;   //Second set of config 
+					DBout         <= 16'h03FF;   //Second set of config (default)
 				end
 
 			end

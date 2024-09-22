@@ -1,0 +1,85 @@
+m255
+K4
+z2
+13
+!s112 1.1
+!i10d 8192
+!i10e 25
+!i10f 100
+cModel Technology
+dC:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/modelSim
+vADC_behav
+Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
+DXx4 work 17 ADC_behav_sv_unit 0 22 UP8f=k>aD3BS]QnY]XHLJ3
+Z1 VDg1SIo80bB@j0V0VzS_@n1
+r1
+!s85 0
+31
+!i10b 1
+!s100 :XzbN;DZMAza;E2OeC^O32
+Ii3YBj_d0Lba[9UOVYfd4R0
+!s105 ADC_behav_sv_unit
+S1
+Z2 dC:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist
+Z3 w1727011245
+Z4 8C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv
+Z5 FC:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv
+L0 35
+Z6 OV;L;10.5b;63
+Z7 !s108 1727011247.000000
+Z8 !s107 timing.sv|macro.f|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv|
+Z9 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv|
+!i113 1
+Z10 o-work work -sv
+Z11 tCvgOpt 0
+n@a@d@c_behav
+XADC_behav_sv_unit
+R0
+VUP8f=k>aD3BS]QnY]XHLJ3
+r1
+!s85 0
+31
+!i10b 1
+!s100 []:cE0oQK2jo55V?`Ezj53
+IUP8f=k>aD3BS]QnY]XHLJ3
+!i103 1
+S1
+R2
+R3
+R4
+R5
+Fmacro.f
+Ftiming.sv
+L0 8
+R6
+R7
+R8
+R9
+!i113 1
+R10
+R11
+n@a@d@c_behav_sv_unit
+vtb
+R0
+!s110 1727011088
+!i10b 1
+!s100 OF>[LOBCi>^<Vn1P;VCfD2
+IImzAZdnQI968<^U`=3g>[1
+R1
+!s105 tb_sv_unit
+S1
+R2
+w1727011040
+8C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/tb.sv
+FC:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/tb.sv
+L0 2
+R6
+r1
+!s85 0
+31
+!s108 1727011088.000000
+!s107 timing.sv|macro.f|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/tb.sv|
+!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/tb.sv|
+!i113 1
+R10
+R11

@@ -92,12 +92,12 @@ module top(
 	assign mem_read  = state[1]; //  
 	assign SPI_RDY   = state[2];
 	
-	
+	// 50 / 4 -> 12.5MHz 
 	Clk_divider Clk_divider_inst(
 		.clk_in(CLOCK_27M),
 		.divisor(32'd4),
 		.switch(1'd1),
-		.clk_out(clk) // 843kHz clock?
+		.clk_out(clk) 
 	);
 	
 	assign XCLK = 1'b1; //should be cll --> XCLK is the external clock that drives the ADC. 

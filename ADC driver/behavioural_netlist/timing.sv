@@ -2,6 +2,10 @@
 //  ADS8528 Timing Sepcs
 //========================
 
+// Conversion Clocking
+`define tCONV 1330 // conversion logic  - Conversion time
+`define tCCLK 20   // conversion logic  - Number of complex conversion clocks
+
 // Write Access Timing
 `define tCSWR 0    // input constraint - CS  low to WR low time
 `define tWRL  15   // input constraint - WR low pulse duration
@@ -13,7 +17,6 @@
 
 // Read Access Timing
 `define tCVL  20   // input constraint  - CONVST_x low time
-`define tACQ  280  // input constraint  - Acquisition time
 `define tDCVB 25   // output constraint - CONVST_x high to BUSY high delay
 `define tBUCS 0    // input constraint  - BUSY low to CS low time ADS85x8, CLKSEL = 1
 `define tCSCV 0    // input constraint  - Bus access finished to next conversion start time ADS8528
