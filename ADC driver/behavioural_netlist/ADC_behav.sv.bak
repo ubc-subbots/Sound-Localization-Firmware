@@ -61,13 +61,12 @@ module ADC_behav(
     assign CONVST_B_buf = CONVST_B;
     assign CONVST_C_buf = CONVST_C;
     assign CONVST_D_buf = CONVST_D;
+    
+    // Instantiating these two modules to get access to the channel conversion tasks and checkers
+    SAR_ADC SAR_ADC();
 
-    // ========================================================
-    // Module Instantiations
-    // ======================================================== 
-    SAR_ADC         SAR_ADC();   // Main conversion handling module
-    self_checker    check  ();   // Read and write access properties
-    cfg             cfg    ();   // Config params so less reliance on macros
+    self_checker check();
+    cfg cfg(); // Config params so don't need to use macros
 
 
     // ========================================================
@@ -143,6 +142,7 @@ module ADC_behav(
 
     // ------- CHANNEL CONVERSION MODEL ------ //
 
+
     // Randomize value for channel
     initial begin
         ADC_num = 0;
@@ -171,6 +171,7 @@ module ADC_behav(
                 SAR_ADC.start_channel_conversion(XCLK_buf, CLKSEL, CONVST_C_buf, CONVST_C_ongoing, CH_ANA_C0, CH_ANA_C1, cfg.Vref, CH_C0, CH_C1);
                 SAR_ADC.start_channel_conversion(XCLK_buf, CLKSEL, CONVST_D_buf, CONVST_D_ongoing, CH_ANA_D0, CH_ANA_D1, cfg.Vref, CH_D0, CH_D1);
                 `endif
+    
             join_any // Prevents hanging if a particular thread is stuck in a waiting state
         end
     end
@@ -204,23 +205,16 @@ module ADC_behav(
 endmodule
 
 
-
-// ========================================================
-// Behavioural SAR ADC Channel conversion model
-// ========================================================
+// Behavioural channel conversion model
 module SAR_ADC();
-
-    // N bit DAC that calculates Vcommon based on what's in the SAR REG 
     task automatic DAC (
         input reg   [15:0]  SAR_REG,
         input real          Vref,
-        output real         VDAC
+        output real         DAC_output
     );
-        bit is_negative = SAR_REG[15]; // ADC is binary 2s complement
-        
-        VDAC = is_negative ? -(Vref*4) : 0;
-        for (int j = 14; j >= 0; j--) begin
-            VDAC = VDAC  + SAR_REG[j]  * (Vref*4) / 2**(15-j); // 4 is default for RANGE
+        DAC_output = 0;
+        for (int j = 15; j >= 0; j--) begin
+            DAC_output = DAC_output + SAR_REG[j] * Vref / 2**(15-j) * 4; // 4 is default for RANGE
         end
     endtask
 
@@ -233,55 +227,39 @@ module SAR_ADC();
         // SAR ADCs work via a binary search algorithm
         // 1st bit is 1/2 VREF, 2nd bit is 1/4VREF, 3rd is 1/8th vref ... 
         // LSB = 1/2^n VREF 
+        real        DAC_output; // DAC is used to recreate the voltage given by the capacitors to feed the comparator
+        reg [15:0]  SAR_REG;    // Stores the result of sampling
         
-        real        VDAC;         // DAC is used to recreate the voltage given by the capacitors to feed the comparator
-        reg [15:0]  SAR_REG = 0;      // Stores the result of sampling
+        $display("Starting SA process");
+        // Main SAR ADC task. Sample and hold of capacitors has already finished
+        for (int i = 15; i >= 0; i--) begin
+                SAR_REG[i] = 1;
 
-        // Binary 2s complement
-        // -4VREF = 0x0000
-        //      0 = 0x7FFF 
-        //  4VREF = 0xFFFF
-
-        // ------ Main SAR ADC task  ------
-        bit is_negative = (Vin < 0) ? 1 : 0;
-        SAR_REG[15] = is_negative; // Keep MSB 0 only if positive voltage
-        $display("Vin = %0.5f, MSB = %b", Vin, SAR_REG[15]);
-        
-        // Binary search is ran on the lower 15 bits since 1st is reserved for sign
-        for (int i = 14; i >= -1; i--) begin
-            SAR_REG[i] = 1;
-            
-            // Calculate DAC output
-            $display("Vin = %0.5f, VDAC = %0.5f, %b", Vin, VDAC, SAR_REG);
-            DAC(SAR_REG, Vref, VDAC);
-
-            if (Vin > VDAC) SAR_REG[i] = 1; 
-            else            SAR_REG[i] = 0; 
-        end
-        $display();
-        adc_val = SAR_REG;
+                // Calculate DAC output
+                DAC(SAR_REG, Vref, DAC_output);
+                if (Vin > DAC_output) SAR_REG[i] = 1; // Keep 1
+                else                  SAR_REG[i] = 0; // Change to 0
+            end
     endtask
 
     task automatic start_channel_conversion (
-        ref     logic        XCLK,
-        input   bit          CLKSEL,
-        ref     logic        CONVST_x, 
-        ref     bit          channel_conv_ongoing, 
-
+        ref         logic        XCLK,
+        input       bit          CLKSEL,
+        ref         logic        CONVST_x, 
+        ref         bit          channel_conv_ongoing, 
         `ifdef SAR_ADC_CONV
-        ref     real         CH_ANA0, // analog value of channel
-        ref     real         CH_ANA1, // analog value of channel
-        ref     real         vref,  // reference voltage
+        input       real         CH_ANA0, // analog value of channel
+        input       real         CH_ANA1, // analog value of channel
+        input       real         vref,  // reference voltage
         `endif
-
-        ref     reg  [15:0]  CH0, 
-        ref     reg  [15:0]  CH1
+        ref         reg  [15:0]  CH0, 
+        ref         reg  [15:0]  CH1
     );
         // Initiate channel conversion for this specific channel
         @ (posedge CONVST_x) begin
             channel_conv_ongoing = 1; 
-            // CH0 = 'bx;
-            // CH1 = 'bx;
+            CH0 = 'bx;
+            CH1 = 'bx;
 
             // Conversion time
             if      (CLKSEL == 0) # (`tCONV );  // using internal clock to fixed delay
@@ -303,18 +281,7 @@ module SAR_ADC();
 endmodule
 
 
-
 module self_checker();
-    task automatic same_signal_constraint(
-        ref signal,
-        bit polarity
-    );
-
-    endtask
-
-    task automatic two_signal_constraint();
-    endtask
-
     task automatic write_access_properties (
         input int write_count,
         ref CS_N,
@@ -326,6 +293,10 @@ module self_checker();
         // Here checking that the timing requirements and read access behaviours for the model are not violated
     
         // PROPERTY - CS  low to WR low time
+    
+    
+        // PROPERTY - We should never write to the configuration register more than two times
+        // assert property (!(write_count > 2));
     
         // Configuraition check
     
@@ -353,6 +324,23 @@ module self_checker();
         int posedge_RD;
         int RD_pulse_duration;
     
+        // George: Commented out for now due to modelsim compilation errors
+        // DATA validity - Check that based on ADC number, that on the positive edge of RD_N that the correct channel is outputed
+        // Placed here to act as an automatic checker to emulate what the driver module should be getting
+        // @ (posedge RD_N) begin
+        //     case (ADC_num)
+        //         0 : assert(DB == CH_A0) 
+        //         1 : assert(DB == CH_A1) 
+        //         2 : assert(DB == CH_B0) 
+        //         3 : assert(DB == CH_B1) 
+        //         4 : assert(DB == CH_C0) 
+        //         5 : assert(DB == CH_C1) 
+        //         6 : assert(DB == CH_D0) 
+        //         7 : assert(DB == CH_D1) 
+        //         default: assert(DB == 'bz); // check what it should be between data values
+        //     endcase
+        // end
+    
         // PROPERTY - If a conversion is ongoing, then an error will be raised if CONVST_x is positive edge triggered at any time 
         // These are status flags that will be set inside the model that will be 1 when a conversion for that channel is ongoing. 
         @(posedge CONVST_A) assert (CONVST_A_ongoing == 0) else $warning("CHA conversion initated while conversion still ongoing");
@@ -363,16 +351,19 @@ module self_checker();
         // PROPERTY - This counter should never go above 5
         @(posedge RD_N) assert (ADC_num <= 5) else $warning("Reading from an invalid channel");
     
-        // PROPERTY - RDL min pulse duration is met
-        @ (negedge RD_N) negedge_RD = $time;
-        @ (posedge RD_N) begin 
-            posedge_RD = $time;
+        // // PROPERTY - RDL min pulse duration is met
+        // @ (negedge RD_N) negedge_RD = $time;
+        // @ (posedge RD_N) begin 
+        //     posedge_RD = $time;
     
-            RD_pulse_duration = posedge_RD - negedge_RD;
-            assert (RD_pulse_duration > `tRDL) else $warning("RDL min pulse duration violated");
-        end
+        //     RD_pulse_duration = posedge_RD - negedge_RD;
+        //     assert (RD_pulse_duration > `tRDL);
+        // end
     
         // PROPERTY - RDH read access restriction is met
+    
+    
+        // PROPERTY - Once the bits have been written into the registers check their values
     
     endtask
 endmodule

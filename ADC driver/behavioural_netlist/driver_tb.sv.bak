@@ -79,7 +79,7 @@ module driver_tb();
         rst = 0; #100;
         rst = 1;
 
-        repeat(80) @ (posedge convst_A);
+        repeat(2) @ (posedge convst_A);
         $stop;
     end
 
@@ -94,19 +94,20 @@ module driver_tb();
 
 
     // Channel values
+
     initial begin
         CH_ANA_A0 = 0.52;
-        CH_ANA_B0 = 0.76;
+        CH_ANA_B0 = -3.76;
         CH_ANA_C0 = 0.24;
         CH_ANA_D0 = -0.3287;
 
         CH_ANA_A1 = -9.5;
         CH_ANA_B1 = 0.2;
-        CH_ANA_C1 = 0.589;
+        CH_ANA_C1 = -8.589;
         CH_ANA_D1 = 0.657;
 
-        forever begin
-            CH_ANA_A0 = 2.5*$sin($time/5000.0); #1ns;
-        end
+        // forever begin
+        //     CH_ANA_A0 = 2.5*$sin($time/60000.0); #1ns;
+        // end
     end
 endmodule
