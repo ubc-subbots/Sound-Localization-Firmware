@@ -238,9 +238,10 @@ module SAR_ADC();
         reg [15:0]  SAR_REG = 0;      // Stores the result of sampling
 
         // Binary 2s complement
-        // -4VREF = 0x0000
-        //      0 = 0x7FFF 
-        //  4VREF = 0xFFFF
+        // -4VREF = 0x1000_0000_0000_0000
+        //     -0 = 0x1111_1111_1111_1111
+        //     +0 = 0x0000_0000_0000_0000
+        //  4VREF = 0x0111_1111_1111_1111
 
         // ------ Main SAR ADC task  ------
         bit is_negative = (Vin < 0) ? 1 : 0;
@@ -280,8 +281,6 @@ module SAR_ADC();
         // Initiate channel conversion for this specific channel
         @ (posedge CONVST_x) begin
             channel_conv_ongoing = 1; 
-            // CH0 = 'bx;
-            // CH1 = 'bx;
 
             // Conversion time
             if      (CLKSEL == 0) # (`tCONV );  // using internal clock to fixed delay
