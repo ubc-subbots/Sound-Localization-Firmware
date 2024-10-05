@@ -1,0 +1,6 @@
+*.wlf
+*.mti
+*.qtl
+*.qpg
+*.qdb
+"ADC driver/behavioural_netlist/work/"
