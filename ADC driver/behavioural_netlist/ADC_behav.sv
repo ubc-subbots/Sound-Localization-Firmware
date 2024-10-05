@@ -10,23 +10,26 @@ task automatic start_channel_conversion (
     input       bit          CLKSEL,
     ref         logic        CONVST_x, 
     ref         bit          channel_conv_ongoing, 
-    output      reg  [15:0]  CH0, 
-    output      reg  [15:0]  CH1
+    ref         reg  [15:0]  CH0, 
+    ref         reg  [15:0]  CH1
 );
     // Initiate channel conversion for this specific channel
     // $display ("[%t] CONVS_x called", $time);
-    channel_conv_ongoing = 1; 
-    CH0 = 'bx;
-    CH1 = 'bx;
+    @ (posedge CONVST_x) begin
+        channel_conv_ongoing = 1; 
+        CH0 = 16'bx;
+        CH1 = 16'bx;
+        $display ("[%t] Channel conv started at", $time);
 
-    if      (CLKSEL == 0) # (`tCONV );  // Conversion time for internal clock
-    else if (CLKSEL == 1) repeat(`tCCLK) @ (posedge XCLK); // Repeat for tCCLK cycles of the external conversion clock
+        if      (CLKSEL == 0) # (`tCONV );  // Conversion time for internal clock
+        else if (CLKSEL == 1) repeat(`tCCLK) @ (posedge XCLK); // Repeat for tCCLK cycles of the external conversion clock
 
-    $display ("[%t] Channel set at", $time);
-    CH0 = $urandom_range(0, 65535);
-    CH1 = $urandom_range(0, 65535);
+        $display ("[%t] Channel set at", $time);
+        CH0 = $urandom_range(0, 65535);
+        CH1 = $urandom_range(0, 65535);
 
-    channel_conv_ongoing = 0;
+       channel_conv_ongoing = 0;
+    end
   
 endtask
 
@@ -89,8 +92,8 @@ initial begin
         @ (negedge WR_N) write_count <= write_count + 1;
 
         // Ignoring for now that technically the config reg only updates after both write signals. Implement a buffer in the future
-        if      (write_count == 1) CONFIG_REG[31:16] = DB_i;
-        else if (write_count == 2) CONFIG_REG[15:0]  = DB_i;
+        if      (write_count == 0) CONFIG_REG[31:16] = DB_i;
+        else if (write_count == 1) CONFIG_REG[15:0]  = DB_i;
     end
 end
 
@@ -172,11 +175,9 @@ end
 // ============================
 initial forever begin
 
-    // Need to add delay statements to this loop otherwise the simulation will hang
-    if (WR_N == 0 | RD_N == 0) begin
+    @ (negedge WR_N or negedge RD_N) begin
         assert (!(WR_N == 0 && RD_N == 0)); // Write and read signals should never both be 0 at the same time
     end
-    #1;
 
     // write_access_properties ();
 

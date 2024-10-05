@@ -1,1 +1,7 @@
-`include "timing.sv"
+`include "config.sv"
+`include  "timing.sv"
+`include "../driver.sv"
+`include "../top.sv"
+`include "../ADCmemory.sv"
+`include "../SPI_slave.sv"
+`include "../Clk_divider.sv"

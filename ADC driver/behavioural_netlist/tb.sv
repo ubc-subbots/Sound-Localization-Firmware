@@ -12,8 +12,9 @@ module tb();
 
     wire          BUSY;
     wire [15:0]   DB;
+    reg [15:0]    DB_i;
 
-    // Example of how you would instantiate the task
+    // Example of how you would instantiate the behavioural model
     ADC_behav DUT (
         XCLK,
         CS_N,
@@ -31,16 +32,31 @@ module tb();
 
     initial begin
         XCLK = 0;
-        force DUT.CLKSEL = 0;
+        // force DUT.CLKSEL = 0;
         forever begin
             XCLK = ~XCLK; # 67;
         end
     end
 
+    // DB port driver
+    assign direction = WR_N;   
+    // assign DB   =  direction ?  DB_o : 'bz;
+    assign DB =  direction ?  'bz : DB_i;
+
     initial begin
         WR_N = 1;
         RD_N = 1;
 
+        // Write Access test
+        DB_i = 'b1000_0000_0101_0100;
+        # 10;
+        WR_N = 0; #67;
+        WR_N = 1; #67;
+        DB_i = 'h03FF;
+        WR_N = 0; #67;
+        WR_N = 1; #67;
+
+        // Read Access Test
         repeat (10) begin
             # 10;
             CONVST_A = 1;

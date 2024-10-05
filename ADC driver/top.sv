@@ -46,10 +46,10 @@ module top(
 );
 	// Should paramaterize a value called `ADC_W or something to indicate the word length
 
-	parameter [31:0] BUFFER_SAMPLE = 32'd500; // George: 32 bits aren't needed to store this value. Can just use the d'500 syntax and verilog will automatically get the vector length
+	parameter [31:0] BUFFER_SAMPLE = 32'd100; // George: 32 bits aren't needed to store this value. Can just use the d'500 syntax and verilog will automatically get the vector length
 	parameter [15:0] VALID_VOLTAGE = 16'd32; // George: I assume this is to set up something like a noise floor?
 	parameter [31:0] VALID_COUNT_NEEDED = 32'd20;
-	parameter [31:0] NUM_READINGS = 32'd500; // George: Renamed from REQUIRED_VOLTAGE since it's confusing with VALID_VOLTAGE
+	parameter [31:0] NUM_READINGS = 32'd100; // George: Renamed from REQUIRED_VOLTAGE since it's confusing with VALID_VOLTAGE
 	
 	logic [15:0] toMem;
 	logic mem_ready;
@@ -65,14 +65,11 @@ module top(
 	
 	
 	logic [31:0] valid_count; //counter to indicate how many valid voltage we have gotten in a row, indicating if what we are detecting is a real pulse
-	
 	logic [31:0] count; //counter to indicate how many voltage we are storing in storage, and if this hits NUM_READINGS, we begin empting everything to SPI 
 
 	logic clk; 
 		
 	assign ADCrst = ~KEY2;
-	
-
 	
 	parameter [5:0] 	 DEFAULT_WAIT        = 6'd000000,
 						 JUNK                = 6'b000011, // write, read
@@ -81,7 +78,7 @@ module top(
 						 COLLECT_UNTIL_FULL  = 6'b001001, // write
 						 WAIT_FOR_FILL       = 6'b001000,
 						 PASSING_DATA_TO_SPI = 6'b000010, //        read
-						 SPI                 = 6'b000100, // George: in your SPI state you're not reading from adc mem
+						 SPI                 = 6'b000110, // George: in your SPI state you're not reading from adc mem
 						 WAIT_FOR_SPI        = 6'b010000; 
 						 
    logic [5:0] state = DEFAULT_WAIT; 
@@ -95,7 +92,7 @@ module top(
 	// 50 / 4 -> 12.5MHz 
 	Clk_divider Clk_divider_inst(
 		.clk_in(CLOCK_27M),
-		.divisor(32'd4),
+		.divisor(32'd2),
 		.switch(1'd1),
 		.clk_out(clk) 
 	);
@@ -126,6 +123,7 @@ module top(
 	
 	// George: You guys will be potentially running into CDC issues here with transferring between the clk <--> sclk domains
 	// George: Style recommendation: having _o or _i directly on the signal name so that you don't need to dig to find it
+
 	ADCmemory ADCmemory_inst(
 		.clk(clk),
 		.rst(rst),
@@ -176,7 +174,7 @@ module top(
 								end 
 				PASSING_DATA_TO_SPI: state <= SPI;
 				SPI: 			begin
-									if(empty) 					stsate <= DEFAULT_WAIT;
+									if(empty) 					state <= DEFAULT_WAIT;
 									else if(~SPI_cs) 			state <= WAIT_FOR_SPI;
 									else  state <= SPI;
 					  			end

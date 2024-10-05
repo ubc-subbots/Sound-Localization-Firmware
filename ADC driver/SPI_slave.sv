@@ -40,7 +40,8 @@ module spi
 	} state_t;
 
 	state_t state = INIT;
-	
+
+	// George: Was this actually synthesizable? Two clocks is so weird looking lol
 	always_ff@(posedge sclk or posedge cs) begin 
 		 
 		if(cs) begin 
