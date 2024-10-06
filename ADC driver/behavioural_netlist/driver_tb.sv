@@ -79,7 +79,7 @@ module driver_tb();
         rst = 0; #100;
         rst = 1;
 
-        repeat(20) @ (posedge convst_A);
+        repeat(36) @ (posedge convst_A);
         $stop;
     end
 
@@ -107,14 +107,14 @@ module driver_tb();
 
         forever begin
             CH_ANA_A0 = 2.5*$sin($time/5000.0); 
-            CH_ANA_B0 = 2.5 * $sin($time / 5000.0 + 0.2); 
+            CH_ANA_B0 = -2.5 * $sin($time / 5000.0 + 0.2); 
             CH_ANA_C0 = 2.5 * $sin($time / 5000.0 + 0.3); 
-            CH_ANA_D0 = 2.5 * $sin($time / 5000.0 + 0.5); 
+            CH_ANA_D0 = -2.5 * $sin($time / 5000.0 + 0.5); 
     
-            CH_ANA_A1 = 2.5 * $sin($time / 5000.0 + 0.9); 
-            CH_ANA_B1 = 2.5 * $sin($time / 5000.0 + 1.0); 
-            CH_ANA_C1 = 2.5 * $sin($time / 5000.0 + 1.4); 
-            CH_ANA_D1 = 2.5 * $sin($time / 5000.0 + 1.9); 
+            CH_ANA_A1 = -7.5 * $sin($time / 5000.0 + 0.9); 
+            CH_ANA_B1 = -2.5 * $sin($time / 5000.0 + 1.0); 
+            CH_ANA_C1 = 18.5 * $sin($time / 5000.0 + 1.4); 
+            CH_ANA_D1 = -2.5 * $sin($time / 5000.0 + 1.9); 
 
             #100ns;  // Change sin wave resolution here. Up to 250ns is decent
         end

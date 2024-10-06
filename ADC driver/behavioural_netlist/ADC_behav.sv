@@ -98,6 +98,10 @@ module ADC_behav(
     // Internal reference calculation
     real VRANGE; // 2.5V or 3V
     real Vref_out;
+    real Vref_A;
+    real Vref_B;
+    real Vref_C;
+    real Vref_D;
 
     // Write to the configuration registers when WR_N goes low
     initial begin
@@ -117,6 +121,11 @@ module ADC_behav(
                 // Calculate internal reference the ADC will be using now that it's been set
                 VRANGE   = CONFIG_REG[13] ? 3.0 : 2.5;
                 Vref_out = VRANGE * (CONFIG_REG[9:0] + 1.0) / 1024.0;
+
+                Vref_A = (CONFIG_REG[24] == 0) ? 4 * Vref_out : 2 * Vref_out;
+                Vref_B = (CONFIG_REG[23] == 0) ? 4 * Vref_out : 2 * Vref_out;
+                Vref_C = (CONFIG_REG[21] == 0) ? 4 * Vref_out : 2 * Vref_out;
+                Vref_D = (CONFIG_REG[19] == 0) ? 4 * Vref_out : 2 * Vref_out;
 
                 // Display Current Config Setting if the option is set
                 check.Vref_out_valid(Vref_out);
@@ -195,10 +204,10 @@ module ADC_behav(
                 `endif
 
                 `ifdef SAR_ADC_CONV
-                SAR_ADC.start_channel_conversion(XCLK_buf, CLKSEL, CONVST_A_buf, CONVST_A_ongoing, CH_ANA_A0, CH_ANA_A1, Vref_out, CH_A0, CH_A1);
-                SAR_ADC.start_channel_conversion(XCLK_buf, CLKSEL, CONVST_B_buf, CONVST_B_ongoing, CH_ANA_B0, CH_ANA_B1, Vref_out, CH_B0, CH_B1);
-                SAR_ADC.start_channel_conversion(XCLK_buf, CLKSEL, CONVST_C_buf, CONVST_C_ongoing, CH_ANA_C0, CH_ANA_C1, Vref_out, CH_C0, CH_C1);
-                SAR_ADC.start_channel_conversion(XCLK_buf, CLKSEL, CONVST_D_buf, CONVST_D_ongoing, CH_ANA_D0, CH_ANA_D1, Vref_out, CH_D0, CH_D1);
+                SAR_ADC.start_channel_conversion(XCLK_buf, CLKSEL, CONVST_A_buf, CONVST_A_ongoing, CH_ANA_A0, CH_ANA_A1, Vref_A, CH_A0, CH_A1);
+                SAR_ADC.start_channel_conversion(XCLK_buf, CLKSEL, CONVST_B_buf, CONVST_B_ongoing, CH_ANA_B0, CH_ANA_B1, Vref_B, CH_B0, CH_B1);
+                SAR_ADC.start_channel_conversion(XCLK_buf, CLKSEL, CONVST_C_buf, CONVST_C_ongoing, CH_ANA_C0, CH_ANA_C1, Vref_C, CH_C0, CH_C1);
+                SAR_ADC.start_channel_conversion(XCLK_buf, CLKSEL, CONVST_D_buf, CONVST_D_ongoing, CH_ANA_D0, CH_ANA_D1, Vref_D, CH_D0, CH_D1);
                 `endif
             join_any // Prevents hanging if a particular thread is stuck in a waiting state
         end
@@ -252,10 +261,10 @@ module SAR_ADC();
         output real         VDAC
     );
         bit is_negative = SAR_REG[15]; // ADC is binary 2s complement
-        VDAC = is_negative ? -(Vref*4) : 0;
+        VDAC = is_negative ? -Vref : 0;
         
         for (int j = 14; j >= 0; j--) begin
-            VDAC = VDAC  + SAR_REG[j]  * (Vref*4) / 2**(15-j); // 2 is default for RANGE
+            VDAC = VDAC  + SAR_REG[j]  * Vref / 2**(15-j); // 2 is default for RANGE
         end
     endtask
 
@@ -278,11 +287,15 @@ module SAR_ADC();
         //     +0 = 16'b0000_0000_0000_0000
         //  4VREF = 16'b0111_1111_1111_1111
 
-        // ------ Main SAR ADC task  ------
+        // ------ Main SAR ADC task  ------ 
         bit is_negative = (Vin < 0) ? 1 : 0;
+        // Throw warning if the voltage saturates the ADC. $abs() does not work with real numbers, only ints and regs
+        if (is_negative & (Vin < -Vref)) cfg.log_warning($sformatf("Vin = %11.5f is outisde voltage range +/- %6.3f", Vin, Vref), cfg.DISPLAY_VOLTAGE_WARN);
+        else if           (Vin >  Vref)  cfg.log_warning($sformatf("Vin = %11.5f is outisde voltage range +/- %6.3f", Vin, Vref), cfg.DISPLAY_VOLTAGE_WARN);
+
         SAR_REG[15] = is_negative; // Keep MSB 0 only if positive voltage
 
-        // Binary search is ran on the lower 16 bits since 1st is reserved for sign
+        // Binary search is ran on the lower 15 bits since 1st is reserved for sign
         for (int i = 14; i >= 0; i--) begin
             SAR_REG[i] = 1;
             
@@ -309,7 +322,7 @@ module SAR_ADC();
         `ifdef SAR_ADC_CONV
         ref     real         CH_ANA0, // analog value of channel
         ref     real         CH_ANA1, // analog value of channel
-        ref     real         vref,  // reference voltage
+        ref     real         Vref,  // reference voltage
         `endif
 
         ref     reg  [15:0]  CH0, 
@@ -329,8 +342,8 @@ module SAR_ADC();
             `endif
             
             `ifdef SAR_ADC_CONV
-                successive_approximation(CH_ANA0, vref, CH0);
-                successive_approximation(CH_ANA1, vref, CH1);
+                successive_approximation(CH_ANA0, Vref, CH0);
+                successive_approximation(CH_ANA1, Vref, CH1);
             `endif
     
             channel_conv_ongoing = 0;
@@ -341,9 +354,9 @@ endmodule
 module self_checker();
 
     task CONFIG_REG(reg [31:0] CONFIG_REG, int message_verbosity, int configured_verbosity);
+        $display ("CONFIGURATION REGISTER   0x%h_%h", CONFIG_REG[31:16], CONFIG_REG[15:0]);
+        $display ("CONFIGURATION REGISTER 32'b%b_%b", CONFIG_REG[31:16], CONFIG_REG[15:0]);
         if (message_verbosity == configured_verbosity) begin
-                                     $display ("CONFIGURATION REGISTER   0x%h_%h", CONFIG_REG[31:16], CONFIG_REG[15:0]);
-                                     $display ("CONFIGURATION REGISTER 32'b%b_%b", CONFIG_REG[31:16], CONFIG_REG[15:0]);
             if (CONFIG_REG[29] == 0) $display ("[CONFIG_REG] BIT29 - Using internal conversion clock");
             else                     $display ("[CONFIG_REG] BIT29 - Using XCLK");
 
