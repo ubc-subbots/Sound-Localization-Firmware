@@ -26,12 +26,12 @@ module driver_tb();
     real CH_ANA_D1;
     
     // Instantiate driver + ADC model
-
     ADC_behav adc_inst (
         .XCLK (XCLK)  ,
         .CS_N (CS_N)  ,
         .WR_N (WR_N)  ,
         .RD_N (RD_N)  ,
+        .HW_N_SW(software_mode),
         
         .CONVST_A(convst_A),
         .CONVST_B(convst_B),
@@ -79,7 +79,7 @@ module driver_tb();
         rst = 0; #100;
         rst = 1;
 
-        repeat(80) @ (posedge convst_A);
+        repeat(20) @ (posedge convst_A);
         $stop;
     end
 
@@ -93,20 +93,30 @@ module driver_tb();
     end
 
 
-    // Channel values
+    // Channel value generation
     initial begin
         CH_ANA_A0 = 0.52;
         CH_ANA_B0 = 0.76;
         CH_ANA_C0 = 0.24;
-        CH_ANA_D0 = -0.3287;
+        CH_ANA_D0 = 10.3287;
 
-        CH_ANA_A1 = -9.5;
-        CH_ANA_B1 = 0.2;
-        CH_ANA_C1 = 0.589;
+        CH_ANA_A1 = -10.98;
+        CH_ANA_B1 = 0.001;
+        CH_ANA_C1 = -0.00027;
         CH_ANA_D1 = 0.657;
 
         forever begin
-            CH_ANA_A0 = 2.5*$sin($time/5000.0); #1ns;
+            CH_ANA_A0 = 2.5*$sin($time/5000.0); 
+            CH_ANA_B0 = 2.5 * $sin($time / 5000.0 + 0.2); 
+            CH_ANA_C0 = 2.5 * $sin($time / 5000.0 + 0.3); 
+            CH_ANA_D0 = 2.5 * $sin($time / 5000.0 + 0.5); 
+    
+            CH_ANA_A1 = 2.5 * $sin($time / 5000.0 + 0.9); 
+            CH_ANA_B1 = 2.5 * $sin($time / 5000.0 + 1.0); 
+            CH_ANA_C1 = 2.5 * $sin($time / 5000.0 + 1.4); 
+            CH_ANA_D1 = 2.5 * $sin($time / 5000.0 + 1.9); 
+
+            #100ns;  // Change sin wave resolution here. Up to 250ns is decent
         end
     end
 endmodule
