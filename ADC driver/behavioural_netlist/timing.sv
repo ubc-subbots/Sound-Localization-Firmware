@@ -18,6 +18,7 @@
 
 
 // Read Access Timing
+`define tACQ  280  // Access consatrint - BUSY deasserted to CONVST_x posedge time
 `define tCVL  20   // input constraint  - CONVST_x low time
 `define tDCVB 25   // output constraint - CONVST_x high to BUSY high delay
 `define tBUCS 0    // input constraint  - BUSY low to CS low time ADS85x8, CLKSEL = 1
@@ -28,4 +29,4 @@
 `define tRDH  2    // input consatrint  - Minimum time between two read accesses
 `define tPDDO 15   // output consatrint - RD or CS falling edge to data valid propagation delay
 `define tHDO  15   // input constraint  - Output data to RD or CS rising edge hold time
-`define tDTRI 10   // input constraint  - CS high to DB[15:0] three-state delay
+`define tDTRI 10   // output constraint - CS high to DB[15:0] three-state delay

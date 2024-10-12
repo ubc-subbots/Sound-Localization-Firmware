@@ -79,7 +79,7 @@ module driver_tb();
         rst = 0; #100;
         rst = 1;
 
-        repeat(100) @ (posedge convst_A);
+        repeat(5) @ (posedge convst_A);
         $stop;
     end
 
@@ -88,7 +88,7 @@ module driver_tb();
         XCLK = 0;
 
         forever begin
-            XCLK = ~XCLK; #67;
+            XCLK = ~XCLK; #80;
         end
     end
 

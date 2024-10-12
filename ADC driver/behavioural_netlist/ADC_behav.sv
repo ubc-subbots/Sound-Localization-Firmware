@@ -35,6 +35,7 @@ module ADC_behav(
 );
 
     reg [15:0] DB_i,  DB_o;    // Buffer since inout port cannot be driven by an initial block
+    reg [15:0] DB_tri;         // Parallel interface is disabled if CS_N is high
     reg [15:0] CH_A0, CH_A1;   // Channel A conversion output
     reg [15:0] CH_B0, CH_B1;   // Channel B conversion output
     reg [15:0] CH_C0, CH_C1;   // Channel C conversion output
@@ -50,17 +51,25 @@ module ADC_behav(
     // Can work around this by providing a buffered version of the signal
     logic XCLK_buf;
     logic RD_N_buf;
+    logic WR_N_buf;
+    logic CS_N_buf;
+    logic BUSY_buf;
     logic CONVST_A_buf;
     logic CONVST_B_buf;
     logic CONVST_C_buf;
     logic CONVST_D_buf;
+    logic [15:0] DB_buf;
 
     assign XCLK_buf = XCLK;
     assign RD_N_buf = RD_N;
+    assign WR_N_buf = WR_N;
+    assign CS_N_buf = CS_N;
+    assign BUSY_buf = BUSY;
     assign CONVST_A_buf = CONVST_A;
     assign CONVST_B_buf = CONVST_B;
     assign CONVST_C_buf = CONVST_C;
     assign CONVST_D_buf = CONVST_D;
+    assign DB_buf = DB;
 
     // ========================================================
     // Module Instantiations
@@ -149,27 +158,29 @@ module ADC_behav(
     // ========================================================
     initial forever begin
         @ (negedge RD_N) begin 
-            # (`tPDDO); // output constraint on when DB will update after RD_N goes low
+            // output constraint on when DB will update after RD_N goes low
+            // 3 state buffer with CS_N adds additional `tDTRI delay so it's subtracted here to achieve a `tPDDO delay
+            # (`tPDDO-`tDTRI); 
 
             case (ADC_num)
-                0 : DB_o = CH_A0;
-                1 : DB_o = CH_A1;
-                2 : DB_o = CH_B0;
-                3 : DB_o = CH_B1;
-                4 : DB_o = CH_C0;
-                5 : DB_o = CH_C1;
-                6 : DB_o = CH_D0;
-                7 : DB_o = CH_D1;
-                default: DB_o = 'bx; // check what it should be between data values
+                0 : DB_tri = CH_A0;
+                1 : DB_tri = CH_A1;
+                2 : DB_tri = CH_B0;
+                3 : DB_tri = CH_B1;
+                4 : DB_tri = CH_C0;
+                5 : DB_tri = CH_C1;
+                6 : DB_tri = CH_D0;
+                7 : DB_tri = CH_D1;
+                default : DB_tri = 'bx; // check what it should be between data values
             endcase
 
             ADC_num = ADC_num + 1;
         end
     end
 
-    // Assume: Configure DB as an output port as the default
     assign direction = WR_N;   
-    assign DB   =  direction ?  DB_o : 'bz;
+    assign #(`tDTRI) DB_o = (CS_N == 0) ? DB_tri : 'bz; // 3 state buffer with delay. RD_N to DB delay is still `tPDDO
+    assign DB   =  direction ?  DB_o : 'bz; // inout port logic
     assign DB_i =  direction ?  'bz : DB;
 
     // ========================================================
@@ -238,12 +249,20 @@ module ADC_behav(
             @ (negedge WR_N or negedge RD_N) begin
                 assert (!(WR_N == 0 && RD_N == 0)); // Write and read signals should never both be 0 at the same time
             end
-            
-            // check.write_access_properties ();
+        join_none
+
+        fork 
+            check.write_access_properties (
+                .CS_N                  (CS_N_buf),
+                .WR_N                  (WR_N_buf),
+                .DB                    (DB_buf)
+            );
             
             check.read_access_properties (
                 .ADC_num               (ADC_num),
                 .RD_N                  (RD_N_buf),
+                .CS_N                  (CS_N_buf),
+                .BUSY                  (BUSY_buf),
                 .CONVST_A_ongoing      (CONVST_A_ongoing),
                 .CONVST_B_ongoing      (CONVST_B_ongoing),
                 .CONVST_C_ongoing      (CONVST_C_ongoing),
@@ -397,15 +416,57 @@ module self_checker();
         end
     endtask
 
-
-    task automatic same_signal_constraint(
-        ref signal,
-        bit polarity
+    task automatic one_signal_constraint(
+        ref signal, 
+        input bit pos_edge_start,
+        input real pulse_min, // timing constraint
+        input string constraint_name
     );
+
+        realtime start_time, end_time;
+        real pulse_duration;
+
+        // Process is blocking. Later calculation won't happen until this finishes
+        if (pos_edge_start) begin
+            @ (posedge signal) start_time = $time;
+            @ (negedge signal) end_time   = $time;
+        end  else begin
+            @ (negedge signal) start_time = $time;
+            @ (posedge signal) end_time   = $time;
+        end
+
+        pulse_duration = real'(end_time - start_time);
+        assert (pulse_duration >= pulse_min) else cfg.timing_violation(constraint_name, pulse_duration, pulse_min, cfg.STOP_SIM);
 
     endtask
 
-    task automatic two_signal_constraint();
+    task automatic two_signal_constraint(
+        ref signal1,
+        input bit s1_pos_triggered,
+        ref signal2,
+        input bit s2_pos_triggered,
+        input real pulse_min,
+        input string constraint_name
+    );
+        realtime start_time, end_time;
+        real pulse_duration;
+
+        // Process is blocking. Later calculation won't happen until this finishes
+        if (s1_pos_triggered) begin
+            @ (posedge signal1) start_time = $time;
+        end  else begin
+            @ (negedge signal1) start_time = $time;
+        end
+
+        if (s2_pos_triggered) begin
+            @ (posedge signal2) end_time = $time;
+        end  else begin
+            @ (negedge signal1) end_time = $time;
+        end
+
+        pulse_duration = real'(end_time - start_time);
+        assert (pulse_duration >= pulse_min) else cfg.timing_violation(constraint_name, pulse_duration, pulse_min, cfg.STOP_SIM);
+
     endtask
 
     task Vref_out_valid(real Vref_out);
@@ -427,22 +488,45 @@ module self_checker();
     endtask
  
     task automatic write_access_properties (
-        input int write_count,
         ref CS_N,
         ref WR_N,
         ref [15:0] DB
     );
     
-        // --------- WRITE ACCESS CHECKS ------ //
-        // Here checking that the timing requirements and read access behaviours for the model are not violated
+        reg [15:0] DB_val;
+        real time_start = -1, time_end;
+        real pulse_duration;
     
+        @ (posedge WR_N) DB_val = DB;
+        # (`tHDI) assert (DB == DB_val) else $error ("tHDI requirement violated");
+
+        // Add a checker for setup time requirement. In a sense this requires looking into the future
+        @ (negedge WR_N) 
+        
+        do begin
+            // Snap show DB, if DB_val after a timestep == DB, start recording time
+            DB_val = DB;
+            # (cfg.CHECKER_TIMESTEP); // How precisely setup time requirement will be measured
     
-        // Timing Constraints check
+            // If they are the same value, startup the timer
+            if (DB_val == DB & time_start == -1) time_start = $time;
+            else if (DB_val != DB) time_start = -1;
+        end while (WR_N == 0);
+
+        time_end = $time;
+        pulse_duration = time_end - time_start;
+        assert (pulse_duration >= `tSUDI) else $error ("tSUDI requirement violated -- %0.5f", pulse_duration);
     
+        two_signal_constraint(CS_N, 0, WR_N, 0, `tCSWR, "tCSWR");
+        two_signal_constraint(WR_N, 1, CS_N, 1, `tWRCS, "tWRCS");
+        one_signal_constraint(WR_N, 0,          `tWRL,  "tWRL");
+        one_signal_constraint(WR_N, 1,          `tWRH,  "tWRH");
     endtask
     
     task automatic read_access_properties (
         ref logic RD_N,
+        ref logic CS_N,
+        ref logic BUSY,
         ref logic CONVST_A, // if the posedge construct is to be used the signal needs to be passed by reference
         ref logic CONVST_B,
         ref logic CONVST_C,
@@ -453,33 +537,28 @@ module self_checker();
         input bit CONVST_C_ongoing,
         input bit CONVST_D_ongoing
     );
-        // --------- READ ACCESS CHECKS ------ //
+        fork
+            // PROPERTY - If a conversion is ongoing, then an error will be raised if CONVST_x is positive edge triggered at any time 
+            // These are status flags that will be set inside the model that will be 1 when a conversion for that channel is ongoing. 
+            @(posedge CONVST_A) assert (CONVST_A_ongoing == 0) else $warning("CHA conversion initated while conversion still ongoing");
+            @(posedge CONVST_B) assert (CONVST_B_ongoing == 0) else $warning("CHB conversion initated while conversion still ongoing"); 
+            @(posedge CONVST_C) assert (CONVST_C_ongoing == 0) else $warning("CHC conversion initated while conversion still ongoing"); 
+            @(posedge CONVST_D) assert (CONVST_D_ongoing == 0) else $warning("CHD conversion initated while conversion still ongoing"); 
+        
+            // PROPERTY - Should not try to read from a channel that is not connected to a mic
+            @(posedge RD_N) assert (ADC_num <= cfg.NUM_MICS) else $warning("Reading from an invalid channel");
+            
+            two_signal_constraint(BUSY, 0, CONVST_A, 1, `tACQ,  "tACQ");
+            two_signal_constraint(BUSY, 0, CS_N,     0, `tBUCS, "tBUCS");
+            two_signal_constraint(CS_N, 0, RD_N,     0, `tCSRD, "tCSRD");
+            two_signal_constraint(CS_N, 1, CONVST_A, 1, `tCSCV, "tCSCV");
     
-        // PROPERTY - RDL min pulse duration is met
-        int negedge_RD;
-        int posedge_RD;
-        int RD_pulse_duration;
+            // PROPERTY - RDL and RDH min pulse durations are met
+            one_signal_constraint(RD_N, 0, `tRDL, "tRDL");
+            one_signal_constraint(RD_N, 1, `tRDH, "tRDH");
     
-        // PROPERTY - If a conversion is ongoing, then an error will be raised if CONVST_x is positive edge triggered at any time 
-        // These are status flags that will be set inside the model that will be 1 when a conversion for that channel is ongoing. 
-        @(posedge CONVST_A) assert (CONVST_A_ongoing == 0) else $warning("CHA conversion initated while conversion still ongoing");
-        @(posedge CONVST_B) assert (CONVST_B_ongoing == 0) else $warning("CHB conversion initated while conversion still ongoing"); 
-        @(posedge CONVST_C) assert (CONVST_C_ongoing == 0) else $warning("CHC conversion initated while conversion still ongoing"); 
-        @(posedge CONVST_D) assert (CONVST_D_ongoing == 0) else $warning("CHD conversion initated while conversion still ongoing"); 
-    
-        // PROPERTY - This counter should never go above 5
-        @(posedge RD_N) assert (ADC_num <= 5) else $warning("Reading from an invalid channel");
-    
-        // PROPERTY - RDL min pulse duration is met
-        @ (negedge RD_N) negedge_RD = $time;
-        @ (posedge RD_N) begin 
-            posedge_RD = $time;
-    
-            RD_pulse_duration = posedge_RD - negedge_RD;
-            assert (RD_pulse_duration > `tRDL) else $warning("RDL min pulse duration violated");
-        end
-    
-        // PROPERTY - RDH read access restriction is met
-    
+            // Output data hold time constraint
+            one_signal_constraint(RD_N, 0, `tPDDO+`tHDO, "tHDO"); // data appears at tHDO and posedge should be tDHO after that time
+        join_any
     endtask
 endmodule
