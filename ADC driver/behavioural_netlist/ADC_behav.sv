@@ -4,7 +4,8 @@
 // A testbench environment should be made with this behavioural model and 
 
 // Main task that is used for getting channel data. Works with both internal conversion clock or external clock
-`include "macro.f"
+`include "timing.sv"
+`include "config.sv"
 
 module ADC_behav(
     input logic             XCLK,     // external clock
@@ -106,6 +107,14 @@ module ADC_behav(
     // Write to the configuration registers when WR_N goes low
     initial begin
         write_count = 0;
+        
+        `ifdef SAR_ADC_CONV
+            $display("[ADC BEHAV] Using SAR ADC model");
+        `endif
+        `ifdef USE_RANDOM_DATA
+            $display("[ADC BEHAV] Using random data");
+        `endif
+
         forever begin
             @ (negedge WR_N) write_count <= write_count + 1;
 
@@ -290,8 +299,8 @@ module SAR_ADC();
         // ------ Main SAR ADC task  ------ 
         bit is_negative = (Vin < 0) ? 1 : 0;
         // Throw warning if the voltage saturates the ADC. $abs() does not work with real numbers, only ints and regs
-        if (is_negative & (Vin < -Vref)) cfg.log_warning($sformatf("Vin = %11.5f is outisde voltage range +/- %6.3f", Vin, Vref), cfg.DISPLAY_VOLTAGE_WARN);
-        else if           (Vin >  Vref)  cfg.log_warning($sformatf("Vin = %11.5f is outisde voltage range +/- %6.3f", Vin, Vref), cfg.DISPLAY_VOLTAGE_WARN);
+        if (is_negative & (Vin < -Vref)) cfg.log_warning($sformatf("Vin = %11.5f is outisde voltage range +/- %6.3f", Vin, Vref), cfg.VOLTAGE_WARNINGS);
+        else if           (Vin >  Vref)  cfg.log_warning($sformatf("Vin = %11.5f is outisde voltage range +/- %6.3f", Vin, Vref), cfg.VOLTAGE_WARNINGS);
 
         SAR_REG[15] = is_negative; // Keep MSB 0 only if positive voltage
 
@@ -354,8 +363,8 @@ endmodule
 module self_checker();
 
     task CONFIG_REG(reg [31:0] CONFIG_REG, int message_verbosity, int configured_verbosity);
-        $display ("CONFIGURATION REGISTER   0x%h_%h", CONFIG_REG[31:16], CONFIG_REG[15:0]);
-        $display ("CONFIGURATION REGISTER 32'b%b_%b", CONFIG_REG[31:16], CONFIG_REG[15:0]);
+                                     $display ("[CONFIG_REG] val = 0x%h_%h", CONFIG_REG[31:16], CONFIG_REG[15:0]);
+                                     $display ("[CONFIG_REG] val = 32'b%b_%b", CONFIG_REG[31:16], CONFIG_REG[15:0]);
         if (message_verbosity == configured_verbosity) begin
             if (CONFIG_REG[29] == 0) $display ("[CONFIG_REG] BIT29 - Using internal conversion clock");
             else                     $display ("[CONFIG_REG] BIT29 - Using XCLK");
@@ -384,6 +393,7 @@ module self_checker();
             if (CONFIG_REG[13] == 0) $display ("[CONFIG_REG] BIT13 - Reference source = 2.5V");
             else                     $display ("[CONFIG_REG] BIT13 - Reference source = 3.0V");
                                      $display ("[CONFIG_REG] DAC   - Code = %d", CONFIG_REG[9:0]);
+                                     $display ("[CONFIG_REG] DAC   - Code = %bb", CONFIG_REG[9:0]);
         end
     endtask
 
@@ -405,7 +415,7 @@ module self_checker();
 
     task voltage_ranges(real Vref_out, reg [31:0] CONFIG_REG);
         $display();
-        if (CONFIG_REG[24] == 0) $display ("[VOLTAGE] CHA Voltage range is +/- %6.3fV", 4*Vref_out);
+        if (CONFIG_REG[24] == 0) $display ("[VOLTAGE] CHA Voltage range is +/- %6.3fV", 4*Vref_out); // 0 is default, 4Vref
         else                     $display ("[VOLTAGE] CHA Voltage range is +/- %6.3fV", 2*Vref_out);
         if (CONFIG_REG[23] == 0) $display ("[VOLTAGE] CHB Voltage range is +/- %6.3fV", 4*Vref_out);
         else                     $display ("[VOLTAGE] CHB Voltage range is +/- %6.3fV", 2*Vref_out);
@@ -426,9 +436,6 @@ module self_checker();
         // --------- WRITE ACCESS CHECKS ------ //
         // Here checking that the timing requirements and read access behaviours for the model are not violated
     
-        // PROPERTY - CS  low to WR low time
-    
-        // Configuraition check
     
         // Timing Constraints check
     

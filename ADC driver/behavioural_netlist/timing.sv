@@ -2,6 +2,8 @@
 //  ADS8528 Timing Sepcs
 //========================
 
+`timescale 1ns/1ns
+
 // Conversion Clocking
 `define tCONV 1330 // conversion logic  - Conversion time
 `define tCCLK 20   // conversion logic  - Number of complete conversion clocks

@@ -1,4 +1,4 @@
-`include "macro.f"
+`include "../driver.sv"
 module driver_tb();
     reg           XCLK;
     reg           rst;
@@ -6,10 +6,10 @@ module driver_tb();
     reg           WR_N;
     reg           RD_N;
 
-    reg          CONVST_A;
-    reg          CONVST_B;
-    reg          CONVST_C;
-    reg          CONVST_D;
+    wire          convst_A;
+    wire          convst_B;
+    wire          convst_C;
+    wire          convst_D;
 
     wire          BUSY;
     wire [15:0]   DB;
@@ -24,13 +24,13 @@ module driver_tb();
     real CH_ANA_B1;
     real CH_ANA_C1;
     real CH_ANA_D1;
-    
+
     // Instantiate driver + ADC model
     ADC_behav adc_inst (
-        .XCLK (XCLK)  ,
-        .CS_N (CS_N)  ,
-        .WR_N (WR_N)  ,
-        .RD_N (RD_N)  ,
+        .XCLK (XCLK),
+        .CS_N (CS_N),
+        .WR_N (WR_N),
+        .RD_N (RD_N),
         .HW_N_SW(software_mode),
         
         .CONVST_A(convst_A),
@@ -40,14 +40,14 @@ module driver_tb();
         
         `ifdef SAR_ADC_CONV
 
-        .CH_ANA_A0( CH_ANA_A0 ),
-        .CH_ANA_B0( CH_ANA_B0 ),
-        .CH_ANA_C0( CH_ANA_C0 ),    
-        .CH_ANA_D0( CH_ANA_D0 ),
-        .CH_ANA_A1( CH_ANA_A1 ),
-        .CH_ANA_B1( CH_ANA_B1 ),
-        .CH_ANA_C1( CH_ANA_C1 ),    
-        .CH_ANA_D1( CH_ANA_D1 ),
+        .CH_ANA_A0(CH_ANA_A0),
+        .CH_ANA_B0(CH_ANA_B0),
+        .CH_ANA_C0(CH_ANA_C0),    
+        .CH_ANA_D0(CH_ANA_D0),
+        .CH_ANA_A1(CH_ANA_A1),
+        .CH_ANA_B1(CH_ANA_B1),
+        .CH_ANA_C1(CH_ANA_C1),    
+        .CH_ANA_D1(CH_ANA_D1),
         
         `endif
 
@@ -79,7 +79,7 @@ module driver_tb();
         rst = 0; #100;
         rst = 1;
 
-        repeat(36) @ (posedge convst_A);
+        repeat(100) @ (posedge convst_A);
         $stop;
     end
 
@@ -92,8 +92,16 @@ module driver_tb();
         end
     end
 
+    `ifdef SAR_ADC_CONV
+    // ========================================
+    // Signal Generation
+    // ========================================
 
-    // Channel value generation
+    real freq = 60_000.0; // 40KHz
+    real T;
+    real PI = 3.14159265358979;
+    real w;
+
     initial begin
         CH_ANA_A0 = 0.52;
         CH_ANA_B0 = 0.76;
@@ -105,18 +113,22 @@ module driver_tb();
         CH_ANA_C1 = -0.00027;
         CH_ANA_D1 = 0.657;
 
+        // Period = 25000 ns
+        T = 1/freq * 1_000_000_000; // Conversion from nanoseconds to seconds since freq was in kHz
+        w = 2 * PI / T;
         forever begin
-            CH_ANA_A0 = 2.5*$sin($time/5000.0); 
+            CH_ANA_A0 = 2.5  * $sin(w * $time); // 40 KHz signal
             CH_ANA_B0 = -2.5 * $sin($time / 5000.0 + 0.2); 
-            CH_ANA_C0 = 2.5 * $sin($time / 5000.0 + 0.3); 
+            CH_ANA_C0 = 2.5  * $sin($time / 5000.0 + 0.3); 
             CH_ANA_D0 = -2.5 * $sin($time / 5000.0 + 0.5); 
     
             CH_ANA_A1 = -7.5 * $sin($time / 5000.0 + 0.9); 
             CH_ANA_B1 = -2.5 * $sin($time / 5000.0 + 1.0); 
-            CH_ANA_C1 = 18.5 * $sin($time / 5000.0 + 1.4); 
+            CH_ANA_C1 = 12.5 * $sin($time / 50000.0 + 1.4); 
             CH_ANA_D1 = -2.5 * $sin($time / 5000.0 + 1.9); 
 
-            #100ns;  // Change sin wave resolution here. Up to 250ns is decent
+            #250ns;  // Change sin wave resolution here. Up to 250ns is decent
         end
     end
+    `endif
 endmodule

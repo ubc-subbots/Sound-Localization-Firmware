@@ -10,27 +10,27 @@ cModel Technology
 dC:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/modelSim
 vADC_behav
 Z0 DXx6 sv_std 3 std 0 22 AD7iAPLo6nTIKk<N0eo=D3
-Z1 !s110 1728239988
+Z1 !s110 1728741365
 !i10b 1
-!s100 nK?iUZQZmZhmXRYRG]dM=0
-IAj0CK4W8XJY`WdDCehfla2
+!s100 dLoTd`3S>`dR9b]4L]BQX2
+IKJE1VNTcXQgQ[[A@6>Fen2
 Z2 VDg1SIo80bB@j0V0VzS_@n1
 Z3 !s105 ADC_behav_sv_unit
 S1
 Z4 dC:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist
-Z5 w1728239987
-Z6 8C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv
-Z7 FC:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv
-L0 9
+Z5 w1728740629
+Z6 8ADC_behav.sv
+Z7 FADC_behav.sv
+L0 10
 Z8 OV;L;10.5b;63
 r1
 !s85 0
 31
-Z9 !s108 1728239988.000000
-Z10 !s107 ../driver.sv|timing.sv|config.sv|macro.f|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv|
-Z11 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv|
+Z9 !s108 1728741365.000000
+Z10 !s107 ../driver.sv|config.sv|timing.sv|driver_tb.sv|ADC_behav.sv|
+Z11 !s90 -reportprogress|300|+define+SAR_ADC_CONV|ADC_behav.sv|driver_tb.sv|
 !i113 1
-Z12 o-work work -sv
+Z12 !s92 +define+SAR_ADC_CONV
 Z13 tCvgOpt 0
 n@a@d@c_behav
 XADC_behav_sv_unit
@@ -44,15 +44,15 @@ V>EU7nJRzT`[<:dYfBMV<h1
 S1
 R4
 w1728145293
-R6
-R7
+8C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv
+FC:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv
 Fmacro.f
-Fconfig.sv
+Z14 Fconfig.sv
 Ftiming.sv
-Z14 F../driver.sv
-Z15 F../ADCmemory.sv
-Z16 F../SPI_slave.sv
-Z17 F../Clk_divider.sv
+Z15 F../driver.sv
+Z16 F../ADCmemory.sv
+Z17 F../SPI_slave.sv
+Z18 F../Clk_divider.sv
 L0 180
 R8
 r1
@@ -60,98 +60,98 @@ r1
 31
 !s108 1728145296.000000
 !s107 ../Clk_divider.sv|../SPI_slave.sv|../ADCmemory.sv|../driver.sv|timing.sv|config.sv|macro.f|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv|
-R11
+Z19 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv|
 !i113 1
-R12
+Z20 o-work work -sv
 R13
 n@a@d@c_behav_sv_unit
 vADCmemory
 R0
-Z18 !s110 1728224738
+Z21 !s110 1728224738
 !i10b 1
 !s100 gmTh93]WjN;1H[6g6RA;F0
 IlY_UoTmWdXA8=Ed;@mZYN2
 R2
-Z19 !s105 driver_tb_sv_unit
+Z22 !s105 driver_tb_sv_unit
 S1
 R4
-Z20 w1725967682
+Z23 w1725967682
 8../ADCmemory.sv
-R15
+R16
 L0 25
 R8
 r1
 !s85 0
 31
-Z21 !s108 1728224738.000000
-Z22 !s107 ../Clk_divider.sv|../SPI_slave.sv|../ADCmemory.sv|../driver.sv|timing.sv|config.sv|macro.f|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/driver_tb.sv|
-Z23 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/driver_tb.sv|
+Z24 !s108 1728224738.000000
+Z25 !s107 ../Clk_divider.sv|../SPI_slave.sv|../ADCmemory.sv|../driver.sv|timing.sv|config.sv|macro.f|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/driver_tb.sv|
+Z26 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/driver_tb.sv|
 !i113 1
-R12
+R20
 R13
 n@a@d@cmemory
 vcfg
 R0
-!s110 1728240265
+R1
 !i10b 1
-!s100 dT1ZXO_hYXdl84a[VcKA20
-I`o^=o]hY@eV;[f>mkOIh[2
+!s100 fUcXCn<YV;dh_SAYJV?a03
+IkOOIb@oZC`^]b@eif7mLG3
 R2
-!s105 config_sv_unit
+R3
 S1
 R4
-w1728240264
-8C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/config.sv
-FC:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/config.sv
-L0 13
+w1728740542
+8config.sv
+R14
+L0 5
 R8
 r1
 !s85 0
 31
-!s108 1728240265.000000
-!s107 C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/config.sv|
-!s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/config.sv|
+R9
+R10
+R11
 !i113 1
 R12
 R13
 vClk_divider
 R0
-R18
+R21
 !i10b 1
 !s100 `mOboO0]WLBc@`KRP76b`3
 ISaAB^Kcei@@;lj95:VAG_1
 R2
-R19
+R22
 S1
 R4
-R20
+R23
 8../Clk_divider.sv
-R17
+R18
 L0 1
 R8
 r1
 !s85 0
 31
-R21
-R22
-R23
+R24
+R25
+R26
 !i113 1
-R12
+R20
 R13
 n@clk_divider
 vdriver
 R0
 R1
 !i10b 1
-!s100 ;`2AbEnTjG6[RJJCNa0[41
-IPzIEM>aLRI3gJMU2gN@@z0
+!s100 ijnH_ge=]d5Yoi>_`5G3:0
+IS:^9e4mm<M;NYJozee>W<0
 R2
-R3
+R22
 S1
 R4
-w1728232504
+w1728244893
 8../driver.sv
-R14
+R15
 L0 20
 R8
 r1
@@ -165,25 +165,25 @@ R12
 R13
 vdriver_tb
 R0
-!s110 1728239910
+R1
 !i10b 1
-!s100 `z`Uc_:_G>SV;fB0L[7Sf1
-IB=nWSAB3>4nFTdhngMLJT1
+!s100 =U?:U5FPYGjeNA^0n>`@X2
+IB]`4Zbfdk:`ciHI6BKh5n1
 R2
-R19
+R22
 S1
 R4
-w1728239909
-8C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/driver_tb.sv
-FC:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/driver_tb.sv
+w1728741156
+8driver_tb.sv
+Fdriver_tb.sv
 L0 2
 R8
 r1
 !s85 0
 31
-!s108 1728239910.000000
-!s107 ../driver.sv|timing.sv|config.sv|macro.f|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/driver_tb.sv|
-R23
+R9
+R10
+R11
 !i113 1
 R12
 R13
@@ -191,8 +191,8 @@ vSAR_ADC
 R0
 R1
 !i10b 1
-!s100 zIMTNJVCkkoRa;]J<7@@X2
-I[2E2_Q6m1KT:;MzJG6BX[2
+!s100 zSOK2@aX3OPfZhF`Y<Xd_2
+I1@AY]OWHbBi<3UVTmh>Sd1
 R2
 R3
 S1
@@ -200,7 +200,7 @@ R4
 R5
 R6
 R7
-L0 255
+L0 264
 R8
 r1
 !s85 0
@@ -216,8 +216,8 @@ vself_checker
 R0
 R1
 !i10b 1
-!s100 WR3h;mf<DnB=c:<bfgH@B0
-IcJzW4F3hMN5Fb2>3dP`0h0
+!s100 TiVe>>H8Ja1Q1VM1g>5Q]3
+I9l@6PdRboi`SNC4ig^Cjo3
 R2
 R3
 S1
@@ -225,7 +225,7 @@ R4
 R5
 R6
 R7
-L0 354
+L0 363
 R8
 r1
 !s85 0
@@ -238,31 +238,31 @@ R12
 R13
 vspi
 R0
-R18
+R21
 !i10b 1
 !s100 4PAO9THC;MeNioY6dG>030
 Igjg@R_2h@]odH=D_6lZ7O1
 R2
-R19
+R22
 S1
 R4
 w1727043463
 8../SPI_slave.sv
-R16
+R17
 L0 22
 R8
 r1
 !s85 0
 31
-R21
-R22
-R23
+R24
+R25
+R26
 !i113 1
-R12
+R20
 R13
 vtb
 R0
-Z24 !s110 1728239332
+Z27 !s110 1728738997
 !i10b 1
 !s100 Q@HBPE[e<?YOh1SnPh95d3
 IFoWSBYbaM9C^FhDQ7h@Ck1
@@ -278,11 +278,11 @@ R8
 r1
 !s85 0
 31
-Z25 !s108 1728239332.000000
+Z28 !s108 1728738997.000000
 !s107 ../driver.sv|timing.sv|config.sv|macro.f|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/tb.sv|
 !i113 1
-R12
+R20
 R13
 vtop
 R0
@@ -304,13 +304,13 @@ r1
 31
 !s108 1728142126.000000
 !s107 ../Clk_divider.sv|../SPI_slave.sv|../ADCmemory.sv|../top.sv|../driver.sv|timing.sv|config.sv|macro.f|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/ADC_behav.sv|
-R11
+R19
 !i113 1
-R12
+R20
 R13
 vtop_tb
 R0
-R24
+R27
 !i10b 1
 !s100 gV72CU3UY;f<BhAoSi0j[3
 I<VX@d;MFVRQAFcGP^6OMb1
@@ -326,9 +326,9 @@ R8
 r1
 !s85 0
 31
-R25
+R28
 !s107 C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/top_tb.sv|
 !s90 -reportprogress|300|-work|work|-sv|-stats=none|C:/Users/flipa/OneDrive - UBC/University/Subbots/Sound-Localization-Firmware/ADC driver/behavioural_netlist/top_tb.sv|
 !i113 1
-R12
+R20
 R13

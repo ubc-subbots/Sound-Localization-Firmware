@@ -1,14 +1,6 @@
 //====================================
 // ADC Behav Params
 //====================================
-`define SAR_ADC_CONV  // Comment to switch between SAR ADC + Data values or randomized values
-
-
-
-`ifndef SAR_ADC_CONV  // Don't manually edit this
-    `define USE_RANDOM_DATA
-`endif
-
 
 module cfg();
     // Configurations go here
@@ -18,10 +10,9 @@ module cfg();
     // Display Control (edit these)
     // ========================================
 
-    int DISPLAY_SAR_APPX     = 0; // See SAR options    --- Valid options {0, 1, 2}
-    int DISPLAY_CONFIG_REF   = 1; // See config optiosn --- Valid options {0, 1}
-    int DISPLAY_VOLTAGE_WARN = 1; // 0 = hide, 1 = show --- Valid options {0, 1}
-
+    int DISPLAY_SAR_APPX   = 0; // See SAR options    --- Valid options {0, 1, 2}
+    int DISPLAY_CONFIG_REF = 1; // See config optiosn --- Valid options {0, 1}
+    int VOLTAGE_WARNINGS   = 1; // 0 = hide, 1 = show --- Valid options {0, 1}
 
     // ===========================================================================
 
