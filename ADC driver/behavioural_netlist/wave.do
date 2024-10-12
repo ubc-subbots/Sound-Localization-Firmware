@@ -13,11 +13,11 @@ add wave -noupdate /driver_tb/convst_D
 add wave -noupdate /driver_tb/convst_C
 add wave -noupdate /driver_tb/convst_B
 add wave -noupdate /driver_tb/convst_A
-add wave -noupdate -group {Channel Outputs} -radix hexadecimal /driver_tb/adc_inst/CH_D1
-add wave -noupdate -group {Channel Outputs} -radix hexadecimal /driver_tb/adc_inst/CH_D0
-add wave -noupdate -group {Channel Outputs} -radix hexadecimal /driver_tb/adc_inst/CH_C1
-add wave -noupdate -group {Channel Outputs} -radix hexadecimal /driver_tb/adc_inst/CH_C0
-add wave -noupdate -group {Channel Outputs} -radix hexadecimal /driver_tb/adc_inst/CH_B1
+add wave -noupdate -group {Channel Outputs} -radix symbolic /driver_tb/adc_inst/CH_D1
+add wave -noupdate -group {Channel Outputs} -radix symbolic /driver_tb/adc_inst/CH_D0
+add wave -noupdate -group {Channel Outputs} -radix symbolic /driver_tb/adc_inst/CH_C1
+add wave -noupdate -group {Channel Outputs} -radix symbolic /driver_tb/adc_inst/CH_C0
+add wave -noupdate -group {Channel Outputs} -radix symbolic /driver_tb/adc_inst/CH_B1
 add wave -noupdate -group {Channel Outputs} -radix symbolic /driver_tb/adc_inst/CH_B0
 add wave -noupdate -group {Channel Outputs} -format Analog-Step -height 74 -max 20478.0 -min -20471.0 -radix symbolic /driver_tb/adc_inst/CH_A1
 add wave -noupdate -group {Channel Outputs} -format Analog-Step -height 74 -max 6823.0 -min -6827.0 -radix symbolic /driver_tb/adc_inst/CH_A0
