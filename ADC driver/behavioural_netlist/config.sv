@@ -2,6 +2,8 @@
 // ADC Behav Params
 //====================================
 
+`timescale 1ns/1ns
+
 module cfg();
     // Configurations go here
     int  DATA_WIDTH = 16; // 12, 14, 16 bit ADC
@@ -12,7 +14,7 @@ module cfg();
     // ========================================
 
     int DISPLAY_SAR_APPX   = 0; // See SAR options    --- Valid options {0, 1, 2}
-    int DISPLAY_CONFIG_REF = 0; // See config optiosn --- Valid options {0, 1}
+    int DISPLAY_CONFIG_REF = 1; // See config optiosn --- Valid options {0, 1}
     int VOLTAGE_WARNINGS   = 0; // 0 = hide, 1 = show --- Valid options {0, 1}
     int STOP_SIM           = 1; // stop simulation if a timing violation is encountered
 
