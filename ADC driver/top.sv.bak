@@ -1,0 +1,11 @@
+module top(
+	inout [15:0] DB,  //driver inputs
+	input Busy,
+	input clk,
+	input rst,
+	
+	input sclk, //SPI inputs
+	input cs,
+	
+	
+	

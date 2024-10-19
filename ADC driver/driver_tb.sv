@@ -57,7 +57,7 @@ module driver_tb();
 		rst = 1'b0;
 		#10
 		rst = 1'b1;
-		#60;
+		#180;
 		Busy = 1'b1;
 		#20;
 		Busy = 1'b0;

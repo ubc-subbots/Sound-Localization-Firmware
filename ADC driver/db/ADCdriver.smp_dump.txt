@@ -1,11 +1,7 @@
 
-State Machine - |driver|readstate
-Name readstate.111 readstate.110 readstate.101 readstate.100 readstate.011 readstate.010 readstate.001 readstate.000 
-readstate.000 0 0 0 0 0 0 0 0 
-readstate.001 0 0 0 0 0 0 1 1 
-readstate.010 0 0 0 0 0 1 0 1 
-readstate.011 0 0 0 0 1 0 0 1 
-readstate.100 0 0 0 1 0 0 0 1 
-readstate.101 0 0 1 0 0 0 0 1 
-readstate.110 0 1 0 0 0 0 0 1 
-readstate.111 1 0 0 0 0 0 0 1 
+State Machine - |top|driver:driver_inst|state_ff
+Name state_ff.HOLD state_ff.MEM state_ff.BUSY state_ff.INIT 
+state_ff.HOLD 0 0 0 0 
+state_ff.INIT 1 0 0 1 
+state_ff.BUSY 1 0 1 0 
+state_ff.MEM 1 1 0 0 
